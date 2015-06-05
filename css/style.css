@@ -1,0 +1,97 @@
+body{
+    background-color:#e9eaed !important;
+}
+
+footer {
+    clear: both;
+    width: 100%;
+    height: 100px;
+    padding: 10px 20px;
+    margin-top: 50px;
+    /*margin-left:10px;
+    margin-right:10px;*/
+    color: white;
+    background: #717074;
+
+    /* background-attachment: scroll;*/
+    /* background-position: 0% 0%;*/
+
+    position: relative;
+    /*position: absolute;*/
+    /* position: fixed;*/
+
+    bottom: 0px;
+
+}
+
+#conteinerMarketing {
+    background-color: #F9F9F9;
+    color: black;
+    width: 1000px;
+    padding: 25px 30px;
+    padding-bottom: 100px;
+
+    margin: 0 auto;
+    margin-top: 20px;
+
+    /*margin-right:160px;
+    margin-left:160px;
+    margin-top: 50px;*/
+}
+
+.container.marketing {
+    width: 100%;
+}
+
+@font-face {
+    font-family: myFirstFont;
+    src: url("../fonts/Roboto-Regular.ttf");
+
+    font-size: 17px;
+}
+
+
+.head_title {
+    font-family: myFirstFont;
+    font-size: 20px;
+    color: #204d74;
+}
+
+#navbar li:hover {
+    background-color: #286090 ;
+}
+
+#navbar {
+    font-family: arial;
+    font-size: 17px;
+}
+
+.logoImage {
+    content: url("../img/logos/logo.png");
+
+}
+
+.user_input, #user_input {
+    resize: none;
+}
+
+/*Einai ta buttons gia prosthiki neou (hotel or auction)*/
+.addNewElement {
+    float: right;
+}
+
+<<<<<<< HEAD
+.form-group  p{
+    text-align: left;
+=======
+p {
+    font-family: myFirstFont;
+    font-size: 17px;
+}
+hr{
+
+    border-color: #D7D7D7 !important;
+
+
+>>>>>>> origin/Kyr-Laptop
+}

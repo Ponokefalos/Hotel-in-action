@@ -1,0 +1,36 @@
+.col-md-2 .col-md-2 h5{
+    margin: 0;
+    font-size: 17px;
+}
+.AuctionTitles{
+    font-size: 16px;
+    color: #204d74;
+
+}
+.container.marketing{
+    padding-top: 10px;
+}
+.userRating{
+    font-size: 13px !important;
+}
+.hotelTitles{
+    text-align: center;
+    font-size: 17px;
+}
+.col-md-2 > p , .col-md-3 > p
+{
+    font-size: 16px;
+    color: #262626;
+}
+.progressingAuctions:hover
+{
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6)
+}
+
+/* ---- Prosoxi to parakatw leei: se oles tis klaseis row ektos tin prwti efarmose to css auto pou einai sta agistra ----*/
+.row ~ .row {
+    cursor: not-allowed;
+}

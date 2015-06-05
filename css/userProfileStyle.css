@@ -1,0 +1,65 @@
+.profileImage {
+    height: 200px;
+    width: 200px;
+    content: url("https://scontent-vie1-1.xx.fbcdn.net/hphotos-xaf1/v/t1.0-9/10168224_10201774468863325_7153089198414523571_n.jpg?oh=5e2416cf0d480ea46abccb2fd379e493&oe=56070604");
+}
+
+#backgroundContainerHolder {
+    background-color: #2e6da4;
+    height: 300px;
+    padding: 0;
+}
+
+#imageContainer {
+    height: 400px;
+    margin: 0;
+    position: relative;
+}
+
+.img-thumbnail {
+    background-color: #e9eaed !important;
+}
+
+#userImage {
+    width: auto;
+    height: auto;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    bottom: 0px;
+}
+
+#main_user_container{
+    margin-top: 150px;
+}
+
+#user_history, #user_info, #user_ratings{
+    background-color: #F9F9F9;
+    padding:0;
+    margin: 10px;
+
+
+}
+
+
+.user_container{
+    padding: 10px;
+}
+
+
+
+
+
+.main_profile_title{
+
+    padding-left: 15px;
+    width: 100%;
+    font-family: myFirstFont;
+    background-color: #2e6da4;
+    color: white;
+
+
+}
+
+
+

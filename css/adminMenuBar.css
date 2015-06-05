@@ -1,0 +1,54 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: myFirstFont;
+    font-size: 16px;
+}
+
+#menubar,
+#menubar ul{
+    list-style: none;
+
+}
+
+#menubar > li{
+    float: left;
+}
+
+#menubar li a{
+    display: block;
+    height: auto;
+    width: inherit;
+    padding: 10px;
+    text-decoration: none;
+}
+
+#menubar>li>a{
+    background-color: #286090;
+    color:#fff;
+}
+
+#hotels_list{
+    position: absolute;
+    background-color: #efefef;
+    z-index: 9999;
+    display: none;
+
+}
+
+#hotels_list>li>a{
+    color: #121;
+    width: auto;
+
+}
+
+#menubar li a:hover{
+    background-color: #286090;
+    color: white;
+}
+
+#menubar li:hover #hotels_list{
+    display: block;
+    color: #fff;
+    width: 180px;
+}

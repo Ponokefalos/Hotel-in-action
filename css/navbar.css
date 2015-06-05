@@ -1,0 +1,33 @@
+/* use navbar-wrapper to wrap navigation bar, the purpose is to overlay navigation bar above slider */
+.navbar-wrapper {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    width: 70%;
+    height: 21px;
+}
+.navbar-wrapper > .container {
+    padding: 0;
+}
+@media all and (max-width: 768px ){
+    .navbar-wrapper {
+        position: relative;
+        top: 0px;
+    }
+}
+#nav{
+    margin-top: 38px;
+    float: right;
+    width: auto;
+    height: auto;
+}
+#navtag{
+    margin-bottom: 0px;
+    background-color:transparent;
+    width: auto;
+    margin-top: 100px;
+}
+.navbar-wrapper{
+    margin-left: 450px;
+    float: right;
+}
