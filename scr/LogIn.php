@@ -67,12 +67,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['signIn'])) {
             $user = new User($row['name'], $row['surname'], $row['username'], $row['email'], $row['image'], $row['userType']);
             $_SESSION['user'] = $user;
             $_SESSION['loggedIn'] = true;
-            header("Location: hotel.php");
+            header("Location: index.php");
             exit();
         } else {
             showAlertDialog("Λάθος στοιχεία.");
-          /*  header("Location: index.php");
-            exit();*/
+            /*  header("Location: index.php");
+              exit();*/
         }
 
     } else if ($errorCode == 1) {

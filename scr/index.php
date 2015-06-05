@@ -52,16 +52,19 @@
 <!------------------------------------------------------ HEADER  --------------------------------------------------------------------------- -->
 <div id="headerWithoutNavBar" class="container" style="margin-top: 10px;">
     <?php
+
     session_start();
-    try {
-        if ($_SESSION['loggedIn'] == true) {
-            header("Location : hotel.php");
+
+        if (isset($_SESSION['loggedIn'])) {
+            echo "kala eimai";
+            session_unset();
+            session_destroy();
+           /* header("Location : hotel.php");
+            exit();*/
         } else {
             include 'LogIn.php';
         }
-    } catch (Exception $e) {
-        echo "craaaaaashara!!!!";
-    }
+
     ?>
     <div id="photoContainer">
         <img class="logoImage">
@@ -115,7 +118,9 @@
             <div style="filter: alpha(opacity=70); opacity: 0.7; position: absolute; display: block;
                 top: 0px; left: 0px; width: 100%; height: 100%;">
             </div>
-
+            <div style="position: absolute; display: block; background: url(../img/loading.gif) no-repeat center center;
+                top: 0px; left: 0px; width: 100%; height: 100%;">
+            </div>
         </div>
         <!-- Slides Container -->
         <div u="slides"
