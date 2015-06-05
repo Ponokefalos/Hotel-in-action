@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <?php
-//session_start();
+function __autoload($class_name) {
+    include $class_name . '.php';
+}
 ?>
-
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -56,7 +57,9 @@
     session_start();
 
         if (isset($_SESSION['loggedIn'])) {
-            echo "kala eimai";
+            /*$userz = $_SESSION['user'];
+            */$useznamez = $_SESSION['username'];
+            echo "kala eimai" .$useznamez ;
             session_unset();
             session_destroy();
            /* header("Location : hotel.php");
@@ -308,18 +311,15 @@
     <button type="button" class="btn btn-warning" onclick="colorChange()">Bg Changer</button>
     <button type="button" class="btn btn-warning" onclick="containerChange()">Conteiner Changer</button>
     <button type="button" class="btn btn-warning" onclick="txtContainerChange()">txt change on Body</button>
-    <<<<<<< HEAD
-    <a href="admin.php">
-        <button type="button" class="btn btn-primary">Admin Panel</button>
-    </a>
-    =======
+
+
     <a href="admin.php">
         <button type="button" class="btn btn-primary">Admin Panel</button>
     </a>
     <a href="userProfile.php">
         <button type="button" class="btn btn-primary">User Profile</button>
     </a>
-    >>>>>>> origin/Kyr-Laptop
+
 
 </footer>
 <!--====================================================================================================================================-->

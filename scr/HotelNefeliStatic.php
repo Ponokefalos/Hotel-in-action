@@ -189,7 +189,7 @@
                 Το Nefeli Hotel απέχει 300μ. από το κέντρο της πόλης και μόλις 1χλμ. από το Λιμάνι του Καρλοβασίου.</p>
         </div>
         <hr class="featurette-divider">
-        <div  id="map-canvas" class="img-thumbnail"></div>
+        <div id="map-canvas" class="img-thumbnail"></div>
 
 
     </div>

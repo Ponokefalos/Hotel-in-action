@@ -16,6 +16,8 @@ class User{
         $this->image=$image;
         $this->userType =$userType;
     }
+
+
 }
 
 ?>

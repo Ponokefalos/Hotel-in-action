@@ -12,6 +12,7 @@
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/navbar.css" rel="stylesheet">
     <link href="../css/globalShadowBoxStyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/HotelFirstPage.css">
 
     <!-- ---------------------------------BETA ---------------------------------------------------- -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
@@ -24,14 +25,12 @@
     <!-- --------------------------------- ---------------------------------------------------- -->
 
 
-    <link rel="stylesheet" href="../css/HotelFirstPage.css">
-
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="mainstyle.css">
+
     <![endif]-->
 
 
@@ -197,16 +196,10 @@
                         </div>
                     </div>
 
+                    <div class="form-group" id="mapLocation">
 
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> Remember me
-                                </label>
-                            </div>
-                        </div>
                     </div>
+
 
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">

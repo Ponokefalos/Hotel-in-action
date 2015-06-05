@@ -47,9 +47,23 @@ function checkIfUserNameExists($name, $link)
 
 
 function getUserFromDatabase($username,$link){
+    $sql = "SELECT * "
+        . "FROM users WHERE username='$username' ";
+
+    $result = mysqli_query($link, $sql) or die(mysqli_error($link));
+    $count = mysqli_num_rows($result);
+
+    if($count ==1){
+        $row = mysqli_fetch_assoc($result);
+
+        $user = new User($row['name'], $row['surname'], $row['username'], $row['email'], $row['image'], $row['userType']);
+    }
+}
+/*
+function getUserFromDatabase($username,$link){
     $sql = "SELECT password "
         . "FROM users WHERE username='$username' ";
-}
+}*/
 /**Saves a new User to Database
  *
  *
