@@ -28,85 +28,17 @@ function __autoload($class_name) {
     <![endif]-->
 
 
-    <script type="text/javascript">
-        function colorChange() {
-            var bgColor = prompt("Enter hex color", "");
-            document.body.style.backgroundColor = bgColor;
-        }
-    </script>
-    <script>
-        function containerChange() {
-            var contColor = prompt("Enter hex color for main body", "");
-            document.getElementById("conteinerMarketing").style.backgroundColor = contColor;
-        }
-        function txtContainerChange() {
-            var txtColor = prompt("Enter hex color for main body", "");
-            document.getElementById("conteinerMarketing").style.color = txtColor;
-        }
-    </script>
+
+
+<?php 
+include ('includes/header.php');
+include('includes/navbar.php'); 
+?>
 
 </head>
 
 <body style="background-color:#ECECEC">
 
-
-<!------------------------------------------------------ HEADER  --------------------------------------------------------------------------- -->
-<div id="headerWithoutNavBar" class="container" style="margin-top: 10px;">
-    <?php
-
-    session_start();
-
-        if (isset($_SESSION['loggedIn'])) {
-            /*$userz = $_SESSION['user'];
-            */$useznamez = $_SESSION['username'];
-            echo "kala eimai" .$useznamez ;
-            session_unset();
-            session_destroy();
-           /* header("Location : hotel.php");
-            exit();*/
-        } else {
-            include 'LogIn.php';
-        }
-
-    ?>
-    <div id="photoContainer">
-        <img class="logoImage">
-    </div>
-</div>
-<!--====================================================================================================================================-->
-
-<!------------------------------------------------ CURRENT NAVBAR-------------------------------------------------------------------------------------->
-<div class="navbar-wrapper" style="">
-    <div class="container marketing" id="nav" style="">
-        <nav id="navtag" role="navigation" style=""> <!-- class="navbar navbar-inverse navbar-static-top" -->
-            <div class="container" style="width: auto;">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                            aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <!--
-                    <a class="navbar-brand" href="http://www.jssor.com/index.html">Bootstrap Carousel</a>
-                         -->
-                </div>
-                <div id="navbar"> <!-- class="navbar-collapse collapse" -->
-                    <ul class="nav navbar-nav"> <!---->
-                        <li><a href="index.html">Αρχική</a></li>
-                        <li><a href="hotel.php">Ξενοδοχεία</a></li>
-                        <li><a href="auction.php">Δημοπρασίες</a></li>
-                        <li><a href="about.php">Σχετικά με Εμάς</a></li>
-                        <li><a href="contact.php">Επικοινωνία</a></li>
-
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </div>
-</div>
-<!--====================================================================================================================================-->
 
 
 <!-- ----------------------------------------------------CAROUSEL----------------------------------------------------------------------------->
@@ -303,27 +235,7 @@ function __autoload($class_name) {
 <br><br><br>
 
 
-<!-------------------------------------------------------- FOOTER---------------------------------------------------->
-<footer>
-    <p class="pull-right"><a href="#">Back to top</a></p>
-
-    <p>&copy; Your Hotel In Action 2015. &middot; <a href="#">Privacy</a> &middot; </p>
-    <button type="button" class="btn btn-warning" onclick="colorChange()">Bg Changer</button>
-    <button type="button" class="btn btn-warning" onclick="containerChange()">Conteiner Changer</button>
-    <button type="button" class="btn btn-warning" onclick="txtContainerChange()">txt change on Body</button>
-
-
-    <a href="admin.php">
-        <button type="button" class="btn btn-primary">Admin Panel</button>
-    </a>
-    <a href="userProfile.php">
-        <button type="button" class="btn btn-primary">User Profile</button>
-    </a>
-
-
-</footer>
-<!--====================================================================================================================================-->
-
+<?php include ('includes/footer.php'); ?>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->

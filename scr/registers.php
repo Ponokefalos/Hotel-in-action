@@ -24,92 +24,15 @@
     <![endif]-->
 
 
-    <script type="text/javascript">
-        function colorChange() {
-            var bgColor = prompt("Enter hex color", "");
-            document.body.style.backgroundColor = bgColor;
-        }
-    </script>
+ <?php 
+include ('includes/header.php');
+include('includes/navbar.php'); 
+include('includes/change_color.php'); 
+?>
 
 </head>
 
 <body style="background-color:#D7D7D7">
-
-
-<!--  ---------------------------------------------------------- NAV BAR OLD ----------------------------
-   <div class="navbar-wrapper" style="margin-left: 450px;">
-       <div class="container" id="nav"  style="margin-top: 15px; width: auto">
-           <ul  class="nav navbar-nav">
-               <li><a href="index.html">Αρχική</a></li>
-               <li><a href="hotel.html">Ξενοδοχεία</a></li>
-               <li><a href="auction.html">Δημοπρασίες</a></li>
-               <li><a href="about.html">Σχετικά με Εμάς</a></li>
-               <li><a href="contact.html">Επικοινωνία</a></li>
-           </ul>
-       </div>
-   </div>
-</div>
-<!--====================================================================================================================================-->
-
-<!------------------------------------------------------ HEADER  --------------------------------------------------------------------------- -->
-<div class="container" style="margin-top: 10px;" id="headerWithoutNavBar">
-    <div style="float: right;">
-        <form class="form-inline">
-            <div class="form-group">
-                <label class="sr-only" for="exampleInputEmail3">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Enter email">
-            </div>
-            <div class="form-group">
-                <label class="sr-only" for="exampleInputPassword3">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox"> Remember me
-                </label>
-            </div>
-            <button type="button" class="btn btn-primary">Sign in</button>
-            <button type="button" class="btn btn-primary">Register</button>
-        </form>
-    </div>
-    <div id="photoContainer">
-        <img class="logoImage">
-    </div>
-</div>
-<!--====================================================================================================================================-->
-
-<!------------------------------------------------ CURRENT NAVBAR-------------------------------------------------------------------------------------->
-<div class="navbar-wrapper" style="margin-left: 450px;">
-    <div class="container" id="nav">
-        <nav id="navtag" role="navigation" style=" margin-top: 50px;">
-            <!-- class="navbar navbar-inverse navbar-static-top" -->
-            <div class="container" style="width: auto;">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                            aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <!--
-                    <a class="navbar-brand" href="http://www.jssor.com/index.html">Bootstrap Carousel</a>
-                         -->
-                </div>
-                <div id="navbar"> <!-- class="navbar-collapse collapse" -->
-                    <ul class="nav navbar-nav"> <!---->
-                        <li><a href="index.php">Αρχική</a></li>
-                        <li><a href="hotel.php">Ξενοδοχεία</a></li>
-                        <li><a href="auction.php">Δημοπρασίες</a></li>
-                        <li><a href="about.php">Σχετικά με Εμάς</a></li>
-                        <li><a href="contact.php">Επικοινωνία</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </div>
-</div>
-<!--====================================================================================================================================-->
 
 
 <!-- Marketing messaging and featurettes
@@ -219,13 +142,9 @@
 
 <br><br>
 
-<footer>
-    <p class="pull-right"><a href="#">Back to top</a></p>
-
-    <p>&copy; Your Hotel In Action 2015. &middot; <a href="#">Privacy</a> &middot; </p>
-    <button type="button" class="btn btn-warning" onclick="colorChange()">Bg Changer</button>
-    <button type="button" class="btn btn-warning" onclick="colorChange()">Conteiner Changer</button>
-</footer>
+<?php 
+include ('includes/footer.php');
+?>
 
 </body>
 </html>
