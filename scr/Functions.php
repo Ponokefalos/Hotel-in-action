@@ -45,6 +45,61 @@ function checkIfUserNameExists($name, $link)
     }
 }
 
+function returnUserIDGivenName($name, $link)
+{
+    $sql = "SELECT user_id "
+        . "FROM users WHERE username='$name' ";
+
+    $result = mysqli_query($link, $sql) or die(mysqli_error($link));
+    $row = mysqli_fetch_assoc($result);
+
+    $userID = $row['user_id'];
+
+    return $userID;
+
+}
+
+function getCurrentDate()
+{
+    return date("Y/m/d");
+}
+
+function saveNewHotelOnDatabase($hotelName, $shortDesc, $longDesc, $date, $link, $userID)
+{
+    mysqli_autocommit($link, false);
+
+    $query = "insert into hotels
+                             (
+                                 HotelName,
+                                 ShortDesc,
+                                 Description,
+                                 user_id,
+                                 Date
+                             )
+                             Values
+                             (
+                                '$hotelName',
+                                '$shortDesc',
+                                '$longDesc',
+                                '$userID',
+                                '$date'
+
+                             )";
+
+    $result = mysqli_query($link, $query);
+
+    if ($result) {
+        mysqli_commit($link);
+        showAlertDialog("Επιτυχής εγγραφή");
+        return true;
+    } else {
+        mysqli_rollback($link);
+        showAlertDialog("Αδυναμία εισαγωγής του ξενοδοχείου στην ιστοσελίδα. Παρακαλώ προσπαθήστε αργότερα.");
+        return false;
+    }
+
+
+}
 
 function getUserFromDatabase($username, $link)
 {
