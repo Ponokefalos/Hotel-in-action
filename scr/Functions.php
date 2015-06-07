@@ -38,27 +38,32 @@ function checkIfUserNameExists($name, $link)
     $result = mysqli_query($link, $sql) or die(mysqli_error($link));
     $count = mysqli_num_rows($result);
 
-    if ($count >=1 ) {
-       return true;
+    if ($count >= 1) {
+        return true;
     } else {
-       return false;
+        return false;
     }
 }
 
 
-function getUserFromDatabase($username,$link){
+function getUserFromDatabase($username, $link)
+{
+    include("user.php");
     $sql = "SELECT * "
         . "FROM users WHERE username='$username' ";
 
     $result = mysqli_query($link, $sql) or die(mysqli_error($link));
     $count = mysqli_num_rows($result);
 
-    if($count ==1){
+    if ($count == 1) {
         $row = mysqli_fetch_assoc($result);
 
-        $user = new User($row['name'], $row['surname'], $row['username'], $row['email'], $row['image'], $row['userType']);
+        $user = new User($row['name'], $row['surname'], $row['username'], $row['email'], $row['image']);
     }
+
+    return $user;
 }
+
 /*
 function getUserFromDatabase($username,$link){
     $sql = "SELECT password "
@@ -81,7 +86,7 @@ function getUserFromDatabase($username,$link){
  * @param $image
  * @return bool
  */
-function saveNewUserOnDatabase($userCode, $name, $surname, $birthDate, $email, $companyName, $newsletter, $password, $username, $maleSex, $link,$image)
+function saveNewUserOnDatabase($userCode, $name, $surname, $birthDate, $email, $companyName, $newsletter, $password, $username, $maleSex, $link, $image)
 {
 
     mysqli_autocommit($link, false);

@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<?php
-function __autoload($class_name) {
-    include $class_name . '.php';
-}
-?>
 <html lang="en">
 <head>
     <meta charset="utf-8">

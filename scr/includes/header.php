@@ -4,15 +4,13 @@
     session_start();
 
         if (isset($_SESSION['loggedIn'])) {
-            /*$userz = $_SESSION['user'];
-            */$useznamez = $_SESSION['username'];
-            echo "kala eimai" .$useznamez ;
+            include 'LoggedIn.php';
 
         } else {
             include 'LogIn.php';
         }
     ?>
-    <div id="photoContainer">
+    <div id="photoContainer" >
         <img class="logoImage">
     </div>
 </div>

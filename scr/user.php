@@ -8,13 +8,12 @@
 
 class User{
 
-    function User($name,$username,$surname,$email,$image,$userType){
+    function User($name,$username,$surname,$email,$image){
         $this->name = $name;
         $this->surname =$surname;
         $this->username=$username;
         $this->email=$email;
         $this->image=$image;
-        $this->userType =$userType;
     }
 
 
