@@ -27,7 +27,6 @@
  <?php 
 include ('includes/header.php');
 include('includes/navbar.php'); 
-include('includes/change_color.php'); 
 ?>
 
 </head>
@@ -149,9 +148,6 @@ include ('includes/footer.php');
 </body>
 </html>
 <?php
-//session_start();
-include("RegisterConnectToDB.php");
-include("Functions.php");
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['register'])) {
 

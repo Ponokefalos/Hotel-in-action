@@ -27,10 +27,16 @@
 
 <?php 
 include ('includes/header.php');
-include('includes/navbar.php');  
-?>
-    
+include('includes/navbar.php');
+$search_result ="glitch2";
+$sql = "SELECT * FROM users WHERE username='$search_result' ";
+$result = mysqli_query($link, $sql) or die(mysqli_error($link));
+$row = mysqli_fetch_assoc($result);
+mysql_close($link);
 
+$user = new User($row['name'], $row['surname'], $row['username'], $row['email'], $row['image'], $row['userType']);
+
+?>
 </head>
 
 <body style="background-color:#D7D7D7">
@@ -50,20 +56,18 @@ include('includes/navbar.php');
 
     <div class="container" id="imageContainer">
 
-
-        <div class="container" id="userImage">
-            <img class="profileImage img-thumbnail">
+        
+         <div class="container" id="userImage">
+            <?php 
+            echo '<img src="data:image;base64,'.base64_encode( $user->image ).'" width=200 height=200/>';
+            ?>
         </div>
-
+ -->
     </div>
 </div>
 
 <div class="container" id="main_user_container">
-
-
     <div class="row ">
-
-
         <div class="col-xs-7 shadowStyle2" id="user_history">
             <div class="col-xs-7 main_profile_title shadowStyle2">
                 <p>Ιστορικό Δημοπρασιών</p>
@@ -71,10 +75,8 @@ include('includes/navbar.php');
             <div class="user_container">
                 <p> SOme texts goes here, isws na min kanei o responsive table gia toso row me periexomena poy theloume.
                     Episis mporei to Istoriko na thelei kai mia row mono tou!</p>
-
                 <p>sdasdas</p>
                 <br>
-
                 <div class="table-responsive">
                     <p>asdsdad</p>
                     <table class="table">
@@ -141,15 +143,6 @@ include('includes/navbar.php');
                         <tr>
                             <td><p> Όνομα Χρήστη: </p></td>
                             <td><?php
-                            include("user.php");
-                            include("Functions.php");
-                            include("RegisterConnectToDB.php");
-                            $search_result ="a";
-                            $sql = "SELECT * "
-                            . "FROM users WHERE username='$search_result' ";
-                            $result = mysqli_query($link, $sql) or die(mysqli_error($link));
-                            $row = mysqli_fetch_assoc($result);
-                            $user = new User($row['name'], $row['surname'], $row['username'], $row['email'], $row['image'], $row['userType']);
                             print($user->name);
                              ?></td>
                         </tr>

@@ -6,7 +6,7 @@
         if (isset($_SESSION['loggedIn'])) {
             /*$userz = $_SESSION['user'];
             */$useznamez = $_SESSION['username'];
-            echo "kala eimai" .$useznamez ;
+            echo "kala eimai " .$useznamez ;
             session_unset();
             session_destroy();
            /* header("Location : hotel.php");
