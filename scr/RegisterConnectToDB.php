@@ -10,7 +10,7 @@
 /*
  * Configuration information is stored here.
  */
-$conf['db']['db_Host'] = 'localhost';
+$conf['db']['db_Host'] = '83.212.96.13';
 $conf['db']['db_Login'] = 'toor';
 $conf['db']['db_PWord'] = 'toor';
 $conf['db']['db_Name'] = 'site';

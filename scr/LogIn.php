@@ -68,7 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['signIn'])) {
             $_SESSION['user'] = $user;
             $_SESSION['username'] =  $row['username'];
             $_SESSION['loggedIn'] = true;
-            header("Location: index.php");
+          /*  header("Location: index.php");*/
+            header("Refresh:0");
             exit();
         } else {
             showAlertDialog("Λάθος στοιχεία.");
