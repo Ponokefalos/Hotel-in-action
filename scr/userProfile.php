@@ -1,3 +1,7 @@
+<?php
+/*session_start();
+*/?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,11 +32,13 @@
 <?php 
 include ('includes/header.php');
 include('includes/navbar.php');
-$search_result ="glitch2";
+include ('RegisterConnectToDB.php');
+include('user.php');
+$search_result = $_SESSION['username'];
 $sql = "SELECT * FROM users WHERE username='$search_result' ";
 $result = mysqli_query($link, $sql) or die(mysqli_error($link));
 $row = mysqli_fetch_assoc($result);
-mysql_close($link);
+
 
 $user = new User($row['name'], $row['surname'], $row['username'], $row['email'], $row['image'], $row['userType']);
 
@@ -62,7 +68,6 @@ $user = new User($row['name'], $row['surname'], $row['username'], $row['email'],
             echo '<img src="data:image;base64,'.base64_encode( $user->image ).'" width=200 height=200/>';
             ?>
         </div>
- -->
     </div>
 </div>
 

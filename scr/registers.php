@@ -229,6 +229,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['register'])) {
         $password = md5($password);
         saveNewUserOnDatabase($userCode, $name, $surname, $birthDate, $eMail, $companyName, $newsletter, $password, $username, $gender, $link,$image);
         header("Location: index.php");
+
         exit();
     } else if ($errorState == 1) {
         showAlertDialog("Παρακαλώ συμπληρώστε κατάλληλα όλα τα πεδία.");
