@@ -80,10 +80,11 @@ footer {
     float: right;
 }
 
-<<<<<<< HEAD
-.form-group  p{
+
+.form-group  p {
     text-align: left;
-=======
+}
+
 p {
     font-family: myFirstFont;
     font-size: 17px;
@@ -91,7 +92,4 @@ p {
 hr{
 
     border-color: #D7D7D7 !important;
-
-
->>>>>>> origin/Kyr-Laptop
 }

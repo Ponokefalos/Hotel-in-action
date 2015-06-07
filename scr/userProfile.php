@@ -33,14 +33,14 @@
 include ('includes/header.php');
 include('includes/navbar.php');
 include ('RegisterConnectToDB.php');
-include('user.php');
+
 $search_result = $_SESSION['username'];
 $sql = "SELECT * FROM users WHERE username='$search_result' ";
 $result = mysqli_query($link, $sql) or die(mysqli_error($link));
 $row = mysqli_fetch_assoc($result);
 
 
-$user = new User($row['name'], $row['surname'], $row['username'], $row['email'], $row['image'], $row['userType']);
+$user = new User($row['name'], $row['surname'], $row['username'], $row['email'], $row['image']);
 
 ?>
 </head>
@@ -163,8 +163,8 @@ $user = new User($row['name'], $row['surname'], $row['username'], $row['email'],
                         <tr>
                             <td><p> Ιδιότητα: </p></td>
                             <td>
-                                <?php 
-                                print($user->userType);
+                                <?php
+                                /*print($user->userType);*/
                                 ?>
                             </td>
                         </tr>

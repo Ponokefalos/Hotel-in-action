@@ -31,7 +31,7 @@
  */
 //session_start();
 
-include("user.php");
+
 include("Functions.php");
 include("RegisterConnectToDB.php");
 
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['signIn'])) {
         $result = mysqli_query($link, $sql) or die(mysqli_error($link));
         $count = mysqli_num_rows($result);
         if ($count == 1) {
-
+            include("user.php");
             $row = mysqli_fetch_assoc($result);
 
             $user = new User($row['name'], $row['surname'], $row['username'], $row['email'], $row['image'], $row['userType']);
