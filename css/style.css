@@ -24,6 +24,22 @@ footer {
 
 }
 
+.round {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 35px;
+    height: 35px;
+}
+
+.round img {
+    display: block;
+    /* Stretch
+          height: 100%;
+          width: 100%; */
+    min-width: 100%;
+    min-height: 100%;
+}
+
 #conteinerMarketing {
     background-color: #F9F9F9;
     color: black;
