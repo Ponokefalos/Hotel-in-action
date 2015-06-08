@@ -9,11 +9,7 @@
             <label class="sr-only" for="exampleInputPassword3">Password</label>
             <input type="password" class="form-control" name="password" id="passwordLogIn" placeholder="Password">
         </div>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox"> Remember me
-            </label>
-        </div>
+
         <button type="submit" name="signIn" class="btn btn-primary">Sign in</button>
         <a href="registers.php">
             <button type="button" class="btn btn-primary">Register</button>
@@ -21,6 +17,8 @@
     </form>
 
 </div>
+
+
 
 <?php
 /**
@@ -64,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['signIn'])) {
             include("user.php");
             $row = mysqli_fetch_assoc($result);
 
-            $user = new User($row['name'], $row['surname'], $row['username'], $row['email'], $row['image'], $row['userType']);
+            $user = new User($row['name'], $row['surname'], $row['username'], $row['email'], $row['image']);
             $_SESSION['user'] = $user;
             $_SESSION['username'] =  $row['username'];
             $_SESSION['loggedIn'] = true;

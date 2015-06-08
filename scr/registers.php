@@ -220,6 +220,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['register'])) {
         $errorState = 2;
     }
 
+    if(checkIfUserEmailExists($eMail,$link)){
+        $errorState = 4;
+    }
 
     if ($image_size == FALSE) {
         $errorState = 3;
@@ -237,6 +240,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['register'])) {
         showAlertDialog("To username υπάρχει. Δοκιμάστε διαφορετικό username.");
     } else if ($errorState == 3) {
         showAlertDialog("Το αρχείο που επιλέξατε δεν είναι εικόνα. Παρακαλώ επιλέξτε μια εικόνα");
+    }else if ($errorState == 4) {
+        showAlertDialog("To e-mail υπάρχει. Δοκιμάστε διαφορετικό e-mail.");
     }
 }
 ?>

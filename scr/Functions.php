@@ -25,6 +25,20 @@ function showAlertDialog($warningText)
     print '</script>';
 }
 
+function checkIfUserEmailExists($email, $link)
+{
+    $sql = "SELECT username "
+        . "FROM users WHERE email='$email' ";
+
+    $result = mysqli_query($link, $sql) or die(mysqli_error($link));
+    $count = mysqli_num_rows($result);
+
+    if ($count >= 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
 /** Checks if a user exist on database
  * @param $name
  * @param $link
@@ -44,6 +58,7 @@ function checkIfUserNameExists($name, $link)
         return false;
     }
 }
+
 
 function returnUserIDGivenName($name, $link)
 {
@@ -113,7 +128,7 @@ function getUserFromDatabase($username, $link)
     if ($count == 1) {
         $row = mysqli_fetch_assoc($result);
 
-        $user = new User($row['name'], $row['surname'], $row['username'], $row['email'], $row['image']);
+        $user = new User($row['name'], $row['username'], $row['surname'], $row['email'], $row['image']);
     }
 
     return $user;

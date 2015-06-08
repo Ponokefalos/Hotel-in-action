@@ -27,9 +27,9 @@
     <a href="admin.php">
         <button type="button" class="btn btn-primary">Admin Panel</button>
     </a>
-    <a href="userProfile.php">
+  <!--  <a href="userProfile.php">
         <button type="button" class="btn btn-primary">User Profile</button>
-    </a>
+    </a>-->
 
 
 </footer>
