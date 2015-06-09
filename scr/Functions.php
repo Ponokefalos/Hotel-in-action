@@ -39,6 +39,7 @@ function checkIfUserEmailExists($email, $link)
         return false;
     }
 }
+
 /** Checks if a user exist on database
  * @param $name
  * @param $link
@@ -134,6 +135,25 @@ function getUserFromDatabase($username, $link)
     return $user;
 }
 
+
+function getSuperUserFromDatabase($username, $link)
+{
+    include("SuperUser.php");
+    $sql = "SELECT * "
+        . "FROM users WHERE username='$username' ";
+
+    $result = mysqli_query($link, $sql) or die(mysqli_error($link));
+    $count = mysqli_num_rows($result);
+
+    if ($count == 1) {
+        $row = mysqli_fetch_assoc($result);
+
+        $user = new SuperUser($row['name'], $row['username'], $row['surname'], $row['email'], $row['image'], $row['password'], $row['birth_date'], $row['company_name'], $row['gender'], $row['code'], $row['newsletter']);
+    }
+
+    return $user;
+}
+
 /*
 function getUserFromDatabase($username,$link){
     $sql = "SELECT password "
@@ -200,6 +220,57 @@ function saveNewUserOnDatabase($userCode, $name, $surname, $birthDate, $email, $
         mysqli_rollback($link);
         showAlertDialog("Αδυναμία εγγραφής στην ιστοσελίδα. Παρακαλώ προσπαθήστε αργότερα.");
         return false;
+    }
+
+}
+
+
+/** Anavathmizei tis plirofories tou xristi stin vasi dedomenwn
+ *
+ * @param $userCode o tipos tou xristi
+ * @param $name to onoma tou xristi
+ * @param $surname to epitheto tou xristi
+ * @param $birthDate i imerominia gennisis tou xristi
+ * @param $email to email tou xristi
+ * @param $companyName to onoma tis etairias pou apasxoleite
+ * @param $newsletter na lamvanei idopoieiseis apo emas
+ * @param $password o kwdikos tou (md5ed)
+ * @param $username to onoma tou stin istoselida mas
+ * @param $maleSex to filo tou (paraplanitiko onoma metavlitis)
+ * @param $image i fwtografia tou xristi
+ * @param $conn
+ * @return bool egine to update i oxi
+ * @internal param gia $link epikoinwnia me db
+ */
+function updateUserOnDatabase($userCode, $name, $surname, $birthDate, $email, $companyName, $newsletter, $password, $username, $maleSex, $image,$conn)
+{
+
+    include ('database.php');
+
+
+    $conn->autocommit(FALSE);
+
+    $updateQuery = "UPDATE users  SET  code='$userCode',
+                                           name='$name',
+                                     surname='$surname',
+                                birth_date='$birthDate',
+                                         email='$email',
+                            company_name='$companyName',
+                               newsletter='$newsletter',
+                                   password='$password',
+                                   username='$username',
+                                      gender='$maleSex',
+                                         image='$image'
+                                         WHERE  username='$username'";
+
+    $result = $conn->query($updateQuery) or die(mysql_error());
+    $result = $conn->commit();
+    if ($result) {
+      showAlertDialog("Οι αλλαγές αποθηκεύτηκαν");
+    }
+    else {
+        //mysql_query("ROLLBACK");
+        showAlertDialog("Κάτι πήγε λάθος");
     }
 
 }
