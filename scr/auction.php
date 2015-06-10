@@ -60,124 +60,21 @@ include('includes/navbar.php');
 
             <!-- --------------------------------- 1o Hotel -------------------------------------->
             <div class="row">
-                <div class="progressingAuctions"> <!-- to div auto einai mono gia to hover (blue shadow) -->
-                    <a href="nefeliAuction.php">
-                        <div class="container marketing">
-                            <div class="col-md-3">
-                                <img class="img-thumbnail"
-                                     src="http://s2.pclncdn.com/htlimg/10564/10564205/thumbnail-200-landscape.jpg">
-
-                                <p class="hotelTitles"> Hotel Nefeli </p>
-                            </div>
-                            <div class="col-md-2">
-                                <h5 class="AuctionTitles">Βαθμολογία</h5>
-                                <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                                <br>
-
-                                <p class="userRating"><i> "Θαυμάσιο" </i></p>
-                                <br>
-
-                                <p class="userRating"><i> Βαθμολογήθηκε από: 43 χρήστες </i></p>
-                            </div>
-                            <div class="col-md-2">
-                                <h5 class="AuctionTitles"> Δημοπρασία </h5>
-
-                                <p> Σε Εξέλιξη </p>
-                            </div>
-                            <div class="col-md-2">
-                                <h5 class="AuctionTitles"> Αρχική Τιμή </h5>
-
-                                <p> 45.00 <span>€</span></p>
-                            </div>
-                            <div class="col-md-3">
-                                <h5 class="AuctionTitles"> Τελευτάια Προσφορά </h5>
-
-                                <p> 73.00 <span>€</span></p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <hr class="featurette-divider">
-
-            <!--  --------------------------------- 2o Hotel -------------------------------------->
-            <div class="row">
-
-                <div class="container marketing">
-                    <div class="col-md-3">
-                        <img class="img-thumbnail"
-                             src="http://s2.pclncdn.com/htlimg/16783/16783304/thumbnail-200-landscape.jpg">
-
-                        <p class="hotelTitles"> Ino Village Hotel </p>
-                    </div>
-                    <div class="col-md-2">
-                        <h5 class="AuctionTitles">Βαθμολογία</h5>
-                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                        <br>
-
-                        <p class="userRating"><i> "Καλό" </i></p>
-                        <br>
-
-                        <p class="userRating"><i> Βαθμολογήθηκε από: 21 χρήστες </i></p>
-                    </div>
-                    <div class="col-md-2">
-                        <h5 class="AuctionTitles"> Δημοπρασία </h5>
-
-                        <p> Έληξε </p>
-                    </div>
-                    <div class="col-md-2">
-                        <h5 class="AuctionTitles"> Αρχική Τιμή </h5>
-
-                        <p> 25.00 <span>€</span></p>
-                    </div>
-                    <div class="col-md-3">
-                        <h5 class="AuctionTitles"> Τελευτάια Προσφορά </h5>
-
-                        <p> 41.00 <span>€</span></p>
-                    </div>
-                </div>
+                <?php
+                    include ('ArizFunctions.php');
+                    $auctions = get_auctions();
+                    while ($row = $auctions->fetch_assoc()){
+                        display_auction_row($row);
+                        echo'<hr class="featurette-divider">';
+                    }
+                ?>
             </div>
 
 
-            <hr class="featurette-divider">
 
-            <!--  --------------------------------- 3o Hotel -------------------------------------->
-            <div class="row">
-                <div class="container marketing">
-                    <div class="col-md-3">
-                        <img class="img-thumbnail"
-                             src="http://mobileimg.priceline.com/htlimg/20940/20940606/thumbnail-200-landscape.jpg">
 
-                        <p class="hotelTitles"> Hotel Aegeon </p>
-                    </div>
-                    <div class="col-md-2">
-                        <h5 class="AuctionTitles">Βαθμολογία</h5>
-                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                        <br>
 
-                        <p class="userRating"><i> "Καλό" </i></p>
-                        <br>
 
-                        <p class="userRating"><i> Βαθμολογήθηκε από: 55 χρήστες </i></p>
-                    </div>
-                    <div class="col-md-2">
-                        <h5 class="AuctionTitles"> Δημοπρασία </h5>
-
-                        <p> Έληξε </p>
-                    </div>
-                    <div class="col-md-2">
-                        <h5 class="AuctionTitles"> Αρχική Τιμή </h5>
-
-                        <p> 35.00 <span>€</span></p>
-                    </div>
-                    <div class="col-md-3">
-                        <h5 class="AuctionTitles"> Τελευτάια Προσφορά </h5>
-
-                        <p> 54.00 <span>€</span></p>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
