@@ -66,14 +66,11 @@ include('includes/navbar.php');
 
     <br><br><br>
 
-    <?php
-        include ('ArizFunctions.php');
-        $hotels = get_hotels();
-    ?>
-
     <div class="container marketing">
         <div class="row">
             <?php
+                include ('ArizFunctions.php');
+                $hotels = get_hotels();
                 while ($row = $hotels->fetch_assoc()) {
                     echo '<div class="col-md-6" >';
                     echo '<a href="'.$row["HotelName"].'.php">';
