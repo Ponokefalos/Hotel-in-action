@@ -119,7 +119,40 @@ include('includes/navbar.php');
                     </div>
 
                     <div class="form-group">
+                        <p for="hotelName" class="col-xs-2 control-label">Ανέσεις </p>
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <p for="hotelName" class="col-xs-2 control-label">Kouzina</p>
+                                <div class="checkbox">
+                                    <input type="checkbox">
+                                </div>
+                            </div>
+                        <div class="col-xs-2">
+                            <p for="hotelName" class="col-xs-2 control-label">Θέα</p>
+                            <div class="checkbox">
+                                <input type="checkbox">
+                            </div>
+                        </div>
+                        <div class="col-xs-1">
+                            <p for="hotelName" class="col-xs-2 control-label">TV</p>
+                            <div class="checkbox">
+                                <input type="checkbox">
+                            </div>
+                        </div>
+                        </div>
+                            <div class="col-xs-2">
+                                <p for="hotelName" class="col-xs-2 control-label">WiFi</p>
+                                <div class="checkbox">
+                                    <input type="checkbox">
+                                </div>
+                            </div>
+
+
+                    </div>
+
+                    <div class="form-group">
                         <p for="hotelPhotosInput">Φωτογραφία</p>
+
 
                         <div class="col-sm-4">
                             <input type="file" id="hotelPhotosInput">
