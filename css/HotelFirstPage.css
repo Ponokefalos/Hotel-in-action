@@ -41,5 +41,10 @@ p.HotelName{
     font-size: 17px;
 }
 
+ .col-xs-2 p{
+    padding-right: 2%;
+}
+
+
 
 
