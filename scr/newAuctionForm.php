@@ -94,11 +94,11 @@ include('RegisterConnectToDB.php');
                             Ξενοδοχείου </p>
                         <?php
 
-                        $tempUserName=$_SESSION['username'];
+                        $tempUserName = $_SESSION['username'];
                         $currentUser = returnUserIDGivenName($tempUserName, $link);
-                     /*   showAlertDialog($currentUser);*/
+                        /*   showAlertDialog($currentUser);*/
                         $query = "SELECT HotelName FROM hotels WHERE user_id= '$currentUser'";
-                        $result = mysqli_query($link,$query);
+                        $result = mysqli_query($link, $query);
 
 
                         ?>
@@ -106,12 +106,11 @@ include('RegisterConnectToDB.php');
                             <select class="form-control">
                                 <?php
                                 while ($row = mysqli_fetch_array($result)) {
-                             echo'kaalsdasa';
-
+                                   print' <option name="auction_hotel_name">'. $row['HotelName'].'</option>';
                                 }
-                                 ?>
+                                ?>
 
-                               <option name="auction_hotel_name">Τρίκλινο</option>
+                                <option name="auction_hotel_name">Τρίκλινο</option>
                                 <!-- <option>Τετρακλινο</option>
                              <option>Διαμέρισμα</option>
                              <option>Studio</option>-->
@@ -227,8 +226,6 @@ include('RegisterConnectToDB.php');
                     </div>
 
 
-
-
                     <div class="form-group">
                         <p for="hotelPhotosInput">Φωτογραφία</p>
 
@@ -282,3 +279,39 @@ include('RegisterConnectToDB.php');
 
 </body>
 </html>
+
+
+<?php
+
+if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newHotel'])) {
+    $errorState = 0;
+
+    $auction_hotel_name =mysqli_real_escape_string($link,$_POST['auction_hotel_name']);
+    $description =mysqli_real_escape_string($link,$_POST['description']);
+    $rooms_number = mysqli_real_escape_string($link,$_POST['rooms_number']);
+    $room_type =mysqli_real_escape_string($link,$_POST['room_type']);
+    $checkin_date =mysqli_real_escape_string($link,$_POST['checkin_date']);
+    $checkout_date =mysqli_real_escape_string($link,$_POST['checkout_date']);
+    $starting_price=mysqli_real_escape_string($link,$_POST['starting_price']);
+    $min_price =mysqli_real_escape_string($link,$_POST['min_price']);
+    $buy_out_box=mysqli_real_escape_string($link,$_POST['buy_out_box']);
+    $buy_out_price=mysqli_real_escape_string($link,$_POST['buy_out_price']);
+    $starting_date=mysqli_real_escape_string($link,$_POST['starting_date']);
+    $finishing_date=mysqli_real_escape_string($link,$_POST['finishing_date']);
+
+    if (empty($buy_out_box)) {
+        settype($buy_out_box, "integer");
+        $buy_out_box = 0;
+    } else {
+        settype($buy_out_box, "integer");
+        $buy_out_box = 1;
+    }
+
+
+}
+
+
+
+
+
+?>
