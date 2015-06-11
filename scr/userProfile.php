@@ -35,8 +35,7 @@
      session_start();
     include ('includes/headerProfile.php');
     include('includes/navbar.php');
-    include('RegisterConnectToDB.php');
-
+    //include('RegisterConnectToDB.php');
 
     $search_result = $_SESSION['username'];
     $user = getSuperUserFromDatabase($search_result, $link);
@@ -163,7 +162,7 @@
 
         <div class="container" id="userImage">
             <?php
-            echo '<img src="data:image;base64,' . base64_encode($user->image) . '" width=200 height=200/>';
+                echo '<img src="data:image;base64,' . base64_encode($user->image) . '" width=200 height=200/>';
             ?>
         </div>
     </div>
@@ -175,45 +174,10 @@
             <div class="col-xs-7 main_profile_title shadowStyle2">
                 <p>Ιστορικό Δημοπρασιών</p>
             </div>
-            <div class="user_container">
-                <p> SOme texts goes here, isws na min kanei o responsive table gia toso row me periexomena poy theloume.
-                    Episis mporei to Istoriko na thelei kai mia row mono tou!</p>
-
-                <p>sdasdas</p>
-                <br>
-
-                <div class="table-responsive">
-                    <p>asdsdad</p>
-                    <table class="table">
-                        <tr>
-                            <td>Cell 1</td>
-                            <td>Cell 2</td>
-                        </tr>
-                        <tr>
-                            <td>Cell 1</td>
-                            <td>Cell 2</td>
-                            <td>Cell 3</td>
-                            <td>Cell 4</td>
-                            <td>Cell 3</td>
-                            <td>Cell 4</td>
-                            <td>Cell 3</td>
-                            <td>Cell 4</td>
-                            <td>Cell 3</td>
-                            <td>Cell 4</td>
-                            <td>Cell 3</td>
-                            <td>LAST</td>
-                        </tr>
-                        <tr>
-                            <td>Cell 1</td>
-                            <td>Cell 2</td>
-                        </tr>
-                        <tr>
-                            <td>Cell 1</td>
-                            <td>Cell 2</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
+            <?php
+                include "ArizFunctions.php";
+                display_user_bid_history($user->username);
+            ?>
 
             <br><br><br><br><br> <br><br><br><br><br> <br><br><br><br><br> <br><br><br><br><br> <br><br><br><br><br>
         </div>

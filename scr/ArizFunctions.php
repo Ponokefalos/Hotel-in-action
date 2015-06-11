@@ -12,9 +12,9 @@ function get_hotels()
 
     $sql = "SELECT * FROM hotels";
     $result = $link ->query($sql);
+    $link->close();
 
     if ($result->num_rows > 0) {
-        $link->close();
         return ($result);
     } else {
         echo "0 results";
@@ -28,13 +28,12 @@ function get_auctions(){
 
     $sql = "SELECT * FROM auctions";
     $result = $link->query($sql);
+    $link->close();
 
     if ($result->num_rows>0){
-        $link->close();
         return ($result);
     }else{
-        $link->close();
-       // print '0 results';
+       echo '0 results';
     }
 }
 function get_auction_rating_comment($value){
@@ -49,7 +48,7 @@ function get_auction_rating_comment($value){
 
 
 function display_auction_row($auction_row){
-    echo 'in display';
+    //echo 'in display';
     global $link;
     require("RegisterConnectToDB.php");
     $auction_id = $auction_row["auction_id"];
@@ -118,4 +117,60 @@ function display_auction_row($auction_row){
                 </div>
                 ';
 }
+function get_auction_name($auction_id){
+    global $link;
+    require("RegisterConnectToDB.php");
+    $sql = "SELECT auction_hotel_name FROM auctions WHERE auction_id=$auction_id";
+    $result = $link->query($sql);
+    $row = mysqli_fetch_array($result);
+    $auction_name= $row['auction_hotel_name'];
+    return $auction_name;
+}
+function display_user_bid_history($username){
+    global $link;
+    require("RegisterConnectToDB.php");
+    //getUserID
+    $sql = "SELECT user_id FROM users WHERE username='$username'";
+    $result = $link->query($sql);
+    $row = mysqli_fetch_array($result);
+    $user_id= $row['user_id'];
+    $sql= "SELECT * FROM bids WHERE user_id=$user_id";
+    $result = $link -> query($sql);
+    $link->close();
 
+    if ($result->num_rows<=0) {
+        echo '0 results';
+        return;
+    }
+
+    //print table
+    echo'<div class="user_container">
+                <p> SOme texts goes here, isws na min kanei o responsive table gia toso row me periexomena poy theloume.
+                    Episis mporei to Istoriko na thelei kai mia row mono tou!</p>
+
+                <p>sdasdas</p>
+                <br>
+
+                <div class="table-responsive">
+                    <table class="table">
+                    <tr>
+                    <td>Ημερομηνία</td>
+                    <td>Δημοπρασία </td>
+                    <td>Ποσό</td>
+                    </tr>
+                    ';
+
+    while($row = $result->fetch_assoc()){
+        echo'
+            <tr>
+                <td>'.$row['date'].'</td>
+                <td>'.get_auction_name($row['auction_id']).'</td>
+                <td>'.$row['bid'].'€</td>
+            </tr>
+        ';
+    }
+
+    echo '</table>
+                </div>
+            </div>';
+}
