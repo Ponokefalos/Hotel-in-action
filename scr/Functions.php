@@ -90,7 +90,7 @@ function saveNewHotelOnDatabase($hotelName, $shortDesc, $longDesc, $date, $link,
                                  ShortDesc,
                                  Description,
                                  user_id,
-                                 Date
+                                 Date,
                                  image
                              )
                              Values

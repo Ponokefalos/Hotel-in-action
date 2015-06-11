@@ -1,8 +1,7 @@
-
-
 <?php
 include('includes/header.php');
 include('includes/navbar.php');
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -259,8 +258,12 @@ include('includes/navbar.php');
 
 
                         <div class="col-sm-4">
-                            <input type="file" id="hotelPhotosInput">
+                            <input type="file" id="image" name="image">
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <p> Παρακαλούμε επιλέξτε την τοποθεσία της Ξενοδοχειακής σας μονάδας από τον παρακάτω χάρτη. Πατήστε κλίκ για επιλογή</p>
                     </div>
 
                     <div class="form-group" id="mapLocation">
@@ -335,19 +338,21 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newHotel'])) {
     $acBox = mysqli_real_escape_string($link, $_POST['acBox']);
     $poolBox = mysqli_real_escape_string($link, $_POST['poolBox']);
 
-    $date = mysqli_real_escape_string($link, $_POST[getCurrentDate()]);
 
-    $tempUserName = $_SESSION['username'];
+    $date = getCurrentDate();
+
+
     $file = $_FILES['image']['tmp_name'];
 
-    if (empty($file)) {
+   /* if (empty($file)) {
+       showAlertDialog('eimai sto file');
         $errorState = 1;
     } else {
         $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
         $image_name = addslashes($_FILES['image']['name']);
         $image_size = getimagesize($_FILES['image']['tmp_name']);
-    }
-
+    }*/
+    $tempUserName = $_SESSION['username'];
     $userID = returnUserIDGivenName($tempUserName, $link);
 
     echo $userID;
@@ -360,66 +365,66 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newHotel'])) {
     /*   -----------------------------Arxi Dilwshs Check Boxes*/
     if (empty($kouzinaBox)) {
         settype($kouzinaBox, "integer");
-        $newsletter = 0;
+        $kouzinaBox = 0;
     } else {
         settype($kouzinaBox, "integer");
-        $newsletter = 1;
+        $kouzinaBox = 1;
     }
 
     if (empty($theaBox)) {
         settype($theaBox, "integer");
-        $newsletter = 0;
+        $theaBox = 0;
     } else {
         settype($theaBox, "integer");
-        $newsletter = 1;
+        $theaBox = 1;
     }
 
     if (empty($tvBox)) {
         settype($tvBox, "integer");
-        $newsletter = 0;
+        $tvBox = 0;
     } else {
         settype($tvBox, "integer");
-        $newsletter = 1;
+        $tvBox = 1;
     }
 
     if (empty($wifiBox)) {
         settype($wifiBox, "integer");
-        $newsletter = 0;
+        $wifiBox = 0;
     } else {
         settype($wifiBox, "integer");
-        $newsletter = 1;
+        $wifiBox = 1;
     }
 
     if (empty($wcBox)) {
         settype($wcBox, "integer");
-        $newsletter = 0;
+        $wcBox = 0;
     } else {
         settype($wcBox, "integer");
-        $newsletter = 1;
+        $wcBox = 1;
     }
 
     if (empty($parkingBox)) {
         settype($parkingBox, "integer");
-        $newsletter = 0;
+        $parkingBox = 0;
     } else {
         settype($parkingBox, "integer");
-        $newsletter = 1;
+        $parkingBox = 1;
     }
 
     if (empty($acBox)) {
         settype($acBox, "integer");
-        $newsletter = 0;
+        $acBox = 0;
     } else {
         settype($acBox, "integer");
-        $newsletter = 1;
+        $acBox = 1;
     }
 
     if (empty($poolBox)) {
         settype($poolBox, "integer");
-        $newsletter = 0;
+        $poolBox = 0;
     } else {
         settype($poolBox, "integer");
-        $newsletter = 1;
+        $poolBox = 1;
     }
 
     /*   -----------------------------Telos Dilwshs Check Boxes*/
@@ -427,7 +432,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newHotel'])) {
 
     if ($errorState == 0) {
 
-        saveNewHotelOnDatabase($hotelName, $shortDesc, $longDesc, $date, $link, $userID,$image);
+        saveNewHotelOnDatabase($hotelName, $shortDesc, $longDesc, $date, $link, $userID,$file,$kouzinaBo,$theaBox,$tvBox,$wifiBox,$wcBox,$parkingBox,$acBox,$poolBox);
 
     } else if ($errorState == 1) {
         showAlertDialog("Παρακαλώ συμπληρώστε κατάλληλα όλα τα πεδία.");
