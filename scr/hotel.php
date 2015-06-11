@@ -68,16 +68,23 @@ include('includes/navbar.php');
 
     <div class="container marketing">
         <div class="row">
-            <div class="col-md-6" >
+            <?php
+                include ('ArizFunctions.php');
+                $hotels = get_hotels();
+                while ($row = $hotels->fetch_assoc()) {
+                    echo '<div class="col-md-6" >';
+                    echo '<a href="'.$row["HotelName"].'.php">';
+                    echo '<img src="data:image;base64,' . base64_encode($row["image"]) . '" width=200 height=200/>';
+                    echo '<p class=HotelName>'.$row["HotelName"].'</p></a>';
+                    echo '</div>';
+                }
+            ?>
+           <!-- <div class="col-md-6" >
                 <a href="InoVillageHotelStatic.php">
               <img src="http://r-ec.bstatic.com/images/hotel/square200/147/14764932.jpg">
                 <p class="HotelName">Ino Village Hotel</p></a>
-            </div>
-            <div class="col-md-6">
-                <a href="HotelNefeliStatic.php">
-                <img src="http://q-ec.bstatic.com/images/hotel/square200/296/2962525.jpg">
-                <p class="HotelName">Hotel Nefeli</p></a>
-            </div>
+            </div>-->
+
         </div>
 
 

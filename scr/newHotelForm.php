@@ -1,3 +1,9 @@
+
+
+<?php
+include('includes/header.php');
+include('includes/navbar.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,13 +12,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Νέο Ξενοδοχείο</title>
-
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet"/>
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/navbar.css" rel="stylesheet">
     <link href="../css/globalShadowBoxStyle.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/HotelFirstPage.css">
+    <style>
+        #mapLocation {
+            height: 370px;
+            width: 100%;
+            margin-top: 20px;
+            padding: 0px
+        }
+    </style>
+<!---------------------------------------Google Maps Geolocation Coordinates--------------------------------->
+
+    <script>
+        var map;
+        var markers = [];
+        function initialize() {
+
+            var location = new google.maps.LatLng(37.801767,26.793818);
+            var mapOptions = {
+                zoom: 10,
+                center: location,
+                mapTypeId: google.maps.MapTypeId.HYBRID
+            };
+            var map = new google.maps.Map(document.getElementById('mapLocation'),
+                mapOptions);
+
+            google.maps.event.addListener(map, 'click', function(e) {
+
+                alert(e.latLng);
+                clearMarkers();
+                placeMarker(e.latLng, map);
+
+
+            });
+        }
+
+        //Adding a new Marker
+        function placeMarker(position, map) {
+            var marker = new google.maps.Marker({
+                position: position,
+                map: map
+            });
+          markers.push(marker);
+        }
+        // Sets the map on all markers in the array.
+        function setAllMap(map) {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+            }
+        }
+
+        // Removes the markers from the map, but keeps them in the array.
+        function clearMarkers() {
+            setAllMap(null);
+        }
+
+        // Shows any markers currently in the array.
+        function showMarkers() {
+            setAllMap(map);
+        }
+
+        // Deletes all markers in the array by removing references to them.
+        function deleteMarkers() {
+            clearMarkers();
+            markers = [];
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+
+    <!----------------------------------------------------------------------------------------------------------------->
+
+
 
     <!-- ---------------------------------BETA ---------------------------------------------------- -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
@@ -46,32 +124,19 @@
 <body style="background-color:#D7D7D7">
 
 
-<?php
-include('includes/header.php');
-include('includes/navbar.php');
-?>
 
-
-<!-- Marketing messaging and featurettes
-================================================== -->
-<!-- Wrap the rest of the page in another container to center all the content. -->
 
 <br>
 
-<div id="conteinerMarketing" class="container marketing shadowStyle"><!-- BG COLOR-->
-    <!--<hr class="featurette-divider"> -->
-
-
-    <!-- Main Container body
-  ============================================================================================= -->
-    <!-------------------------- -->
+<div id="conteinerMarketing" class="container marketing shadowStyle">
+    <!-- =============================================PERIEXOMENO SELIDAS ================================================-->
     <div class="head_title">
         <p>
 
         <h3><i>Προσθήκη Ξενοδχείου</i></h3></p>
         <hr class="featurette-divider">
     </div>
-    <!-- =============================================PERIEXOMENO SELIDAS ================================================-->
+
 
     <p class="infoTxt"> Καλώς ήρθατε στην φόρμα συμπλήρωσης ξενοδείων. Παρακαλούμε συμπληρώστε τα παρακάτω πεδία με τις
         απαραίτητες πληροφορίες
@@ -120,35 +185,74 @@ include('includes/navbar.php');
 
                     <div class="form-group">
                         <p for="hotelName" class="col-xs-2 control-label">Ανέσεις </p>
-                        <div class="row">
+
+                        <div class="row ">
                             <div class="col-xs-2">
-                                <p for="hotelName" class="col-xs-2 control-label">Kouzina</p>
+                                <p for="hotelName" class="col-xs-2 control-label">Κουζίνα</p>
+
                                 <div class="checkbox">
-                                    <input type="checkbox">
+                                    <input type="checkbox" name="kouzinaBox">
                                 </div>
                             </div>
-                        <div class="col-xs-2">
-                            <p for="hotelName" class="col-xs-2 control-label">Θέα</p>
-                            <div class="checkbox">
-                                <input type="checkbox">
+                            <div class="col-xs-2">
+                                <p for="hotelName" class="col-xs-2 control-label">Θέα</p>
+
+                                <div class="checkbox">
+                                    <input type="checkbox" name="theaBox">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-xs-1">
-                            <p for="hotelName" class="col-xs-2 control-label">TV</p>
-                            <div class="checkbox">
-                                <input type="checkbox">
+                            <div class="col-xs-2">
+                                <p for="hotelName" class="col-xs-2 control-label">TV</p>
+
+                                <div class="checkbox">
+                                    <input type="checkbox" name="tvBox">
+                                </div>
                             </div>
-                        </div>
-                        </div>
                             <div class="col-xs-2">
                                 <p for="hotelName" class="col-xs-2 control-label">WiFi</p>
+
                                 <div class="checkbox">
-                                    <input type="checkbox">
+                                    <input type="checkbox" name="wifiBox">
                                 </div>
                             </div>
-
-
+                        </div>
                     </div>
+
+                    <div class="form-group">
+                        <p for="hotelName" class="col-xs-2 control-label"></p>
+
+                        <div class="row ">
+                            <div class="col-xs-2">
+                                <p for="hotelName" class="col-xs-2 control-label">W/C</p>
+
+                                <div class="checkbox">
+                                    <input type="checkbox" name="wcBox">
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <p for="hotelName" class="col-xs-2 control-label">Parking</p>
+
+                                <div class="checkbox">
+                                    <input type="checkbox" name="parkingBox">
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <p for="hotelName" class="col-xs-2 control-label">A/C</p>
+
+                                <div class="checkbox">
+                                    <input type="checkbox" name="acBox">
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <p for="hotelName" class="col-xs-2 control-label">Pool</p>
+
+                                <div class="checkbox">
+                                    <input type="checkbox" name="poolBox">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
                     <div class="form-group">
                         <p for="hotelPhotosInput">Φωτογραφία</p>
@@ -211,7 +315,7 @@ include('includes/navbar.php');
 <?php
 
 include("RegisterConnectToDB.php");
-include("Functions.php");
+/*include("Functions.php");*/
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newHotel'])) {
     $errorState = 0;
@@ -222,9 +326,27 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newHotel'])) {
     $longDesc = mysqli_real_escape_string($link, $_POST['longDesc']);
 
 
+    $kouzinaBox = mysqli_real_escape_string($link, $_POST['kouzinaBox']);
+    $theaBox = mysqli_real_escape_string($link, $_POST['theaBox']);
+    $tvBox = mysqli_real_escape_string($link, $_POST['tvBox']);
+    $wifiBox = mysqli_real_escape_string($link, $_POST['wifiBox']);
+    $wcBox = mysqli_real_escape_string($link, $_POST['wcBox']);
+    $parkingBox = mysqli_real_escape_string($link, $_POST['parkingBox']);
+    $acBox = mysqli_real_escape_string($link, $_POST['acBox']);
+    $poolBox = mysqli_real_escape_string($link, $_POST['poolBox']);
+
     $date = mysqli_real_escape_string($link, $_POST[getCurrentDate()]);
 
     $tempUserName = $_SESSION['username'];
+    $file = $_FILES['image']['tmp_name'];
+
+    if (empty($file)) {
+        $errorState = 1;
+    } else {
+        $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
+        $image_name = addslashes($_FILES['image']['name']);
+        $image_size = getimagesize($_FILES['image']['tmp_name']);
+    }
 
     $userID = returnUserIDGivenName($tempUserName, $link);
 
@@ -235,11 +357,77 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newHotel'])) {
         $errorState = 1;
 
     }
+    /*   -----------------------------Arxi Dilwshs Check Boxes*/
+    if (empty($kouzinaBox)) {
+        settype($kouzinaBox, "integer");
+        $newsletter = 0;
+    } else {
+        settype($kouzinaBox, "integer");
+        $newsletter = 1;
+    }
+
+    if (empty($theaBox)) {
+        settype($theaBox, "integer");
+        $newsletter = 0;
+    } else {
+        settype($theaBox, "integer");
+        $newsletter = 1;
+    }
+
+    if (empty($tvBox)) {
+        settype($tvBox, "integer");
+        $newsletter = 0;
+    } else {
+        settype($tvBox, "integer");
+        $newsletter = 1;
+    }
+
+    if (empty($wifiBox)) {
+        settype($wifiBox, "integer");
+        $newsletter = 0;
+    } else {
+        settype($wifiBox, "integer");
+        $newsletter = 1;
+    }
+
+    if (empty($wcBox)) {
+        settype($wcBox, "integer");
+        $newsletter = 0;
+    } else {
+        settype($wcBox, "integer");
+        $newsletter = 1;
+    }
+
+    if (empty($parkingBox)) {
+        settype($parkingBox, "integer");
+        $newsletter = 0;
+    } else {
+        settype($parkingBox, "integer");
+        $newsletter = 1;
+    }
+
+    if (empty($acBox)) {
+        settype($acBox, "integer");
+        $newsletter = 0;
+    } else {
+        settype($acBox, "integer");
+        $newsletter = 1;
+    }
+
+    if (empty($poolBox)) {
+        settype($poolBox, "integer");
+        $newsletter = 0;
+    } else {
+        settype($poolBox, "integer");
+        $newsletter = 1;
+    }
+
+    /*   -----------------------------Telos Dilwshs Check Boxes*/
 
 
     if ($errorState == 0) {
 
-        saveNewHotelOnDatabase($hotelName, $shortDesc, $longDesc, $date, $link, $userID);
+        saveNewHotelOnDatabase($hotelName, $shortDesc, $longDesc, $date, $link, $userID,$image);
 
     } else if ($errorState == 1) {
         showAlertDialog("Παρακαλώ συμπληρώστε κατάλληλα όλα τα πεδία.");
