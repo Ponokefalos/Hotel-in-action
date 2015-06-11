@@ -5,6 +5,26 @@
  * Date: 10/6/2015
  * Time: 7:44 μμ
  */
+function echo_pic($pic){
+
+}
+
+function get_hotel_by_id($id){
+    global $link;
+    require('RegisterConnectToDB.php');
+
+    $sql = "SELECT * FROM hotels WHERE hotelID=".$id;
+    $result = $link ->query($sql);
+    $link->close();
+
+    if ($result->num_rows > 0) {
+        $hotel =  mysqli_fetch_array($result);
+        return ($hotel);
+    } else {
+        echo "0 results";
+    }
+}
+
 function get_hotels()
 {
     global $link;
