@@ -19,14 +19,14 @@
     <p class="pull-right"><a href="#">Back to top</a></p>
 
     <p>&copy; Your Hotel In Action 2015. &middot; <a href="#">Privacy</a> &middot; </p>
-    <button type="button" class="btn btn-warning" onclick="colorChange()">Bg Changer</button>
+   <!-- <button type="button" class="btn btn-warning" onclick="colorChange()">Bg Changer</button>
     <button type="button" class="btn btn-warning" onclick="containerChange()">Conteiner Changer</button>
     <button type="button" class="btn btn-warning" onclick="txtContainerChange()">txt change on Body</button>
 
 
     <a href="admin.php">
         <button type="button" class="btn btn-primary">Admin Panel</button>
-    </a>
+    </a>-->
   <!--  <a href="userProfile.php">
         <button type="button" class="btn btn-primary">User Profile</button>
     </a>-->
