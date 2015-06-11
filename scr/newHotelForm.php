@@ -1,3 +1,9 @@
+
+
+<?php
+include('includes/header.php');
+include('includes/navbar.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -118,32 +124,19 @@
 <body style="background-color:#D7D7D7">
 
 
-<?php
-include('includes/header.php');
-include('includes/navbar.php');
-?>
 
-
-<!-- Marketing messaging and featurettes
-================================================== -->
-<!-- Wrap the rest of the page in another container to center all the content. -->
 
 <br>
 
-<div id="conteinerMarketing" class="container marketing shadowStyle"><!-- BG COLOR-->
-    <!--<hr class="featurette-divider"> -->
-
-
-    <!-- Main Container body
-  ============================================================================================= -->
-    <!-------------------------- -->
+<div id="conteinerMarketing" class="container marketing shadowStyle">
+    <!-- =============================================PERIEXOMENO SELIDAS ================================================-->
     <div class="head_title">
         <p>
 
         <h3><i>Προσθήκη Ξενοδχείου</i></h3></p>
         <hr class="featurette-divider">
     </div>
-    <!-- =============================================PERIEXOMENO SELIDAS ================================================-->
+
 
     <p class="infoTxt"> Καλώς ήρθατε στην φόρμα συμπλήρωσης ξενοδείων. Παρακαλούμε συμπληρώστε τα παρακάτω πεδία με τις
         απαραίτητες πληροφορίες
@@ -322,7 +315,7 @@ include('includes/navbar.php');
 <?php
 
 include("RegisterConnectToDB.php");
-include("Functions.php");
+/*include("Functions.php");*/
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newHotel'])) {
     $errorState = 0;
@@ -331,6 +324,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newHotel'])) {
     $hotelName = mysqli_real_escape_string($link, $_POST['hotelName']);
     $shortDesc = mysqli_real_escape_string($link, $_POST['shortDesc']);
     $longDesc = mysqli_real_escape_string($link, $_POST['longDesc']);
+
 
     $kouzinaBox = mysqli_real_escape_string($link, $_POST['kouzinaBox']);
     $theaBox = mysqli_real_escape_string($link, $_POST['theaBox']);
@@ -344,6 +338,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newHotel'])) {
     $date = mysqli_real_escape_string($link, $_POST[getCurrentDate()]);
 
     $tempUserName = $_SESSION['username'];
+    $file = $_FILES['image']['tmp_name'];
+
+    if (empty($file)) {
+        $errorState = 1;
+    } else {
+        $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
+        $image_name = addslashes($_FILES['image']['name']);
+        $image_size = getimagesize($_FILES['image']['tmp_name']);
+    }
 
     $userID = returnUserIDGivenName($tempUserName, $link);
 
@@ -424,7 +427,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newHotel'])) {
 
     if ($errorState == 0) {
 
-        saveNewHotelOnDatabase($hotelName, $shortDesc, $longDesc, $date, $link, $userID);
+        saveNewHotelOnDatabase($hotelName, $shortDesc, $longDesc, $date, $link, $userID,$image);
 
     } else if ($errorState == 1) {
         showAlertDialog("Παρακαλώ συμπληρώστε κατάλληλα όλα τα πεδία.");
