@@ -166,7 +166,7 @@
             <div id="details" class="col-md-6">
 
                 <div id="title">
-                    <h1 style="color: #204d74;">Nefeli Hotel</h1>
+                    <h1 style="color: #204d74;"></h1>
                 </div>
 
                 <div class="rating">
