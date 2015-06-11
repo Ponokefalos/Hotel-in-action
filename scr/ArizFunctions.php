@@ -72,7 +72,7 @@ function display_auction_row($auction_row){
     $date = $auction_row['finishing_date'];
     $now = new DateTime();
 
-    if($date < $now) {
+    if($date < $now->date) {
        $auction_progress="Έχει τελειώσει";
     }else{
         $auction_progress="Σε εξέλιξη";
