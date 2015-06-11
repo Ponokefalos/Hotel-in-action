@@ -5,8 +5,16 @@
  * Date: 10/6/2015
  * Time: 7:44 μμ
  */
-function echo_pic($pic){
+function select_auction_by_id($id,$link){
+    $sql = "SELECT * FROM auctions WHERE auction_id=".$id;
+    $result = $link ->query($sql);
 
+    if ($result->num_rows > 0) {
+        $auction =  mysqli_fetch_array($result);
+        return ($auction);
+    } else {
+        echo "0 results";
+    }
 }
 
 function get_hotel_by_id($id){
@@ -66,29 +74,41 @@ function get_auction_rating_comment($value){
     else if ($v>=4 && $v<5){return "Θαυμάσιο";}
 }
 
+function select_auction_avg_rating($auction_id,$link){
+    $sql= "SELECT avg(rating) FROM ratings WHERE auction_id=$auction_id";
+    $result = $link->query($sql);
+    $row = mysqli_fetch_array($result);
+    $avg = $row['avg(rating)'];
+    return $avg;
+}
+
+function select_count_of_auction_ratings($auction_id,$link){
+    $sql = "SELECT COUNT(auction_id) FROM ratings WHERE auction_id=$auction_id";
+    $result = $link->query($sql);
+    $row = mysqli_fetch_array($result);
+    $votes = $row['COUNT(auction_id)'];
+    return $votes;
+}
+
+function select_auction_last_bid($auction_id,$link){
+    $sql = "SELECT * FROM bids WHERE auction_id=".$auction_id." ORDER BY bids.date DESC";
+    $result = $link->query($sql);
+    $row = mysqli_fetch_array($result);
+    $last_bid_value=$row['bid'];
+    return $last_bid_value;
+}
 
 function display_auction_row($auction_row){
     //echo 'in display';
     global $link;
     require("RegisterConnectToDB.php");
     $auction_id = $auction_row["auction_id"];
-    $sql= "SELECT avg(rating) FROM ratings WHERE auction_id = $auction_id";
-    $result = $link->query($sql);
-    $row = mysqli_fetch_array($result);
-    $avg = $row['avg(rating)'];
-    $sql = "SELECT COUNT(auction_id) FROM ratings WHERE auction_id=".$auction_id;
-    $result = $link->query($sql);
-    $row = mysqli_fetch_array($result);
-    $votes = $row['COUNT(auction_id)'];
-    $sql = "SELECT * FROM bids WHERE auction_id=".$auction_id." ORDER BY bids.date DESC";
-    $result = $link->query($sql);
-    $row = mysqli_fetch_array($result);
-    $last_bid_value=$row['bid'];
+    $avg = select_auction_avg_rating($auction_id,$link);
+    $votes = select_count_of_auction_ratings($auction_id,$link);
+    $last_bid_value=select_auction_last_bid($auction_id,$link);
     $link->close();
 
     $comment = get_auction_rating_comment(($avg));
-
-
     $date = $auction_row['finishing_date'];
     $now = new DateTime();
 
@@ -100,7 +120,7 @@ function display_auction_row($auction_row){
 
     echo '
     <div class="progressingAuctions"> <!-- to div auto einai mono gia to hover (blue shadow) -->
-                    <a href="nefeliAuction.php">
+                    <a href="viewAuction.php?a='.$auction_id.'">
                         <div class="container marketing">
                             <div class="col-md-3">
                                 <img class="img-thumbnail" src="data:image;base64,' . base64_encode($auction_row["auction_file"]) . '" width=200 height=200/>
