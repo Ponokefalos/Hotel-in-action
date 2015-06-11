@@ -47,7 +47,7 @@
 
     <?php
     include('includes/header.php');
-    //include('includes/navbar.php');
+    include('includes/navbar.php');
     ?>
 
 </head>
@@ -75,7 +75,7 @@
     <div id="auction">
         <div class="row">
             <div  id="pictures" class=" col-md-6">
-                <img class="img-thumbnail"src="http://q-ec.bstatic.com/images/hotel/max1024x768/296/2962528.jpg">
+                <?php echo '<img src="data:image;base64,' . base64_encode($auction["auction_file"]) . '" width=400 height=400/>'; ?>
             </div>
             <div id="details" class="col-md-6">
 
@@ -92,7 +92,8 @@
                     <p> Υπολοιπόμενος Χρόνος Δημοπρασίας: </p>
                     <p id="auctionTimeRemaining">
                         <?php
-                            if ($ftime<$now->format('Y-m-d H:i:s')){
+                        $str = $time->format('%R');
+                           if ($str==='-'){
                                 echo 'Έχει λήξει.';
                             }else
                             echo  $time->format('%a Μέρες %H Ώρες %i Λεπτά');
