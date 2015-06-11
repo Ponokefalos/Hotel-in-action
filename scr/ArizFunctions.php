@@ -69,10 +69,11 @@ function display_auction_row($auction_row){
 
     $comment = get_auction_rating_comment(($avg));
 
+
     $date = $auction_row['finishing_date'];
     $now = new DateTime();
 
-    if($date < $now->date) {
+    if($date < $now->format('Y-m-d H:i:s')) {
        $auction_progress="Έχει τελειώσει";
     }else{
         $auction_progress="Σε εξέλιξη";
