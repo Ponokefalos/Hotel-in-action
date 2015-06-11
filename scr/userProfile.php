@@ -30,22 +30,12 @@
     <![endif]-->
 
     <?php
-    /* include('includes/header.php');
-     include('includes/navbar.php');
-     include('RegisterConnectToDB.php');
 
-     $search_result = $_SESSION['username'];
-     $user = getSuperUserFromDatabase($search_result, $link);
-
-     if ($user->newsLetter == 1) {
-         $newsletterValue = "checked";
-     }*/
-
-
-    include('includes/header.php');
+    //include('includes/header.php');
+     session_start();
+    include ('includes/headerProfile.php');
     include('includes/navbar.php');
     include('RegisterConnectToDB.php');
-    include('database.php');
 
 
     $search_result = $_SESSION['username'];
@@ -56,93 +46,101 @@
     }
 
 
-    if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['save'])) {
+    if ($_SERVER['REQUEST_METHOD'] == "POST") {
+        if (isset($_POST['saveInfo'])) {
 
-        $filledVariablesState = 0;//oi metavlites exoun times
-        $state = 0;// otan ola einai ok
-        $errorMessage = "none";
-        $fileState = 0;// 0 otan den kanoume upload nea photo
-        $name = mysqli_real_escape_string($link, $_POST['inputName']);
-        $surname = mysqli_real_escape_string($link, $_POST['inputSurname']);
-        $birthDate = mysqli_real_escape_string($link, $_POST['birthDate']);
-        //$eMail = mysqli_real_escape_string($link, $_POST['email']);
-        $companyName = mysqli_real_escape_string($link, $_POST['companyName']);
-        $newsletter = mysqli_real_escape_string($link, $_POST['newsletter']);
-        // $username = mysqli_real_escape_string($link, $_POST['username']);
-        $oldPassword = mysqli_real_escape_string($link, $_POST['oldPassword']);
-        $newPassword = mysqli_real_escape_string($link, $_POST['newPassword']);
-        $confirmNewPassword = mysqli_real_escape_string($link, $_POST['confirmNewPassword']);
-        $file = $_FILES['image']['tmp_name'];
+            $name = mysqli_real_escape_string($link, $_POST['inputName']);
+            $surname = mysqli_real_escape_string($link, $_POST['inputSurname']);
+            $companyName = mysqli_real_escape_string($link, $_POST['companyName']);
+            $newsletter = mysqli_real_escape_string($link, $_POST['newsletter']);
 
-        if (empty($file)) {
+            if (empty($newsletter)) {
+                settype($newsletter, "integer");
+                $newsletter = 0;
+            } else {
+                settype($newsletter, "integer");
+                $newsletter = 1;
+            }
 
-        } else {
-            $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
-            $image_name = addslashes($_FILES['image']['name']);
-            $image_size = getimagesize($_FILES['image']['tmp_name']);
-            $fileState = 1;
-        }
+            if (empty($name) || empty($surname) || empty($companyName)) {
+                showAlertDialog("Συμπλήρωσε όλα τα πεδία κωδικών");
+            } else {
 
-        if (isset($oldPassword)) {
-            if (md5($oldPassword) == $user->password) {
-                if ((isset($newPassword)) && (isset($confirmNewPassword))) {
+                $response = updateInfo($name, $surname, $companyName, $newsletter, $user->username, $link);
+
+                if ($response) {
+                 //   ob_clean();
+                    header("Refresh:0");
+                  //  header("Location: index.php");
+                    exit;
+                    //ob_start();
+
+                }
+              /*  print '<script type="text/javascript">';
+                print 'location.reload(); ';
+                print '</script>';*/
+            }
+
+
+        } else if (isset($_POST['savePhoto'])) {
+
+            $file = $_FILES['image']['tmp_name'];
+
+            if (!empty($file)) {
+                $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
+                $image_name = addslashes($_FILES['image']['name']);
+                $image_size = getimagesize($_FILES['image']['tmp_name']);
+            }
+
+            if ($image_size == FALSE) {
+
+            } else {
+                $responsePhoto =  updatePhoto($image, $user->username, $link);
+
+                if ($responsePhoto) {
+                    //   ob_clean();
+                    header("Refresh:0");
+                    //  header("Location: index.php");
+                    exit;
+                    //ob_start();
+
+                }
+            }
+
+
+        } else if (isset($_POST['savePassword'])) {
+
+            $oldPassword = mysqli_real_escape_string($link, $_POST['oldPassword']);
+            $newPassword = mysqli_real_escape_string($link, $_POST['newPassword']);
+            $confirmNewPassword = mysqli_real_escape_string($link, $_POST['confirmNewPassword']);
+
+            if (isset($oldPassword) && isset($newPassword) && isset($confirmNewPassword)) {
+
+                if (md5($oldPassword) == $user->password) {
+
                     if ($newPassword == $confirmNewPassword) {
-                        $state = 3;
+                      $responsePassword =  updatePassword(md5($newPassword), $user->username, $link);
+
+
+                        if ($responsePassword) {
+                            //   ob_clean();
+                            header("Refresh:0");
+                            //  header("Location: index.php");
+                            exit;
+                            //ob_start();
+
+                        }
                     } else {
-                        $state = 2;
-                        $errorMessage = "newPasswordMismatch";
+                        showAlertDialog("Οι νέοι κωδικοί δεν ταιρίαζουν προσπάθησε ξανά");
                     }
+                } else {
+                    showAlertDialog("Λάθος παλιός κωδικός");
                 }
             } else {
-                $state = 1;
-                $errorMessage = "oldPasswordMismatch";
+                showAlertDialog("Συμπλήρωσε όλα τα πεδία κωδικών");
             }
-        } else {
-            $state = 0;
         }
-
-        if (empty($name) || empty($surname) || (empty($birthDate)) || empty($companyName)) {
-            $filledVariablesState = 1;
-        }
-
-        if (empty($newsletter)) {
-            settype($newsletter, "integer");
-            $newsletter = 0;
-        } else {
-            settype($newsletter, "integer");
-            $newsletter = 1;
-        }
-
-        if ($filledVariablesState == 0) {
-            if ($fileState == 1) {/// exei anevasei nea photo
-                if ($state == 0) {// den  iparxei neos kwdikos
-                    updateUserOnDatabase($user->code, $name, $surname, $birthDate, $user->email, $companyName, $newsletter, $user->password, $user->username, $user->gender, $image,$conn);
-                } else if ($state == 3) {/// iparxei neos kwdikos
-                    updateUserOnDatabase($user->code, $name, $surname, $birthDate, $user->email, $companyName, $newsletter, md5($newPassword), $user->username, $user->gender, $image,$conn);
-                } else if ($state == 2) {// new password mismatch
-                    showAlertDialog("Οι νέοι κωδικοί δεν ταιριάζουν μεταξύ τους");
-                } else if ($state == 1) {// old password mismatch
-                    showAlertDialog("Εσφαλμένος παλιός κωδικός");
-                }
-
-            } else {//oxi nea photo
-                if ($state == 0) {// den  iparxei neos kwdikos
-                    updateUserOnDatabase($user->code, $name, $surname, $birthDate, $user->email, $companyName, $newsletter, $user->password, $user->username, $user->gender, $user->image,$conn);
-                } else if ($state == 3) {/// iparxei neos kwdikos
-                    updateUserOnDatabase($user->code, $name, $surname, $birthDate, $user->email, $companyName, $newsletter, md5($newPassword), $user->username, $user->gender, $user->image,$conn);
-                } else if ($state == 2) {// new password mismatch
-                    showAlertDialog("Οι νέοι κωδικοί δεν ταιριάζουν μεταξύ τους");
-                } else if ($state == 1) {// old password mismatch
-                    showAlertDialog("Εσφαλμένος παλιός κωδικός");
-                }
-            }
-        } else {
-            showAlertDialog("Συμπλήρωσε όλα τα παιδία κατάλληλα");
-        }
-
-
     }
-
 
 
     ?>
@@ -245,7 +243,7 @@
             </div>
 
             <div class="container marketing">
-                <form role="form" action="userProfile.php" method="post" enctype="multipart/form-data">
+                <form role="form" action="#" method="post" enctype="multipart/form-data">
                     <div class="form-group" id="personal-info">
 
                         <label></label>
@@ -260,16 +258,7 @@
                             <input type="text" name="inputSurname" class="form-control" id="inputsurname"
                                    value=<?php echo $user->surname ?>>
                         </div>
-                        <div class="form-group" id="dateofbirth">
-                            <label for="inputdate">Ημερομηνία Γέννησης</label>
-                            <input type="date" name="birthDate" class="form-control" id="inputdate"
-                                   value=<?php echo $user->birthDate; ?>>
-                        </div>
-                        <div class="form-group" id="email">
-                            <label for="inputdate">Ηλεκτρονική Διεύθυνση</label>
-                            <input type="email" name="email" class="form-control" id="inputemail"
-                                   placeholder=<?php echo $user->email ?> disabled>
-                        </div>
+
                     </div>
 
                     <div class="form-group" id="companyinfo">
@@ -298,7 +287,56 @@
                                disabled>
                     </div>
 
-                    <div class="form-group" id="password">
+                    <div class="form-group" id="email">
+                        <label for="inputdate">Ηλεκτρονική Διεύθυνση</label>
+                        <input type="email" name="email" class="form-control" id="inputemail"
+                               placeholder=<?php echo $user->email ?> disabled>
+                    </div>
+                    <button type="submit" name="saveInfo" class="btn btn-primary">Αποθήκευση</button>
+                </form>
+            </div>
+            <br>
+        </div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="container marketing shadowStyle" id="user_photo">
+            <div class="col-xs-4 main_profile_title shadowStyle2">
+                <p>Αλλαγή φωτογραφίας</p>
+            </div>
+            <br><br>
+
+            <div class="user_container">
+
+                <div class="form-group" id="password">
+                    <form action="userProfile.php" method="post" enctype="multipart/form-data">
+                        <div class="form-group" id="file">
+                            <label for="input-photo">Φωτογραφία προφίλ</label>
+                            <input type="file" name="image" id="image"/>
+                            <br>
+                            <button type="submit" name="savePhoto" class="btn btn-primary">Αποθήκευση</button>
+                        </div>
+                    </form>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="container marketing shadowStyle" id="user_password">
+            <div class="col-xs-4 main_profile_title shadowStyle2">
+                <p>Αλλαγή κωδικού</p>
+            </div>
+            <br><br>
+
+            <div class="user_container">
+
+                <div class="form-group" id="password">
+                    <form action="userProfile.php" method="post" enctype="multipart/form-data">
                         <label for="input-confirm-pswd">Τρέχων Κωδικός</label>
                         <input type="password" name="oldPassword" class="form-control" id="input-confirm-pswd">
 
@@ -307,155 +345,36 @@
 
                         <label for="input-confirm-pswd">Επιβεβαίωση Νέου Κωδικού</label>
                         <input type="password" name="confirmNewPassword" class="form-control" id="input-confirm-pswd">
-                    </div>
-                    <div class="form-group" id="file">
-                        <label for="input-photo">Φωτογραφία προφίλ</label>
-                        <input type="file" name="image" id="image"/>
-
-                    </div>
-
-
-                    <button type="submit" name="save" class="btn btn-primary">Αποθήκευση</button>
-                </form>
+                        <br>
+                        <button type="submit" name="savePassword" class="btn btn-primary">Αποθήκευση</button>
+                    </form>
+                </div>
+                <br>
             </div>
-
-
-            <br>
-
-
         </div>
-
-
-        <br><br><br><br><br>
     </div>
 
-</div>
+    <br><br> <br><br><br><br><br> <br><br><br><br><br> <br><br><br><br><br> <br><br>
 
-</div>
-
-<?php
-/*
-include('includes/header.php');
-include('includes/navbar.php');
-include('RegisterConnectToDB.php');
-
-$search_result = $_SESSION['username'];
-$user = getSuperUserFromDatabase($search_result, $link);
-
-if ($user->newsLetter == 1) {
-    $newsletterValue = "checked";
-}
+    <?php
+    include('includes/footer.php');
+    ?>
 
 
-if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['save'])) {
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/docs.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
 
-    $filledVariablesState = 0;//oi metavlites exoun times
-    $state = 0;// otan ola einai ok
-    $errorMessage = "none";
-    $fileState = 0;// 0 otan den kanoume upload nea photo
-    $name = mysqli_real_escape_string($link, $_POST['inputName']);
-    $surname = mysqli_real_escape_string($link, $_POST['inputSurname']);
-    $birthDate = mysqli_real_escape_string($link, $_POST['birthDate']);
-    //$eMail = mysqli_real_escape_string($link, $_POST['email']);
-    $companyName = mysqli_real_escape_string($link, $_POST['companyName']);
-    $newsletter = mysqli_real_escape_string($link, $_POST['newsletter']);
-    // $username = mysqli_real_escape_string($link, $_POST['username']);
-    $oldPassword = mysqli_real_escape_string($link, $_POST['oldPassword']);
-    $newPassword = mysqli_real_escape_string($link, $_POST['newPassword']);
-    $confirmNewPassword = mysqli_real_escape_string($link, $_POST['confirmNewPassword']);
-    $file = $_FILES['image']['tmp_name'];
-
-    if (empty($file)) {
-
-    } else {
-        $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
-        $image_name = addslashes($_FILES['image']['name']);
-        $image_size = getimagesize($_FILES['image']['tmp_name']);
-        $fileState = 1;
-    }
-
-    if (isset($oldPassword)) {
-        if (md5($oldPassword) == $user->password) {
-            if ((isset($newPassword)) && (isset($confirmNewPassword))) {
-                if ($newPassword == $confirmNewPassword) {
-                    $state = 3;
-                } else {
-                    $state = 2;
-                    $errorMessage = "newPasswordMismatch";
-                }
-            }
-        } else {
-            $state = 1;
-            $errorMessage = "oldPasswordMismatch";
-        }
-    } else {
-        $state = 0;
-    }
-
-    if (empty($name) || empty($surname) || (empty($birthDate)) || empty($companyName)) {
-        $filledVariablesState = 1;
-    }
-
-    if (empty($newsletter)) {
-        settype($newsletter, "integer");
-        $newsletter = 0;
-    } else {
-        settype($newsletter, "integer");
-        $newsletter = 1;
-    }
-
-    if ($filledVariablesState == 0) {
-        if ($fileState == 1) {/// exei anevasei nea photo
-            if ($state == 0) {// den  iparxei neos kwdikos
-                updateUserOnDatabase($user->code, $name, $surname, $birthDate, $user->email, $companyName, $newsletter, $user->password, $user->username, $user->gender, $link, $image);
-            } else if ($state == 3) {/// iparxei neos kwdikos
-                updateUserOnDatabase($user->code, $name, $surname, $birthDate, $user->email, $companyName, $newsletter, md5($newPassword), $user->username, $user->gender, $link, $image);
-            } else if ($state == 2) {// new password mismatch
-                showAlertDialog("Οι νέοι κωδικοί δεν ταιριάζουν μεταξύ τους");
-            } else if ($state == 1) {// old password mismatch
-                showAlertDialog("Εσφαλμένος παλιός κωδικός");
-            }
-
-        } else {//oxi nea photo
-            if ($state == 0) {// den  iparxei neos kwdikos
-                updateUserOnDatabase($user->code, $name, $surname, $birthDate, $user->email, $companyName, $newsletter, $user->password, $user->username, $user->gender, $link, $user->image);
-            } else if ($state == 3) {/// iparxei neos kwdikos
-                updateUserOnDatabase($user->code, $name, $surname, $birthDate, $user->email, $companyName, $newsletter, md5($newPassword), $user->username, $user->gender, $link, $user->image);
-            } else if ($state == 2) {// new password mismatch
-                showAlertDialog("Οι νέοι κωδικοί δεν ταιριάζουν μεταξύ τους");
-            } else if ($state == 1) {// old password mismatch
-                showAlertDialog("Εσφαλμένος παλιός κωδικός");
-            }
-        }
-    } else {
-        showAlertDialog("Συμπλήρωσε όλα τα παιδία κατάλληλα");
-    }
-
-
-}*/
-
-?>
-<br><br> <br><br><br><br><br> <br><br><br><br><br> <br><br><br><br><br> <br><br>
-
-<?php
-include('includes/footer.php');
-?>
-
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
-<script src="../js/docs.min.js"></script>
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="../js/ie10-viewport-bug-workaround.js"></script>
-
-<!-- jssor slider scripts-->
-<!-- use jssor.js + jssor.slider.js instead for development -->
-<!-- jssor.slider.mini.js = (jssor.js + jssor.slider.js) -->
-<script type="text/javascript" src="../js/jssor.slider.mini.js"></script>
+    <!-- jssor slider scripts-->
+    <!-- use jssor.js + jssor.slider.js instead for development -->
+    <!-- jssor.slider.mini.js = (jssor.js + jssor.slider.js) -->
+    <script type="text/javascript" src="../js/jssor.slider.mini.js"></script>
 
 </body>
 </html>

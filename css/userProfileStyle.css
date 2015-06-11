@@ -29,35 +29,28 @@
     bottom: 0px;
 }
 
-#main_user_container{
+#main_user_container {
     margin-top: 150px;
 }
 
-#user_history, #user_info, #user_ratings{
+#user_history, #user_info, #user_ratings, #user_photo, #user_image, #user_password {
     background-color: #F9F9F9;
-    padding:0;
+    padding: 0;
     margin: 10px;
-
 
 }
 
-
-.user_container{
+.user_container {
     padding: 10px;
 }
 
-
-
-
-
-.main_profile_title{
+.main_profile_title {
 
     padding-left: 15px;
     width: 100%;
     font-family: myFirstFont;
     background-color: #2e6da4;
     color: white;
-
 
 }
 

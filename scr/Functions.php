@@ -80,7 +80,7 @@ function getCurrentDate()
     return date("Y/m/d");
 }
 
-function saveNewHotelOnDatabase($hotelName, $shortDesc, $longDesc, $date, $link, $userID)
+function saveNewHotelOnDatabase($hotelName, $shortDesc, $longDesc, $date, $link, $userID,$image)
 {
     mysqli_autocommit($link, false);
 
@@ -91,6 +91,7 @@ function saveNewHotelOnDatabase($hotelName, $shortDesc, $longDesc, $date, $link,
                                  Description,
                                  user_id,
                                  Date
+                                 image
                              )
                              Values
                              (
@@ -98,8 +99,8 @@ function saveNewHotelOnDatabase($hotelName, $shortDesc, $longDesc, $date, $link,
                                 '$shortDesc',
                                 '$longDesc',
                                 '$userID',
-                                '$date'
-
+                                '$date',
+                                '$image'
                              )";
 
     $result = mysqli_query($link, $query);
@@ -162,7 +163,7 @@ function getUserFromDatabase($username,$link){
 /**Saves a new User to Database
  *
  *
- * @param $userCode
+ * @param $userCode 1 for simple user \ 2 for hotel owner \ 0 for admin
  * @param $name
  * @param $surname
  * @param $birthDate
@@ -174,7 +175,7 @@ function getUserFromDatabase($username,$link){
  * @param $maleSex
  * @param $link
  * @param $image
- * @return bool
+ * @return bool Returns TRUE if user was added successfully FALSE otherwise
  */
 function saveNewUserOnDatabase($userCode, $name, $surname, $birthDate, $email, $companyName, $newsletter, $password, $username, $maleSex, $link, $image)
 {
@@ -225,54 +226,101 @@ function saveNewUserOnDatabase($userCode, $name, $surname, $birthDate, $email, $
 }
 
 
-/** Anavathmizei tis plirofories tou xristi stin vasi dedomenwn
+/** Deletes a user from database
  *
- * @param $userCode o tipos tou xristi
- * @param $name to onoma tou xristi
- * @param $surname to epitheto tou xristi
- * @param $birthDate i imerominia gennisis tou xristi
- * @param $email to email tou xristi
- * @param $companyName to onoma tis etairias pou apasxoleite
- * @param $newsletter na lamvanei idopoieiseis apo emas
- * @param $password o kwdikos tou (md5ed)
- * @param $username to onoma tou stin istoselida mas
- * @param $maleSex to filo tou (paraplanitiko onoma metavlitis)
- * @param $image i fwtografia tou xristi
- * @param $conn
- * @return bool egine to update i oxi
- * @internal param gia $link epikoinwnia me db
+ * @param $username The name of the user to delete
+ * @param $link
+ * @return bool Returns TRUE if user was deleted successfully FALSE otherwise
  */
-function updateUserOnDatabase($userCode, $name, $surname, $birthDate, $email, $companyName, $newsletter, $password, $username, $maleSex, $image,$conn)
+function deleteUserFromDatabase($username, $link)
 {
 
-    include ('database.php');
+    mysqli_autocommit($link, false);
 
+    $deleteQuery = "DELETE FROM users WHERE username='$username'";
 
-    $conn->autocommit(FALSE);
+    $result = mysqli_query($link, $deleteQuery);
 
-    $updateQuery = "UPDATE users  SET  code='$userCode',
-                                           name='$name',
-                                     surname='$surname',
-                                birth_date='$birthDate',
-                                         email='$email',
-                            company_name='$companyName',
-                               newsletter='$newsletter',
-                                   password='$password',
-                                   username='$username',
-                                      gender='$maleSex',
-                                         image='$image'
-                                         WHERE  username='$username'";
-
-    $result = $conn->query($updateQuery) or die(mysql_error());
-    $result = $conn->commit();
     if ($result) {
-      showAlertDialog("Οι αλλαγές αποθηκεύτηκαν");
+        mysqli_commit($link);
+        return true;
+    } else {
+        mysqli_rollback($link);
+        return false;
     }
-    else {
-        //mysql_query("ROLLBACK");
-        showAlertDialog("Κάτι πήγε λάθος");
-    }
-
 }
 
+
+/**Updates a user's password
+ *
+ * @param $newPassword User's new password
+ * @param $username The User to update
+ * @param $link
+ * @return bool TRUE if successful FALSE otherwise
+ */
+function updatePassword($newPassword, $username, $link)
+{
+
+    mysqli_autocommit($link, false);
+
+    $updatePasswordQuery = "UPDATE users SET password='$newPassword' WHERE username='$username'";
+
+    $result = mysqli_query($link, $updatePasswordQuery);
+
+    if ($result) {
+        mysqli_commit($link);
+        showAlertDialog("O κωδικός ενημερώθηκε επιτυχώς");
+        return true;
+    } else {
+        mysqli_rollback($link);
+        showAlertDialog("O κωδικός δεν ενημερώθηκε, κάτι πήγε λάθος");
+        return false;
+    }
+}
+
+/** Updates a user's image
+ *
+ * @param $newImage User's new photo
+ * @param $username The User to update
+ * @param $link
+ * @return bool TRUE if successful FALSE otherwise
+ */
+function updatePhoto($newImage, $username, $link)
+{
+
+    mysqli_autocommit($link, false);
+
+    $updatePhotoQuery = "UPDATE users SET image='$newImage' WHERE username='$username'";
+
+    $result = mysqli_query($link, $updatePhotoQuery);
+
+    if ($result) {
+        mysqli_commit($link);
+        showAlertDialog("Η φωτογραφία ενημερώθηκε επιτυχώς");
+        return true;
+    } else {
+        mysqli_rollback($link);
+        showAlertDialog("Η φωτογραφία δεν ενημερώθηκε, κάτι πήγε λάθος");
+        return false;
+    }
+}
+
+function updateInfo($newName,$newSurname,$newCompanyName,$newNewsletter,$username,$link){
+
+    mysqli_autocommit($link, false);
+
+    $updateInfoQuery = "UPDATE users SET name='$newName' , surname='$newSurname' , company_name='$newCompanyName' , newsletter='$newNewsletter' WHERE username='$username'";
+
+    $result = mysqli_query($link, $updateInfoQuery);
+
+    if ($result) {
+        mysqli_commit($link);
+        showAlertDialog("Οι πληροφορίες ενημερώθηκαν επιτυχώς");
+        return true;
+    } else {
+        mysqli_rollback($link);
+        showAlertDialog("Οι πληροφορίες δεν ενημερώθηκαν, κάτι πήγε λάθος");
+        return false;
+    }
+}
 ?>
