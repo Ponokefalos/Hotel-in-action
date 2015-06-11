@@ -7,7 +7,7 @@
  */
 
 
-function saveNewHotelOnDatabase($hotelName, $shortDesc, $longDesc, $date, $link, $userID,$image,$kouzinaBo,$theaBox,$tvBox,$wifiBox,$wcBox,$parkingBox,$acBox,$poolBox)
+function saveNewHotelOnDatabase1($hotelName, $shortDesc, $longDesc, $date, $link, $userID,$image,$kouzinaBox,$theaBox,$tvBox,$wifiBox,$wcBox,$parkingBox,$acBox,$poolBox,$lat,$lond)
 {
     mysqli_autocommit($link, false);
 
@@ -18,7 +18,17 @@ function saveNewHotelOnDatabase($hotelName, $shortDesc, $longDesc, $date, $link,
                                  Description,
                                  user_id,
                                  Date,
-                                 image
+                                 image,
+                                 kouzinaBox,
+                                 theaBox,
+                                 tvBox,
+                                 wifiBox,
+                                 wcBox,
+                                 parkingBox,
+                                 acBox,
+                                 poolBox,
+                                 latitude,
+                                 longitude
                              )
                              Values
                              (
@@ -27,7 +37,17 @@ function saveNewHotelOnDatabase($hotelName, $shortDesc, $longDesc, $date, $link,
                                 '$longDesc',
                                 '$userID',
                                 '$date',
-                                '$image'
+                                '$image',
+                                '$kouzinaBox',
+                                '$theaBox',
+                                '$tvBox',
+                                '$wifiBox',
+                                '$wcBox',
+                                '$parkingBox',
+                                '$acBox',
+                                '$poolBox',
+                                '$lat',
+                                '$lond'
                              )";
 
     $result = mysqli_query($link, $query);
