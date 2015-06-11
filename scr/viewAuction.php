@@ -1,3 +1,25 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: arist
+ * Date: 11-Jun-15
+ * Time: 19:23
+ */
+    include('ArizFunctions.php');
+
+    //get auction
+    $id = htmlspecialchars($_GET["a"]);
+
+    global $link;
+    include ('RegisterConnectToDB.php');
+    $auction = select_auction_by_id($id,$link);
+    $rating = select_auction_avg_rating($id,$link);
+    $link->close();
+    $ftime= new DateTime($auction['finishing_date']);
+    $now = new DateTime();
+    $time = date_diff($now,$ftime);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,113 +27,116 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Ξενοδοχεία</title>
+    <title>Hotel Nefeli</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet" />
     <link href="../css/style.css" rel="stylesheet" >
     <link href="../css/navbar.css" rel="stylesheet">
-    <link href="../css/globalShadowBoxStyle.css" rel="stylesheet">
 
+    <link href="../css/nefeliAuctionStyle.css" rel="stylesheet">
 
-
-    <link rel="stylesheet" href="../css/HotelFirstPage.css" >
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 
-
+    <link rel="stylesheet" type="text/css" href="mainstyle.css">
     <![endif]-->
 
-
-   <?php 
-include ('includes/header.php');
-include('includes/navbar.php'); 
-?>
+    <?php
+    include('includes/header.php');
+    //include('includes/navbar.php');
+    ?>
 
 </head>
 
 <body style="background-color:#D7D7D7">
 
-
-
 <!-- Marketing messaging and featurettes
 ================================================== -->
 <!-- Wrap the rest of the page in another container to center all the content. -->
 
-<br>
-<div id="conteinerMarketing" class="container marketing shadowStyle" ><!-- BG COLOR-->
+<div id="conteinerMarketing" class="container marketing" ><!-- BG COLOR-->
     <!--<hr class="featurette-divider"> -->
 
 
 
     <!-- Main Container body
   ============================================================================================= -->
-        <!-------------------------- -->
+    <!-------------------------- -->
     <div class="head_title">
-        <div class="addNewElement">
-            <button onclick="location.href ='newHotelForm.php' "  ; type="submit" class="btn btn-primary" >+ Νέο Ξενοδοχείο</button>
-        </div>
-        <p><h3><i>Ξενοδοχεία</i></h3></p>
 
+        <p><h3><i> Ξενοδοχεία </i></h3></p>
         <hr class="featurette-divider">
-
     </div>
-        <!-- =============================================PERIEXOMENO SELIDAS ================================================-->
-
-    <p class="infoTxt"> Εδώ θα βρείτε όλες τις απαραίτητες πληροφορίες που χρειάζεστε  για τα ξενοδοχεία που συνεργαζόμαστε, όπως φωτογραφικό υλικό, τοποθεσία του καταλύματος στον χάρτη κ.τ.λ.
-        Επιλέξτε μια παρακάτω επιλογές για να πλοηγηθείτε στο site </p>
-
-    <br><br><br>
-
-    <div class="container marketing">
+    <!-- =============================================PERIEXOMENO SELIDAS ================================================-->
+    <div id="auction">
         <div class="row">
-            <?php
-                include ('ArizFunctions.php');
-                $hotels = get_hotels();
-                $hotels_array = array();
-                while ($row = $hotels->fetch_assoc()) {
-                    $hotels_array [] = $row;
-                    echo '<div class="col-md-6" >';
-                    echo '<a href="viewHotel.php?h='.$row['hotelID'].'">';
-                    echo '<img src="data:image;base64,' . base64_encode($row["image"]) . '" width=200 height=200/>';
-                    echo '<p class=HotelName>'.$row["HotelName"].'</p></a>';
-                    echo '</div>';
-                }
-            ?>
-           <!-- <div class="col-md-6" >
-                <a href="InoVillageHotelStatic.php">
-              <img src="http://r-ec.bstatic.com/images/hotel/square200/147/14764932.jpg">
-                <p class="HotelName">Ino Village Hotel</p></a>
-            </div>-->
+            <div  id="pictures" class=" col-md-6">
+                <img class="img-thumbnail"src="http://q-ec.bstatic.com/images/hotel/max1024x768/296/2962528.jpg">
+            </div>
+            <div id="details" class="col-md-6">
 
+                <div id="title">
+                    <h1><?php echo $auction['auction_hotel_name'];?></h1>
+                </div>
+
+                <div class="rating">
+                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                    <h3><?php echo $rating;?></h3>
+                </div>
+                <br>
+                <div id="short-description">
+                    <p> Υπολοιπόμενος Χρόνος Δημοπρασίας: </p>
+                    <p id="auctionTimeRemaining">
+                        <?php
+                            if ($ftime<$now->format('Y-m-d H:i:s')){
+                                echo 'Έχει λήξει.';
+                            }else
+                            echo  $time->format('%a Μέρες %H Ώρες %i Λεπτά');
+                        ?>
+                    </p>
+                    <br>
+                    <p>Τελευταία Προσφορά: <?php echo select_auction_last_bid($id,$link)?> <span>€</span></p>
+                    <br>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label class="sr-only" for="newAmount">Amount (in dollars)</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">$</div>
+                                <input type="text" class="form-control" id="newAmount" placeholder="Ποσό">
+                                <div class="input-group-addon">.00</div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Προσθήκη Προσφοράς</button>
+                    </form>
+                </div>
+            </div>
         </div>
-
-
+        <br>
+        <div id="full-description">
+            <p> <h4>Περιγραφή</h4>
+                <?php echo $auction['Description'];?>
+            </p>
+        </div>
     </div>
-
-
-
-
-    <br><br><br><br><br>
 
 
 </div><!-- /.container -->
+<br><br><br>
 
-<br><br>
 
-<?php 
-include ('includes/footer.php');
+
+<?php
+    include('includes/footer.php');
 ?>
-
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="../js/jquery-1.9.1.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/docs.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
