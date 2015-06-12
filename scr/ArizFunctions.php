@@ -93,9 +93,11 @@ function select_count_of_auction_ratings($auction_id,$link){
 function select_auction_last_bid($auction_id,$link){
     $sql = "SELECT * FROM bids WHERE auction_id=".$auction_id." ORDER BY bids.date DESC";
     $result = $link->query($sql);
-    $row = mysqli_fetch_array($result);
-    $last_bid_value=$row['bid'];
-    return $last_bid_value;
+    if ($result->num_rows>0){
+        $row = mysqli_fetch_array($result);
+        $last_bid_value=$row['bid'];
+        return $last_bid_value;
+    }else return 0;
 }
 
 function display_auction_row($auction_row){
