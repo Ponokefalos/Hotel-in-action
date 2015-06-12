@@ -1,3 +1,18 @@
+    <!-- Bootstrap core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/navbar.css" rel="stylesheet">
+    <link href="../css/globalShadowBoxStyle.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+
+    <![endif]-->
+
 <?php
 /**
  * Created by PhpStorm.
@@ -41,7 +56,7 @@ include_once 'RegisterConnectToDB.php';
                 <td>'.$auction["starting_date"].'</td>
                 <td>'.$auction["finishing_date"].'</td>
                 <td>'.$bid.'</td>
-                <td><input type="button" value="Επεξεργασία">.</td>
+                <td><a href="adminEditAuction.php?id='.$auction["auction_id"].'">Επεξεργασία</a></td>
                 </tr>';
     }
     $link->close();
