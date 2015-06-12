@@ -8,14 +8,13 @@
     <title>Ξενοδοχεία</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet" />
-    <link href="../css/style.css" rel="stylesheet" >
+    <link href="../css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../css/style.css" rel="stylesheet">
     <link href="../css/navbar.css" rel="stylesheet">
     <link href="../css/globalShadowBoxStyle.css" rel="stylesheet">
 
 
-
-    <link rel="stylesheet" href="../css/HotelFirstPage.css" >
+    <link rel="stylesheet" href="../css/HotelFirstPage.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -26,15 +25,14 @@
     <![endif]-->
 
 
-   <?php 
-include ('includes/header.php');
-include('includes/navbar.php'); 
-?>
+    <?php
+    include('includes/header.php');
+    include('includes/navbar.php');
+    ?>
 
 </head>
 
 <body style="background-color:#D7D7D7">
-
 
 
 <!-- Marketing messaging and featurettes
@@ -42,26 +40,35 @@ include('includes/navbar.php');
 <!-- Wrap the rest of the page in another container to center all the content. -->
 
 <br>
-<div id="conteinerMarketing" class="container marketing shadowStyle" ><!-- BG COLOR-->
-    <!--<hr class="featurette-divider"> -->
 
+<div id="conteinerMarketing" class="container marketing shadowStyle"><!-- BG COLOR-->
+    <!--<hr class="featurette-divider"> -->
 
 
     <!-- Main Container body
   ============================================================================================= -->
-        <!-------------------------- -->
+    <!-------------------------- -->
     <div class="head_title">
         <div class="addNewElement">
-            <button onclick="location.href ='newHotelForm.php' "  ; type="submit" class="btn btn-primary" >+ Νέο Ξενοδοχείο</button>
+            <?php
+            if ($_SESSION['userCode'] == 2 || $_SESSION['userCode'] == 0) {
+
+                echo '<button onclick="location.href =' . "'newHotelForm.php'" . '"; type="submit" class="btn btn-primary" >+ Νέο Ξενοδοχείο</button>';
+                // <button onclick="location.href ='newHotelForm.php' "  ; type="submit" class="btn btn-primary" >+ Νέο Ξενοδοχείο</button>
+            }
+            ?>
         </div>
-        <p><h3><i>Ξενοδοχεία</i></h3></p>
+        <p>
+
+        <h3><i>Ξενοδοχεία</i></h3></p>
 
         <hr class="featurette-divider">
 
     </div>
-        <!-- =============================================PERIEXOMENO SELIDAS ================================================-->
+    <!-- =============================================PERIEXOMENO SELIDAS ================================================-->
 
-    <p class="infoTxt"> Εδώ θα βρείτε όλες τις απαραίτητες πληροφορίες που χρειάζεστε  για τα ξενοδοχεία που συνεργαζόμαστε, όπως φωτογραφικό υλικό, τοποθεσία του καταλύματος στον χάρτη κ.τ.λ.
+    <p class="infoTxt"> Εδώ θα βρείτε όλες τις απαραίτητες πληροφορίες που χρειάζεστε για τα ξενοδοχεία που
+        συνεργαζόμαστε, όπως φωτογραφικό υλικό, τοποθεσία του καταλύματος στον χάρτη κ.τ.λ.
         Επιλέξτε μια παρακάτω επιλογές για να πλοηγηθείτε στο site </p>
 
     <br><br><br>
@@ -69,23 +76,23 @@ include('includes/navbar.php');
     <div class="container marketing">
         <div class="row">
             <?php
-                include ('ArizFunctions.php');
-                $hotels = get_hotels();
-                $hotels_array = array();
-                while ($row = $hotels->fetch_assoc()) {
-                    $hotels_array [] = $row;
-                    echo '<div class="col-md-6" >';
-                    echo '<a href="viewHotel.php?h='.$row['hotelID'].'">';
-                    echo '<img src="data:image;base64,' . base64_encode($row['image']) . '" width=200 height=200/>';
-                    echo '<p class=HotelName>'.$row["HotelName"].'</p></a>';
-                    echo '</div>';
-                }
+            include('ArizFunctions.php');
+            $hotels = get_hotels();
+            $hotels_array = array();
+            while ($row = $hotels->fetch_assoc()) {
+                $hotels_array [] = $row;
+                echo '<div class="col-md-6" >';
+                echo '<a href="viewHotel.php?h=' . $row['hotelID'] . '">';
+                echo '<img src="data:image;base64,' . base64_encode($row['image']) . '" width=200 height=200/>';
+                echo '<p class=HotelName>' . $row["HotelName"] . '</p></a>';
+                echo '</div>';
+            }
             ?>
-           <!-- <div class="col-md-6" >
-                <a href="InoVillageHotelStatic.php">
-              <img src="http://r-ec.bstatic.com/images/hotel/square200/147/14764932.jpg">
-                <p class="HotelName">Ino Village Hotel</p></a>
-            </div>-->
+            <!-- <div class="col-md-6" >
+                 <a href="InoVillageHotelStatic.php">
+               <img src="http://r-ec.bstatic.com/images/hotel/square200/147/14764932.jpg">
+                 <p class="HotelName">Ino Village Hotel</p></a>
+             </div>-->
 
         </div>
 
@@ -93,17 +100,16 @@ include('includes/navbar.php');
     </div>
 
 
-
-
     <br><br><br><br><br>
 
 
-</div><!-- /.container -->
+</div>
+<!-- /.container -->
 
 <br><br>
 
-<?php 
-include ('includes/footer.php');
+<?php
+include('includes/footer.php');
 ?>
 
 
@@ -176,6 +182,7 @@ include ('includes/footer.php');
             else
                 window.setTimeout(ScaleSlider, 30);
         }
+
         ScaleSlider();
 
         $(window).bind("load", ScaleSlider);

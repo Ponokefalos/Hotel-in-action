@@ -65,12 +65,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['signIn'])) {
             include_once('ArizFunctions.php');
             $now = new DateTime();
             $now = $now->format('Y-m-d H:i:s');
-            if (insert_to_logins($row['user_id'],$now,$link)) {
+            if (insert_to_logins($row['user_id'], $now, $link)) {
                 $user = new User($row['name'], $row['surname'], $row['username'], $row['email'], $row['image']);
                 $_SESSION['user_id'] = $row['user_id'];
                 $_SESSION['user'] = $user;
                 $_SESSION['username'] = $row['username'];
                 $_SESSION['loggedIn'] = true;
+                $_SESSION['userCode'] = $row['code'];
                 /*  header("Location: index.php");*/
                 header("Refresh:0");
                 exit();
