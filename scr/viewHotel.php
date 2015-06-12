@@ -50,7 +50,7 @@ $hotel = get_hotel_by_id($id);
 
     <script type="text/javascript">
         function initialize() {
-            var myLatlng = new google.maps.LatLng(37.796412, 26.702513);
+            var myLatlng = new google.maps.LatLng(<?php echo $hotel['latitude']?>, <?php echo $hotel['longitude']?>);
             var mapOptions = {
                 zoom: 15,
                 center: myLatlng
@@ -60,7 +60,7 @@ $hotel = get_hotel_by_id($id);
             var marker = new google.maps.Marker({
                 position: myLatlng,
                 map: map,
-                title: 'Hello World!'
+                title: '<?php echo $hotel['latitude'].' , '. $hotel['longitude']?>'
             });
         }
 
