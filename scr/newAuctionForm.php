@@ -273,7 +273,7 @@ include('KyrFunctions.php')
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newAuction'])) {
     $errorState = 0;
-    $auction_status='Ενεργεί';
+
 
     $auction_hotel_name = mysqli_real_escape_string($link, $_POST['auction_hotel_name']);
     $description = mysqli_real_escape_string($link, $_POST['description']);
@@ -287,7 +287,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newAuction'])) {
     $buy_out_price = mysqli_real_escape_string($link, $_POST['buy_out_price']);
     $starting_date = mysqli_real_escape_string($link, $_POST['starting_date']);
     $finishing_date = mysqli_real_escape_string($link, $_POST['finishing_date']);
-    $file = isset($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : '';
+    $file = $_FILES['image']['tmp_name'];
+
+    $hotelID=returnHotelId($link,$auction_hotel_name);
+
 
     if (empty($file)) {
         $errorState = 1;
@@ -322,7 +325,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newAuction'])) {
 
     if ($errorState == 0) {
         //to $currentUser to pernoume apo panw me ta selections des line: 98
-        saveNewAuctionInDatabase($auction_hotel_name, $description, $rooms_number, $room_type, $checkin_date, $checkout_date, $starting_price, $min_price, $buy_out_box, $buy_out_price, $starting_date, $finishing_date, $image, $currentUser,$link);
+        saveNewAuctionInDatabase($auction_hotel_name, $description, $rooms_number, $room_type, $checkin_date, $checkout_date, $starting_price, $min_price, $buy_out_box, $buy_out_price, $starting_date, $finishing_date, $image, $currentUser,$link,$hotelID);
         showAlertDialog("Επιτυχής εγγραφή");
     } elseif ($errorState == 1) {
         showAlertDialog("Παρακαλώ συμπληρώστε κατάλληλα όλα τα πεδία.");

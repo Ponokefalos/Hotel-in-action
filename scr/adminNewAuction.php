@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 /**
  * Created by PhpStorm.
  * User: Kir
@@ -11,6 +12,8 @@
 
 
 <?php
+=======
+>>>>>>> origin/Kyr-Pc
 include('includes/header.php');
 include('includes/navbar.php');
 include('RegisterConnectToDB.php');
@@ -78,7 +81,11 @@ include('KyrFunctions.php')
     <div class="head_title">
         <p>
 
+<<<<<<< HEAD
         <h3><i>Προσθήκη Δημοπρασίας</i></h3></p>
+=======
+        <h3><i>Προσθήκη Δημοπρασίας Admin Panel</i></h3></p>
+>>>>>>> origin/Kyr-Pc
         <hr class="featurette-divider">
     </div>
 
@@ -109,25 +116,43 @@ include('KyrFunctions.php')
 
                         ?>
                         <div class="col-sm-4 col-xs-4">
+<<<<<<< HEAD
                             <select class="form-control" name="admin_hotel_username">
                                 <?php
                                 while ($row = mysqli_fetch_array($result)) {
                                     print '<option>' . $row['username'] . '</option>';
                                 }
+=======
+                            <select class="form-control" name="auction_username">
+                                <?php
+
+                                while ($row = mysqli_fetch_array($result)) {
+                                    print '<option>' . $row['username'] . '</option>';
+                                }
+
+>>>>>>> origin/Kyr-Pc
                                 ?>
                             </select>
                         </div>
                     </div>
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/Kyr-Pc
                     <div class="form-group">
                         <p for="auctionHotelName" id="auctionHotelName" class="col-xs-2 control-label">Όνομα
                             Ξενοδοχείου </p>
                         <?php
 
+<<<<<<< HEAD
                         $query = "SELECT HotelName FROM hotels WHERE user_id= '$currentUser'";
+=======
+
+                        $query = "SELECT HotelName FROM hotels";
+>>>>>>> origin/Kyr-Pc
                         $result = mysqli_query($link, $query);
                         ?>
                         <div class="col-sm-4">
@@ -138,10 +163,14 @@ include('KyrFunctions.php')
                                 }
                                 ?>
                             </select>
+<<<<<<< HEAD
 
 
                         </div>
 
+=======
+                        </div>
+>>>>>>> origin/Kyr-Pc
                     </div>
 
 
@@ -252,7 +281,11 @@ include('KyrFunctions.php')
                         <p for="hotelPhotosInput">Φωτογραφία</p>
 
                         <div class="col-sm-4">
+<<<<<<< HEAD
                             <input type="file" name="image" id="hotelPhotosInput">
+=======
+                            <input type="file" name="image" id="image">
+>>>>>>> origin/Kyr-Pc
                         </div>
                     </div>
 
@@ -279,7 +312,11 @@ include('KyrFunctions.php')
 
 <br><br>
 
+<<<<<<< HEAD
 <?php include "includes/footer.php";?>
+=======
+<?php include "includes/footer.php"; ?>
+>>>>>>> origin/Kyr-Pc
 
 
 <!-- Bootstrap core JavaScript
@@ -301,9 +338,15 @@ include('KyrFunctions.php')
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newAuction'])) {
     $errorState = 0;
+<<<<<<< HEAD
     $auction_status='Ενεργεί';
 
     $auction_hotel_name = mysqli_real_escape_string($link, $_POST['auction_hotel_name']);
+=======
+
+    $auction_username = mysqli_real_escape_string($link, $_POST['auction_username']); //onoma xristi pou dialegei ap to prwto dropdown
+    $auction_hotel_name=mysqli_real_escape_string($link,$_POST['auction_hotel_name']); //onoma ksenodoxeiou ap to deutero
+>>>>>>> origin/Kyr-Pc
     $description = mysqli_real_escape_string($link, $_POST['description']);
     $rooms_number = mysqli_real_escape_string($link, $_POST['rooms_number']);
     $room_type = mysqli_real_escape_string($link, $_POST['room_type']);
@@ -315,9 +358,21 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newAuction'])) {
     $buy_out_price = mysqli_real_escape_string($link, $_POST['buy_out_price']);
     $starting_date = mysqli_real_escape_string($link, $_POST['starting_date']);
     $finishing_date = mysqli_real_escape_string($link, $_POST['finishing_date']);
+<<<<<<< HEAD
     $file = isset($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : '';
 
     if (empty($file)) {
+=======
+
+
+
+    $hotelID=returnHotelId($link,$auction_hotel_name);
+    $currentUser=returnUserIDGivenName($auction_username,$link);
+    $file =$_FILES['image']['tmp_name'];
+
+    if (empty($file)) {
+
+>>>>>>> origin/Kyr-Pc
         $errorState = 1;
     } else {
         $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
@@ -326,6 +381,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newAuction'])) {
     }
 
     if (empty($image)) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/Kyr-Pc
         $errorState = 1;
     }
     if ($image_size == FALSE) {
@@ -334,12 +393,22 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newAuction'])) {
 
     if (empty($auction_hotel_name) || empty($description) || empty($rooms_number) || empty($room_type) || empty($checkin_date) ||
         empty($checkout_date) || empty($starting_price) || empty($min_price) || empty($buy_out_box) || empty($buy_out_price) ||
+<<<<<<< HEAD
         empty($starting_date) || empty($finishing_date)){
         $errorState=1;
     }
 
 
 
+=======
+        empty($starting_date) || empty($finishing_date)
+    ) {
+       
+        $errorState = 1;
+    }
+
+
+>>>>>>> origin/Kyr-Pc
     if (empty($buy_out_box)) {
         settype($buy_out_box, "integer");
         $buy_out_box = 0;
@@ -350,11 +419,19 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newAuction'])) {
 
     if ($errorState == 0) {
         //to $currentUser to pernoume apo panw me ta selections des line: 98
+<<<<<<< HEAD
         saveNewAuctionInDatabase($auction_hotel_name, $description, $rooms_number, $room_type, $checkin_date, $checkout_date, $starting_price, $min_price, $buy_out_box, $buy_out_price, $starting_date, $finishing_date, $image, $currentUser,$link);
         showAlertDialog("Επιτυχής εγγραφή");
     } elseif ($errorState == 1) {
         showAlertDialog("Παρακαλώ συμπληρώστε κατάλληλα όλα τα πεδία.");
     }elseif ($errorState == 2) {
+=======
+        saveNewAuctionInDatabase($auction_hotel_name, $description, $rooms_number, $room_type, $checkin_date, $checkout_date, $starting_price, $min_price, $buy_out_box, $buy_out_price, $starting_date, $finishing_date, $image, $currentUser, $link,$hotelID);
+        showAlertDialog("Επιτυχής εγγραφή");
+    } elseif ($errorState == 1) {
+        showAlertDialog("Παρακαλώ συμπληρώστε κατάλληλα όλα τα πεδία.");
+    } elseif ($errorState == 2) {
+>>>>>>> origin/Kyr-Pc
         showAlertDialog("Το αρχείο που εισάγατε δεν είναι εικόνα.");
     }
 
