@@ -351,6 +351,9 @@ $hotelID = returnHotelId($link, $hotel['HotelName']) ?>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button type="submit" name="newHotel" class="btn btn-primary">Εισαγωγή</button>
+                                <button align="right" style="margin-left: 2%" type="submit" name="adminDeleteHotel"
+                                        class="btn btn-danger">Διαγραφή Ξενοδοχείου
+                                </button>
                             </div>
                         </div>
 
@@ -521,5 +524,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newHotel'])) {
     }
 
 
+}else if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['adminDeleteHotel'])) {
+    include_once('ArizFunctions.php');
+    delete_hotel_from_id($id, $link);
+    echo '<script > document.location = "admin.php" </script>';
 }
 ?>

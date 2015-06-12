@@ -6,6 +6,36 @@
  * Time: 7:44 μμ
  */
 
+function delete_hotel_from_id($id, $link){
+    $sql = "DELETE FROM hotels WHERE hotelID=$id";
+    $result = mysqli_query($link, $sql);
+
+    if ($result) {
+        mysqli_commit($link);
+        showAlertDialog("Επιτυχής διαγραφή");
+        return true;
+    } else {
+        mysqli_rollback($link);
+        showAlertDialog("Αδυναμία διαγγραφής στην ιστοσελίδα. Παρακαλώ προσπαθήστε αργότερα.");
+        return false;
+    }
+}
+
+function delete_auction_from_id($id, $link){
+    $sql = "DELETE FROM auctions WHERE auction_id=$id";
+    $result = mysqli_query($link, $sql);
+
+    if ($result) {
+        mysqli_commit($link);
+        showAlertDialog("Επιτυχής διαγραφή");
+        return true;
+    } else {
+        mysqli_rollback($link);
+        showAlertDialog("Αδυναμία διαγγραφής στην ιστοσελίδα. Παρακαλώ προσπαθήστε αργότερα.");
+        return false;
+    }
+}
+
 function is_user_logged_in($id,$link){
     $sql = "SELECT * FROM logins WHERE user_id=$id";
     $result = $link ->query($sql);
