@@ -132,7 +132,7 @@
                             </td>
                             <td>
                                 <?php
-                                echo '<img align="right" src="data:image;base64,' . base64_encode($user->image) . '" width=35 height=35/>';
+                                echo '<img  align="right" src="data:image;base64,' . base64_encode($user->image) . '" width=35 height=35/>';
                                 ?>
                             </td>
                         </tr>
