@@ -92,10 +92,10 @@ include('KyrFunctions.php');
                 markers = [];
             }
 
-            function alterlotLat (lond,lat){
-                alert(lond+" "+lat);
-               document.getElementById("londTxt").value=lond;
-               document.getElementById("latTxt").value=lat;
+            function alterlotLat(lond, lat) {
+
+                document.getElementById("londTxt").value = lond;
+                document.getElementById("latTxt").value = lat;
             }
 
             google.maps.event.addDomListener(window, 'load', initialize);
@@ -166,7 +166,7 @@ include('KyrFunctions.php');
 
             <div class="row">
                 <div class="col-xs-12" id="auctionFormLabels">
-                    <form class="form-horizontal" method="post">
+                    <form class="form-horizontal" method="post" enctype="multipart/form-data">
 
                         <div class="form-group">
                             <p for="hotelName" class="col-xs-2 control-label">Όνομα Ξενοδοχείου </p>
@@ -267,6 +267,21 @@ include('KyrFunctions.php');
                             </div>
                         </div>
 
+                        <div class="form-group ">
+                            <p class="col-xs-6"> Παρακαλώ δώστε τον Αριθμό των Αστεριών του ξενοδοχείο σας.</p>
+
+                            <div class="form-group">
+                                <select name="stars" class="col-xs-2">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                </select>
+                            </div>
+                        </div>
+
 
                         <div class="form-group">
                             <p for="hotelPhotosInput">Φωτογραφία</p>
@@ -283,16 +298,16 @@ include('KyrFunctions.php');
                             <!--kodikas gia ta fanera text boxes-->
                             <div class="col-xs-2">
                                 <p>Γεωφραφικό Πλάτος</p>
-                                <input type="text"class="form-control" id="londTxt" name="lat">
+                                <input type="text" class="form-control" id="londTxt" name="lat">
                             </div>
 
                             <div class="col-xs-2">
                                 <p>Γεωφραφικό μήκος</p>
-                                <input type="text"class="form-control" id="latTxt" name="lond">
+                                <input type="text" class="form-control" id="latTxt" name="lond">
                             </div>
 
 
-                            <!-- kodikas gia allo ena p pou tha leei na kaneis click ston xarti-->
+
 
                         </div>
 
@@ -322,14 +337,7 @@ include('KyrFunctions.php');
 
     <br><br>
 
-    <footer>
-        <p class="pull-right"><a href="#">Back to top</a></p>
-
-        <p>&copy; Your Hotel In Action 2015. &middot; <a href="#">Privacy</a> &middot; </p>
-        <button type="button" class="btn btn-warning" onclick="colorChange()">Bg Changer</button>
-        <button type="button" class="btn btn-warning" onclick="colorChange()">Conteiner Changer</button>
-    </footer>
-
+    <?php include('includes/footer.php') ?>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -353,54 +361,59 @@ include("RegisterConnectToDB.php");
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newHotel'])) {
     $errorState = 0;
 
-
     $hotelName = mysqli_real_escape_string($link, $_POST['hotelName']);
     $shortDesc = mysqli_real_escape_string($link, $_POST['shortDesc']);
     $longDesc = mysqli_real_escape_string($link, $_POST['longDesc']);
 
-    $somevar = $_GET["longitude"];
-    echo $somevar;
 
-
-    /*$kouzinaBox = mysqli_real_escape_string($link, $_POST['kouzinaBox']);*/
     $kouzinaBox = isset($_POST['kouzinaBox']) ? $_POST['kouzinaBox'] : '';
-    $theaBox = mysqli_real_escape_string($link, $_POST['theaBox']);
-    $tvBox = mysqli_real_escape_string($link, $_POST['tvBox']);
-    $wifiBox = mysqli_real_escape_string($link, $_POST['wifiBox']);
-    $wcBox = mysqli_real_escape_string($link, $_POST['wcBox']);
-    $parkingBox = mysqli_real_escape_string($link, $_POST['parkingBox']);
-    $acBox = mysqli_real_escape_string($link, $_POST['acBox']);
-    $poolBox = mysqli_real_escape_string($link, $_POST['poolBox']);
+    $theaBox = isset($_POST['theaBox']) ? $_POST['theaBox'] : '';
+    $tvBox = isset($_POST['tvBox']) ? $_POST['tvBox'] : '';
+    $wifiBox = isset($_POST['wifiBox']) ? $_POST['wifiBox'] : '';
+    $wcBox = isset($_POST['wcBox']) ? $_POST['wcBox'] : '';
+    $parkingBox = isset($_POST['parkingBox']) ? $_POST['parkingBox'] : '';
+    $acBox = isset($_POST['acBox']) ? $_POST['acBox'] : '';
+    $poolBox = isset($_POST['poolBox']) ? $_POST['poolBox'] : '';
+    $file = isset($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : '';
 
-    $lat=mysqli_real_escape_string($link,$_POST['lat']);
-    $lond=mysqli_real_escape_string($link,$_POST['lond']);
+    $stars = mysqli_real_escape_string($link, $_POST['stars']);
+
+    $lat = mysqli_real_escape_string($link, $_POST['lat']);
+    $lond = mysqli_real_escape_string($link, $_POST['lond']);
 
 
+    $date = getCurrentDate();
+    $tempUserName = $_SESSION['username'];
+    $userID = returnUserIDGivenName($tempUserName, $link);
 
     /* $file = $_FILES['image']['tmp_name'];*/
-    $file = isset($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : '';
-    $date = getCurrentDate();
 
-    if (empty($hotelName) || empty($shortDesc) || (empty($longDesc))) {
-        $errorState = 1;
 
-    }
-    /*if (empty($file)) {
-        showAlertDialog('eimai sto file');
+    if (empty($file)) {
         $errorState = 1;
     } else {
         $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
         $image_name = addslashes($_FILES['image']['name']);
         $image_size = getimagesize($_FILES['image']['tmp_name']);
-    }*/
-    $tempUserName = $_SESSION['username'];
-    $userID = returnUserIDGivenName($tempUserName, $link);
+    }
 
-
-  /*  if (empty($image)) {
-
+    if (empty($image)) {
         $errorState = 1;
-    }*/
+    }
+    if ($image_size == FALSE) {
+        $errorState = 2;
+    }
+
+    if (empty($hotelName) || empty($shortDesc) || (empty($longDesc)) || empty($lat) || empty($lond)) {
+        $errorState = 1;
+
+    }
+
+
+    /*  if (empty($image)) {
+
+          $errorState = 1;
+      }*/
 
     echo $userID;
 
@@ -475,10 +488,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newHotel'])) {
 
     if ($errorState == 0) {
 
-        saveNewHotelOnDatabase1($hotelName, $shortDesc, $longDesc, $date, $link, $userID, $file, $kouzinaBox, $theaBox, $tvBox, $wifiBox, $wcBox, $parkingBox, $acBox, $poolBox,$lat,$lond);
+        saveNewHotelOnDatabase1($hotelName, $shortDesc, $longDesc, $date, $link, $userID, $file, $kouzinaBox, $theaBox, $tvBox, $wifiBox, $wcBox, $parkingBox, $acBox, $poolBox, $lat, $lond, $stars);
 
     } else if ($errorState == 1) {
         showAlertDialog("Παρακαλώ συμπληρώστε κατάλληλα όλα τα πεδία.");
+    } elseif ($errorState == 2) {
+        showAlertDialog("Το αρχείο που εισάγατε δεν είναι εικόνα.");
     }
 
 
