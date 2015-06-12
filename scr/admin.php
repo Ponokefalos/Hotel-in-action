@@ -44,7 +44,7 @@
     </div>
 
     <div>
-        <button onclick="location.href ='adminViewHotels.php' " ; type="submit" class="btn btn-primary">ViewHotels
+        <button onclick="location.href ='adminViewHotels.php' " ; type="submit" class="btn btn-primary">Προβολή ξενοδοχείων
         </button>
     </div>
     <br><br><br>
@@ -63,7 +63,7 @@
 
     <div>
         <button onclick="location.href ='adminViewAuctions.php' " ; type="submit" class="btn btn-primary">
-            adminViewAuctions
+            Προβολή δημοπρασιών
         </button>
     </div>
 
@@ -83,7 +83,7 @@
     </div>
 
     <div>
-        <button onclick="location.href ='adminViewUsers.php' " ; type="submit" class="btn btn-primary">adminViewUsers
+        <button onclick="location.href ='adminViewUsers.php' " ; type="submit" class="btn btn-primary">Προβολή χρηστών
         </button>
     </div>
 
