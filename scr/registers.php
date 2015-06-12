@@ -24,10 +24,10 @@
     <![endif]-->
 
 
- <?php 
-include ('includes/header.php');
-include('includes/navbar.php');
-?>
+    <?php
+    include('includes/header.php');
+    include('includes/navbar.php');
+    ?>
 
 </head>
 
@@ -141,8 +141,8 @@ include('includes/navbar.php');
 
 <br><br>
 
-<?php 
-include ('includes/footer.php');
+<?php
+include('includes/footer.php');
 ?>
 
 </body>
@@ -220,7 +220,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['register'])) {
         $errorState = 2;
     }
 
-    if(checkIfUserEmailExists($eMail,$link)){
+    if (checkIfUserEmailExists($eMail, $link)) {
         $errorState = 4;
     }
 
@@ -230,7 +230,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['register'])) {
     if ($errorState == 0) {
         $userCode = returnUserCode($hotelAdmin);
         $password = md5($password);
-        saveNewUserOnDatabase($userCode, $name, $surname, $birthDate, $eMail, $companyName, $newsletter, $password, $username, $gender, $link,$image);
+        saveNewUserOnDatabase($userCode, $name, $surname, $birthDate, $eMail, $companyName, $newsletter, $password, $username, $gender, $link, $image);
         header("Location: index.php");
 
         exit();
@@ -240,7 +240,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['register'])) {
         showAlertDialog("To username υπάρχει. Δοκιμάστε διαφορετικό username.");
     } else if ($errorState == 3) {
         showAlertDialog("Το αρχείο που επιλέξατε δεν είναι εικόνα. Παρακαλώ επιλέξτε μια εικόνα");
-    }else if ($errorState == 4) {
+    } else if ($errorState == 4) {
         showAlertDialog("To e-mail υπάρχει. Δοκιμάστε διαφορετικό e-mail.");
     }
 }
