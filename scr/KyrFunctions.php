@@ -123,15 +123,8 @@ function saveNewAuctionInDatabase($auction_hotel_name, $description, $rooms_numb
     }
 }
 
-<<<<<<< HEAD
-function returnAllUsers($link){
-    $query = "select username from users";
-    $result = mysqli_query($link, $query) or die(mysqli_error($link));
-    $count = mysqli_num_rows($result);
 
 
-
-=======
 
 
 function returnHotelId ($link,$hotel_name){
@@ -143,7 +136,7 @@ function returnHotelId ($link,$hotel_name){
     $hotelID = $row['hotelID'];
 
     return $hotelID;
->>>>>>> origin/Kyr-Pc
+
 }
 
 ?>
