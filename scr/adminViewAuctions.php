@@ -5,13 +5,11 @@
  * Date: 12-Jun-15
  * Time: 03:02
  */
-include'C:\Users\arist\PhpstormProjects\There-Is-No-Hope\scr\ArizFunctions.php';
+include 'ArizFunctions.php';
 $result= get_auctions();
 
 global $link;
-include 'C:\Users\arist\PhpstormProjects\There-Is-No-Hope\scr\RegisterConnectToDB.php';
-
-
+include 'RegisterConnectToDB.php';
 
 ?>
 
