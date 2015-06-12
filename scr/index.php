@@ -56,16 +56,25 @@ include('includes/navbar.php');
         <div u="slides"
              style="cursor: move; position: absolute; left: 0px; top: 0px; width: 1300px; height: 500px; overflow: hidden;">
             <div>
-                <img u="image" src2="../img/1920/photo1.jpg"/>
+                <img u="image" src2="../img/1920/photo21.jpg"/>
             </div>
             <div>
-                <img u="image" src2="../img/1920/photo2.jpg"/>
+                <img u="image" src2="../img/1920/photo22.jpg"/>
             </div>
             <div>
-                <img u="image" src2="../img/1920/photo3.jpg"/>
+                <img u="image" src2="../img/1920/photo23.jpg"/>
             </div>
             <div>
-                <img u="image" src2="../img/1920/photo4.jpg"/>
+                <img u="image" src2="../img/1920/photo24.jpg"/>
+            </div>
+            <div>
+                <img u="image" src2="../img/1920/photo25.jpg"/>
+            </div>
+            <div>
+                <img u="image" src2="../img/1920/photo26.jpg"/>
+            </div>
+            <div>
+                <img u="image" src2="../img/1920/photo27.jpg"/>
             </div>
         </div>
 

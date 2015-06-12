@@ -43,9 +43,7 @@ include('KyrFunctions.php');
                     mapOptions);
 
                 google.maps.event.addListener(map, 'click', function (e) {
-                    /*  window.location.href="newHotelForm.php?longitude="+e.latLng.lng();*/
-                    /*window.location.hash="longitude"+e.latLng.lng();*/
-                    /*  window.location.search += '&longitude='+e.latLng.lng();*/
+
 
 
                     clearMarkers();
