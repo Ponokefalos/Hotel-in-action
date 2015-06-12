@@ -2,7 +2,7 @@
 include('includes/header.php');
 include('includes/navbar.php');
 include('RegisterConnectToDB.php');
-
+include('KyrFunctions.php')
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -87,7 +87,7 @@ include('RegisterConnectToDB.php');
 
         <div class="row">
             <div class="col-xs-12" id="auctionFormLabels">
-                <form class="form-horizontal">
+                <form class="form-horizontal" method="post" enctype="multipart/form-data">
 
                     <div class="form-group">
                         <p for="auctionHotelName" id="auctionHotelName" class="col-xs-2 control-label">Όνομα
@@ -103,18 +103,12 @@ include('RegisterConnectToDB.php');
 
                         ?>
                         <div class="col-sm-4">
-                            <select class="form-control">
+                            <select class="form-control" name="auction_hotel_name">
                                 <?php
                                 while ($row = mysqli_fetch_array($result)) {
-                                   print' <option name="auction_hotel_name">'. $row['HotelName'].'</option>';
+                                    print' <option name="auction_hotel_name">' . $row['HotelName'] . '</option>';
                                 }
                                 ?>
-
-                                <option name="auction_hotel_name">Τρίκλινο</option>
-                                <!-- <option>Τετρακλινο</option>
-                             <option>Διαμέρισμα</option>
-                             <option>Studio</option>-->
-
                             </select>
 
 
@@ -230,14 +224,14 @@ include('RegisterConnectToDB.php');
                         <p for="hotelPhotosInput">Φωτογραφία</p>
 
                         <div class="col-sm-4">
-                            <input type="file" name="auction_file" id="hotelPhotosInput">
+                            <input type="file" name="image" id="hotelPhotosInput">
                         </div>
                     </div>
 
 
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-primary">Εισαγωγή</button>
+                            <button type="submit" class="btn btn-primary" name="newAuction">Εισαγωγή</button>
                         </div>
                     </div>
 
@@ -257,13 +251,7 @@ include('RegisterConnectToDB.php');
 
 <br><br>
 
-<footer>
-    <p class="pull-right"><a href="#">Back to top</a></p>
-
-    <p>&copy; Your Hotel In Action 2015. &middot; <a href="#">Privacy</a> &middot; </p>
-    <button type="button" class="btn btn-warning" onclick="colorChange()">Bg Changer</button>
-    <button type="button" class="btn btn-warning" onclick="colorChange()">Conteiner Changer</button>
-</footer>
+<?php include "includes/footer.php";?>
 
 
 <!-- Bootstrap core JavaScript
@@ -283,28 +271,63 @@ include('RegisterConnectToDB.php');
 
 <?php
 
-if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newHotel'])) {
+if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newAuction'])) {
     $errorState = 0;
+    $auction_status='Ενεργεί';
 
-    $auction_hotel_name =mysqli_real_escape_string($link,$_POST['auction_hotel_name']);
-    $description =mysqli_real_escape_string($link,$_POST['description']);
-    $rooms_number = mysqli_real_escape_string($link,$_POST['rooms_number']);
-    $room_type =mysqli_real_escape_string($link,$_POST['room_type']);
-    $checkin_date =mysqli_real_escape_string($link,$_POST['checkin_date']);
-    $checkout_date =mysqli_real_escape_string($link,$_POST['checkout_date']);
-    $starting_price=mysqli_real_escape_string($link,$_POST['starting_price']);
-    $min_price =mysqli_real_escape_string($link,$_POST['min_price']);
-    $buy_out_box=mysqli_real_escape_string($link,$_POST['buy_out_box']);
-    $buy_out_price=mysqli_real_escape_string($link,$_POST['buy_out_price']);
-    $starting_date=mysqli_real_escape_string($link,$_POST['starting_date']);
-    $finishing_date=mysqli_real_escape_string($link,$_POST['finishing_date']);
+    $auction_hotel_name = mysqli_real_escape_string($link, $_POST['auction_hotel_name']);
+    $description = mysqli_real_escape_string($link, $_POST['description']);
+    $rooms_number = mysqli_real_escape_string($link, $_POST['rooms_number']);
+    $room_type = mysqli_real_escape_string($link, $_POST['room_type']);
+    $checkin_date = mysqli_real_escape_string($link, $_POST['checkin_date']);
+    $checkout_date = mysqli_real_escape_string($link, $_POST['checkout_date']);
+    $starting_price = mysqli_real_escape_string($link, $_POST['starting_price']);
+    $min_price = mysqli_real_escape_string($link, $_POST['min_price']);
+    $buy_out_box = mysqli_real_escape_string($link, $_POST['buy_out_box']);
+    $buy_out_price = mysqli_real_escape_string($link, $_POST['buy_out_price']);
+    $starting_date = mysqli_real_escape_string($link, $_POST['starting_date']);
+    $finishing_date = mysqli_real_escape_string($link, $_POST['finishing_date']);
+    $file = isset($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : '';
 
-    if (empty($buy_out_box)) {
-        settype($buy_out_box, "integer");
-        $buy_out_box = 0;
+    if (empty($file)) {
+        $errorState = 1;
     } else {
-        settype($buy_out_box, "integer");
-        $buy_out_box = 1;
+        $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
+        $image_name = addslashes($_FILES['image']['name']);
+        $image_size = getimagesize($_FILES['image']['tmp_name']);
+    }
+
+    if (empty($image)) {
+        $errorState = 1;
+    }
+    if ($image_size == FALSE) {
+        $errorState = 2;
+    }
+
+    if (empty($auction_hotel_name) || empty($description) || empty($rooms_number) || empty($room_type) || empty($checkin_date) ||
+        empty($checkout_date) || empty($starting_price) || empty($min_price) || empty($buy_out_box) || empty($buy_out_price) ||
+        empty($starting_date) || empty($finishing_date)){
+        $errorState=1;
+    }
+
+
+
+        if (empty($buy_out_box)) {
+            settype($buy_out_box, "integer");
+            $buy_out_box = 0;
+        } else {
+            settype($buy_out_box, "integer");
+            $buy_out_box = 1;
+        }
+
+    if ($errorState == 0) {
+        //to $currentUser to pernoume apo panw me ta selections des line: 98
+        saveNewAuctionInDatabase($auction_hotel_name, $description, $rooms_number, $room_type, $checkin_date, $checkout_date, $starting_price, $min_price, $buy_out_box, $buy_out_price, $starting_date, $finishing_date, $image, $currentUser,$link);
+        showAlertDialog("Επιτυχής εγγραφή");
+    } elseif ($errorState == 1) {
+        showAlertDialog("Παρακαλώ συμπληρώστε κατάλληλα όλα τα πεδία.");
+    }elseif ($errorState == 2) {
+        showAlertDialog("Το αρχείο που εισάγατε δεν είναι εικόνα.");
     }
 
 
