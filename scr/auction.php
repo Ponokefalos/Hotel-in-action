@@ -46,7 +46,15 @@ include('includes/navbar.php');
     <!-------------------------- -->
     <div class="head_title">
         <div class="addNewElement">
-            <button onclick="location.href ='newAuctionForm.php' "  ; type="submit" class="btn btn-primary">+ Νέα Δημοπρασία</button>
+            <?php
+            if ($_SESSION['userCode'] == 2 || $_SESSION['userCode'] == 0) {
+showAlertDialog($_SESSION['userCode']);
+            echo '<button onclick="location.href =' . "'newAuctionForm.php'" . '"; type="submit" class="btn btn-primary" >+ Νέο Ξενοδοχείο</button>';
+            // <button onclick="location.href ='newHotelForm.php' "  ; type="submit" class="btn btn-primary" >+ Νέο Ξενοδοχείο</button>
+                //  <button onclick="location.href ='newAuctionForm.php' "  ; type="submit" class="btn btn-primary">+ Νέα Δημοπρασία</button>
+            }
+            ?>
+
         </div>
         <p> <h3><i> Δημοπρασίες </i></h3></p>
         <hr class="featurette-divider">
@@ -61,10 +69,12 @@ include('includes/navbar.php');
             <!-- --------------------------------- 1o Hotel -------------------------------------->
             <div class="row">
                 <?php
-                    include ('ArizFunctions.php');
-                    $auctions = get_auctions();
+                    global $link;
+                    include ("RegisterConnectToDB.php");
+                    include_once ('ArizFunctions.php');
+                    $auctions = get_auctions($link);
                     while ($row = $auctions->fetch_assoc()){
-                        display_auction_row($row);
+                        display_auction_row($row, $link);
                         echo'<hr class="featurette-divider">';
                     }
                 ?>

@@ -155,6 +155,24 @@ function getSuperUserFromDatabase($username, $link)
     return $user;
 }
 
+
+function getSuperUserFromDatabaseGivenId($id, $link)
+{
+    include("SuperUser.php");
+    $sql = "SELECT * "
+        . "FROM users WHERE user_id='$id' ";
+
+    $result = mysqli_query($link, $sql) or die(mysqli_error($link));
+    $count = mysqli_num_rows($result);
+
+    if ($count == 1) {
+        $row = mysqli_fetch_assoc($result);
+
+        $user = new SuperUser($row['name'], $row['username'], $row['surname'], $row['email'], $row['image'], $row['password'], $row['birth_date'], $row['company_name'], $row['gender'], $row['code'], $row['newsletter'], $row['user_id']);
+    }
+
+    return $user;
+}
 /*
 function getUserFromDatabase($username,$link){
     $sql = "SELECT password "
@@ -177,7 +195,7 @@ function getUserFromDatabase($username,$link){
  * @param $image
  * @return bool Returns TRUE if user was added successfully FALSE otherwise
  */
-function saveNewUserOnDatabase($userCode, $name, $surname, $birthDate, $email, $companyName, $newsletter, $password, $username, $maleSex, $link, $image)
+function saveNewUserOnDatabase($userCode, $name, $surname, $birthDate, $email, $companyName, $newsletter, $password, $username, $maleSex, $link, $image, $date_registered)
 {
 
     mysqli_autocommit($link, false);
@@ -194,7 +212,8 @@ function saveNewUserOnDatabase($userCode, $name, $surname, $birthDate, $email, $
                                  password,
                                  username,
                                  gender,
-                                 image
+                                 image,
+                                 date_registered
                              )
                              Values
                              (
@@ -208,7 +227,8 @@ function saveNewUserOnDatabase($userCode, $name, $surname, $birthDate, $email, $
                                  '$password',
                                  '$username',
                                  '$maleSex',
-                                 '$image'
+                                 '$image',
+                                 '$date_registered'
                              )";
 
     $result = mysqli_query($link, $query);
@@ -381,6 +401,28 @@ function updateUser($code, $name, $surname, $username, $email, $password, $gende
     } else {
         mysqli_rollback($link);
         showAlertDialog("Οι πληροφορίες του χρήστη δεν ενημερώθηκαν, κάτι πήγε λάθος");
+        return false;
+    }
+}
+
+function updateHotel($hotelName, $shortDesc, $longDesc, $date, $link, $userID, $image, $kouzinaBox, $theaBox, $tvBox, $wifiBox, $wcBox, $parkingBox, $acBox, $poolBox, $lat, $lond, $stars, $hotelID)
+{
+
+    if ($image == 1) {
+        $updateHotelQuery = "UPDATE hotels SET HotelName='$hotelName' , ShortDesc='$shortDesc' , Description='$longDesc' , kouzinaBox='$kouzinaBox' , theaBox='$theaBox' , tvBox='$tvBox' , wifiBox='$wifiBox' , wcBox='$wcBox' , parkingBox='$parkingBox' , acBox ='$acBox' , poolBox='$poolBox' , latitude='$lat' , longitude='$lond' , stars='$stars' WHERE hotelID='$hotelID'";
+    } else {
+        $updateHotelQuery = "UPDATE hotels SET HotelName='$hotelName' , ShortDesc='$shortDesc' , Description='$longDesc' , kouzinaBox='$kouzinaBox' , theaBox='$theaBox' , tvBox='$tvBox' , wifiBox='$wifiBox' , wcBox='$wcBox' , parkingBox='$parkingBox' , acBox ='$acBox' , poolBox='$poolBox' , latitude='$lat' , longitude='$lond' , stars='$stars' , image='$image' WHERE hotelID='$hotelID'";
+    }
+
+    $result = mysqli_query($link, $updateHotelQuery);
+
+    if ($result) {
+        mysqli_commit($link);
+        showAlertDialog("Οι πληροφορίες του ξενοδοχείου ενημερώθηκαν επιτυχώς");
+        return true;
+    } else {
+        mysqli_rollback($link);
+        showAlertDialog("Οι πληροφορίες του ξενοδοχείου δεν ενημερώθηκαν, κάτι πήγε λάθος");
         return false;
     }
 }

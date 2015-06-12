@@ -24,7 +24,8 @@
     include('includes/navbar.php');
     include('RegisterConnectToDB.php');
 
-    $user = getSuperUserFromDatabase("l", $link);
+    $id = htmlspecialchars($_GET["id"]);
+    $user = getSuperUserFromDatabaseGivenId($id, $link);
 
     ?>
 
@@ -259,7 +260,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['adminEditUser'])) {
 
         updateUser($userType, $name, $surname, $username, $eMail, $password, $gender, $companyName, $newsletter, $image, $birthDate, $user->userID, $link);
 
-        echo '<script > document.location = aadminEditUser.php</script>';
+        echo '<script > document.location = "adminEditUser.php" </script>';
 
 
     } else if ($errorState == 1) {
@@ -273,8 +274,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['adminEditUser'])) {
     }
 
 } else if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['adminDeleteUser'])) {
-    deleteUserFromDatabaseGivenId($user->userID, $link);
-    echo '<script > document.location = "admin.php" </script>';
+    deleteUserFromDatabaseGivenId($id, $link);
+    echo '<script > document.location = "adminViewUsers.php" </script>';
 }
 ?>
 

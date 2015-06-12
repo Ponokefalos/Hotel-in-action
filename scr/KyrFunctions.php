@@ -126,6 +126,10 @@ function saveNewAuctionInDatabase($auction_hotel_name, $description, $rooms_numb
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 
 function returnHotelId ($link,$hotel_name){
     $query="select hotelID from hotels WHERE HotelName='$hotel_name'";
@@ -137,6 +141,7 @@ function returnHotelId ($link,$hotel_name){
 
     return $hotelID;
 
+<<<<<<< HEAD
 }
 
 function get_auction_by_id($link,$auctionID){
@@ -174,6 +179,8 @@ function updateAuction($hotelName, $shortDesc, $longDesc, $link, $userID, $image
         showAlertDialog("Οι πληροφορίες του ξενοδοχείου δεν ενημερώθηκαν, κάτι πήγε λάθος");
         return false;
     }
+=======
+>>>>>>> origin/master
 }
 
 

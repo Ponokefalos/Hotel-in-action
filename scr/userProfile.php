@@ -35,7 +35,8 @@
      session_start();
     include ('includes/headerProfile.php');
     include('includes/navbar.php');
-    //include('RegisterConnectToDB.php');
+    global $link;
+    include('RegisterConnectToDB.php');
 
     $search_result = $_SESSION['username'];
     $user = getSuperUserFromDatabase($search_result, $link);
@@ -176,7 +177,7 @@
             </div>
             <?php
                 include "ArizFunctions.php";
-                display_user_bid_history($user->username);
+                display_user_bid_history($user->username,$link);
             ?>
 
             <br><br><br><br><br> <br><br><br><br><br> <br><br><br><br><br> <br><br><br><br><br> <br><br><br><br><br>
