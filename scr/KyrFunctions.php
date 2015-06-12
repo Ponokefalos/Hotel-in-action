@@ -50,6 +50,7 @@ function saveNewHotelOnDatabase1($hotelName, $shortDesc, $longDesc, $date, $link
                                 '$lat',
                                 '$lond',
                                 '$stars'
+
                              )";
 
     $result = mysqli_query($link, $query);
@@ -68,7 +69,7 @@ function saveNewHotelOnDatabase1($hotelName, $shortDesc, $longDesc, $date, $link
 }
 
 
-function saveNewAuctionInDatabase($auction_hotel_name, $description, $rooms_number, $room_type, $checkin_date, $checkout_date, $starting_price, $min_price, $buy_out_box, $buy_out_price, $starting_date, $finishing_date, $image, $currentUser, $link)
+function saveNewAuctionInDatabase($auction_hotel_name, $description, $rooms_number, $room_type, $checkin_date, $checkout_date, $starting_price, $min_price, $buy_out_box, $buy_out_price, $starting_date, $finishing_date, $image, $currentUser, $link,$hotel_id)
 {
     mysqli_autocommit($link, false);
 
@@ -86,7 +87,8 @@ function saveNewAuctionInDatabase($auction_hotel_name, $description, $rooms_numb
                                     starting_date,
                                     finishing_date,
                                     auction_file,
-                                    userID
+                                    userID,
+                                    hotel_id
 
                                     )
                                     VALUES
@@ -104,8 +106,8 @@ function saveNewAuctionInDatabase($auction_hotel_name, $description, $rooms_numb
                                     '$starting_date',
                                     '$finishing_date',
                                     '$image',
-                                    '$currentUser'
-
+                                    '$currentUser',
+                                    '$hotel_id'
                                     )";
 
 
@@ -121,6 +123,7 @@ function saveNewAuctionInDatabase($auction_hotel_name, $description, $rooms_numb
     }
 }
 
+<<<<<<< HEAD
 function returnAllUsers($link){
     $query = "select username from users";
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
@@ -128,6 +131,19 @@ function returnAllUsers($link){
 
 
 
+=======
+
+
+function returnHotelId ($link,$hotel_name){
+    $query="select hotelID from hotels WHERE HotelName='$hotel_name'";
+    $result= mysqli_query($link,$query);
+
+    $row = mysqli_fetch_assoc($result);
+
+    $hotelID = $row['hotelID'];
+
+    return $hotelID;
+>>>>>>> origin/Kyr-Pc
 }
 
 ?>
