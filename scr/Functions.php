@@ -80,7 +80,7 @@ function getCurrentDate()
     return date("Y/m/d");
 }
 
-function saveNewHotelOnDatabase($hotelName, $shortDesc, $longDesc, $date, $link, $userID,$image)
+function saveNewHotelOnDatabase($hotelName, $shortDesc, $longDesc, $date, $link, $userID, $image)
 {
     mysqli_autocommit($link, false);
 
@@ -149,7 +149,7 @@ function getSuperUserFromDatabase($username, $link)
     if ($count == 1) {
         $row = mysqli_fetch_assoc($result);
 
-        $user = new SuperUser($row['name'], $row['username'], $row['surname'], $row['email'], $row['image'], $row['password'], $row['birth_date'], $row['company_name'], $row['gender'], $row['code'], $row['newsletter']);
+        $user = new SuperUser($row['name'], $row['username'], $row['surname'], $row['email'], $row['image'], $row['password'], $row['birth_date'], $row['company_name'], $row['gender'], $row['code'], $row['newsletter'], $row['user_id']);
     }
 
     return $user;
@@ -250,6 +250,31 @@ function deleteUserFromDatabase($username, $link)
     }
 }
 
+/** Deletes a user from database
+ *
+ * @param $userId
+ * @param $link
+ * @return bool Returns TRUE if user was deleted successfully FALSE otherwise
+ */
+function deleteUserFromDatabaseGivenId($userId, $link)
+{
+
+    mysqli_autocommit($link, false);
+
+    $deleteQuery = "DELETE FROM users WHERE user_id='$userId'";
+
+    $result = mysqli_query($link, $deleteQuery);
+
+    if ($result) {
+        mysqli_commit($link);
+        showAlertDialog("O χρήστης διαγράφτηκε επιτυχώς");
+        return true;
+    } else {
+        mysqli_rollback($link);
+        showAlertDialog("Αποτυχία διαγραφής χρήστη");
+        return false;
+    }
+}
 
 /**Updates a user's password
  *
@@ -305,7 +330,8 @@ function updatePhoto($newImage, $username, $link)
     }
 }
 
-function updateInfo($newName,$newSurname,$newCompanyName,$newNewsletter,$username,$link){
+function updateInfo($newName, $newSurname, $newCompanyName, $newNewsletter, $username, $link)
+{
 
     mysqli_autocommit($link, false);
 
@@ -323,4 +349,40 @@ function updateInfo($newName,$newSurname,$newCompanyName,$newNewsletter,$usernam
         return false;
     }
 }
+
+function updateUser($code, $name, $surname, $username, $email, $password, $gender, $companyName, $newsLetter, $image, $birthDate, $userID, $link)
+{
+
+    mysqli_autocommit($link, false);
+
+    if ($password == 1) {
+
+        if ($image == 1) {
+            $updateUserQuery = "UPDATE users SET code='$code' , name='$name' , surname='$surname' , birth_date='$birthDate' , email='$email' , company_name='$companyName' , newsletter='$newsLetter'  , username='$username' , gender='$gender'  WHERE user_id='$userID'";
+        } else {
+            $updateUserQuery = "UPDATE users SET code='$code' , name='$name' , surname='$surname' , birth_date='$birthDate' , email='$email' , company_name='$companyName' , newsletter='$newsLetter' , username='$username' , gender='$gender' , image='$image' WHERE user_id='$userID'";
+        }
+    } else {
+        if ($image == 1) {
+            $updateUserQuery = "UPDATE users SET code='$code' , name='$name' , surname='$surname' , birth_date='$birthDate' , email='$email' , company_name='$companyName' , newsletter='$newsLetter' , password='$password' , username='$username' , gender='$gender'  WHERE user_id='$userID'";
+        } else {
+            $updateUserQuery = "UPDATE users SET code='$code' , name='$name' , surname='$surname' , birth_date='$birthDate' , email='$email' , company_name='$companyName' , newsletter='$newsLetter' , password='$password' , username='$username' , gender='$gender' , image='$image' WHERE user_id='$userID'";
+        }
+    }
+
+    //$updateUserQuery = "UPDATE users SET code='$code' , name='$name' , surname='$surname' , birth_date='$birthDate' , email='$email' , company_name='$companyName' , newsletter='$newsLetter' , password='$password' , username='$username' , gender='$gender' , image='$image' WHERE user_id='$userID'";
+
+    $result = mysqli_query($link, $updateUserQuery);
+
+    if ($result) {
+        mysqli_commit($link);
+        showAlertDialog("Οι πληροφορίες του χρήστη ενημερώθηκαν επιτυχώς");
+        return true;
+    } else {
+        mysqli_rollback($link);
+        showAlertDialog("Οι πληροφορίες του χρήστη δεν ενημερώθηκαν, κάτι πήγε λάθος");
+        return false;
+    }
+}
+
 ?>

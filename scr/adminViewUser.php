@@ -1,161 +1,187 @@
 <!DOCTYPE html>
 
-
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Ξενοδοχεία</title>
+    <title>Επεξεργασία χρήστη</title>
 
-    <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet"/>
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/navbar.css" rel="stylesheet">
-    <link href="../css/globalShadowBoxStyle.css" rel="stylesheet">
 
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="mainstyle.css">
-    <![endif]-->
+    <link href="../css/globalShadowBoxStyle.css" rel="stylesheet">
 
+    <link rel="stylesheet" type="text/css" href="mainstyle.css">
 
     <?php
+
     include('includes/header.php');
     include('includes/navbar.php');
+    include('RegisterConnectToDB.php');
+
+    $user = getSuperUserFromDatabase("l", $link);
+
     ?>
 
 </head>
+<br>
+<br>
+<br>
+<br>
 
 <body style="background-color:#D7D7D7">
 
+<div id="conteinerMarketing" class="container marketing shadowStyle">
 
-<!-- Marketing messaging and featurettes
-================================================== -->
-<!-- Wrap the rest of the page in another container to center all the content. -->
-
-<br>
-<br>
-<br>
-
-<div id="conteinerMarketing" class="container marketing shadowStyle"><!-- BG COLOR-->
-    <!--<hr class="featurette-divider"> -->
-
-
-    <!-- Main Container body
-  ============================================================================================= -->
-    <!-------------------------- -->
     <div class="head_title">
 
-        <p>
-
-        <h2><i> Εγγραφή </i></h2></p>
+        <h2><i> Επεξεργασία χρήστη <?php echo $user->name . "  " . $user->surname; ?></i></h2>
         <hr class="featurette-divider">
-    </div>
-    <!-- =============================================PERIEXOMENO SELIDAS ================================================-->
 
-    <div class="container marketing ">
-        <form role="form" action="registers.php" method="post" enctype="multipart/form-data">
+    </div>
+
+    <div class="container marketing">
+        <form role="form" action="adminViewUser.php" method="post" enctype="multipart/form-data">
             <div class="form-group" id="personal-info">
                 <label>Προσωπικά Στοιχεία</label>
 
+                <div class="form-group" id="userType">
+                    <br>
+                    <label for="inputUserType">Τύπος χρήστη</label>
+                    <input type="number" name="userType" class="form-control" id="inputUserType"
+                           value=<?php echo $user->code; ?>>
+                </div>
 
                 <div class="form-group" id="sex">
-                    <br>
                     <label>Φύλο</label>
                     <label class="radio-inline">
-                        <input type="radio" name="sexMale" id="male" value="1"> Άρρεν
+                        <input type="radio" name="sexMale" id="male" value="1" <?php if ($user->gender == 0) {
+                            echo "checked";
+                        } ?>> Άρρεν
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="sexFemale" id="female" value="1"> Θύλη
+                        <input type="radio" name="sexFemale" id="female" value="1" <?php if ($user->gender == 1) {
+                            echo "checked";
+                        } ?>> Θύλη
                     </label>
                 </div>
                 <div class="form-group" id="name">
-                    <input type="text" name="inputName" class="form-control" id="inputname" placeholder="Όνομα">
+                    <input type="text" name="inputName" class="form-control" id="inputname"
+                           value=<?php echo $user->name; ?>>
                 </div>
                 <div class="form-group" id="surname">
-                    <input type="text" name="inputSurname" class="form-control" id="inputsurname" placeholder="Επίθετο">
+                    <input type="text" name="inputSurname" class="form-control" id="inputsurname"
+                           value=<?php echo $user->surname; ?>>
                 </div>
                 <div class="form-group" id="dateofbirth">
                     <label for="inputdate">Ημερομηνία Γέννησης</label>
-                    <input type="date" name="birthDate" class="form-control" id="inputdate">
+                    <input type="date" name="birthDate" class="form-control" id="inputdate"
+                           value=<?php echo $user->birthDate; ?>>
                 </div>
                 <div class="form-group" id="email">
                     <label for="inputdate">Ηλεκτρονική Διεύθυνση</label>
                     <input type="email" name="email" class="form-control" id="inputemail"
-                           placeholder="Ηλεκτρονική Διεύθυνση">
+                           value=<?php echo $user->email; ?>>
                 </div>
             </div>
 
             <div class="form-group" id="companyinfo">
-                <label>Στοιχεία Εταιρείας</label>
+                <label>Όνομα ταιρείας</label>
 
                 <div class="form-group" id="companyname">
                     <input type="text" name="companyName" class="form-control" id="inputcompanyname"
-                           placeholder="Επωνυμία Εταιρείας">
+                           value=<?php echo $user->companyName; ?>>
                 </div>
             </div>
 
             <div class="form-group" id="options">
                 <div class="form-group" id="newsletter">
                     <label for="input-newsletter">Ενημερωτικό Δελτίο</label>
-                    <input type="checkbox" name="newsletter" id="input-newsletter">
+                    <input type="checkbox" name="newsletter" id="input-newsletter"<?php if ($user->newsLetter == 1) {
+                        echo "checked";
+                    } ?>>
                 </div>
             </div>
 
             <div class="form-group" id="user_name">
                 <label for="inputUsername">Username</label>
-                <input type="text" name="username" class="form-control" id="user_name" placeholder="Username">
+                <input type="text" name="username" class="form-control" id="user_name"
+                       value=<?php echo $user->username; ?>>
             </div>
 
             <div class="form-group" id="password">
-                <label for="input-pswd">Κωδικός Πρόσβασης</label>
+                <label for="input-pswd">Νέος κωδικός πρόσβασης</label>
                 <input type="password" name="password" class="form-control" id="input-pswd">
 
-                <label for="input-confirm-pswd">Επιβεβαίωση Κωδικού</label>
+                <label for="input-confirm-pswd">Επιβεβαίωση νέου κωδικού</label>
                 <input type="password" name="confirmPassword" class="form-control" id="input-confirm-pswd">
             </div>
             <div class="form-group" id="file">
                 <label for="input-photo">Φωτογραφία προφίλ</label>
-                <input type="file" name="image" id="image"/>
 
+                <div>
+                    <table>
+                        <tr>
+                            <td>
+                                <input type="file" name="image" id="image"/>
+                            </td>
+                            <td>
+                                <?php
+                                echo '<img align="right" src="data:image;base64,' . base64_encode($user->image) . '" width=35 height=35/>';
+                                ?>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
 
 
             <div class="form-group" id="extra">
                 <div class="form-group" id="hoteladmin">
                     <label for="input-hotel-admin">Είστε Διαχειριστής κάποιου Ξενοδοχείου:</label>
-                    <input type="checkbox" name="hotelAdmin" id="input-hotel-admin">
+                    <input type="checkbox" name="hotelAdmin" id="input-hotel-admin" <?php if ($user->code == "2") {
+                        echo "checked";
+                    } ?>>
                 </div>
             </div>
-
-            <button type="submit" name="register" class="btn btn-primary">Εγγραφή</button>
+            <div>
+                <div>
+                    <button type="submit" name="adminEditUser" class="btn btn-primary">Ενημέρωση στοιχείων
+                    </button>
+                    <button align="right" style="margin-left: 2%" type="submit" name="adminDeleteUser"
+                            class="btn btn-danger">Διαγραφή χρήστη
+                    </button>
+                </div>
+            </div>
         </form>
     </div>
 </div>
-<!-- /.container -->
-
 
 
 <?php
 include('includes/footer.php');
 ?>
-
 </body>
 </html>
+
 <?php
 
-if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['register'])) {
+
+
+if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['adminEditUser'])) {
 
     $errorState = 0;
     $femaleSex = 0;
     $maleSex = 0;
+    $passwordChangedState = FALSE;
 
     $maleSex = mysqli_real_escape_string($link, $_POST['sexMale']);
+    $userType = mysqli_real_escape_string($link, $_POST['userType']);
     $femaleSex = mysqli_real_escape_string($link, $_POST['sexFemale']);
     $name = mysqli_real_escape_string($link, $_POST['inputName']);
     $surname = mysqli_real_escape_string($link, $_POST['inputSurname']);
@@ -170,20 +196,22 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['register'])) {
     $file = $_FILES['image']['tmp_name'];
 
     if (empty($file)) {
-        $errorState = 1;
+        // $errorState = 1;
+        $image = 1;
     } else {
         $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
         $image_name = addslashes($_FILES['image']['name']);
         $image_size = getimagesize($_FILES['image']['tmp_name']);
     }
 
-
-    if (empty($name) || empty($surname) || (empty($birthDate)) || empty($eMail) || empty($companyName) || empty($username) || empty($password) || empty($confirmPassword)) {
+    if (empty($name) || empty($surname) || (empty($birthDate)) || empty($eMail) || empty($companyName) || empty($username) || empty($userType)) {
         $errorState = 1;
     }
 
     if (empty($image)) {
-        $errorState = 1;
+        // $errorState = 1;
+        //settype($password, "integer");
+        $image = 1;
     }
 
     $gender = 0;
@@ -212,28 +240,28 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['register'])) {
         $hotelAdmin = 1;
     }
 
-    if ($password != $confirmPassword) {
-        $errorState = 1;
+    if (isset($password)) {
+        if ($password != $confirmPassword) {
+            $errorState = 1;
+        } else {
+
+        }
+    } else {
+        $password = 1;
     }
 
-    if (checkIfUserNameExists($username, $link)) {
-        $errorState = 2;
-    }
 
-    if (checkIfUserEmailExists($eMail, $link)) {
-        $errorState = 4;
-    }
-
-    if ($image_size == FALSE) {
-        $errorState = 3;
-    }
     if ($errorState == 0) {
-        $userCode = returnUserCode($hotelAdmin);
-        $password = md5($password);
-        saveNewUserOnDatabase($userCode, $name, $surname, $birthDate, $eMail, $companyName, $newsletter, $password, $username, $gender, $link, $image);
-        header("Location: index.php");
+        if ($password != 1) {
+            $password = md5($password);
+        }
 
-        exit();
+
+        updateUser($userType, $name, $surname, $username, $eMail, $password, $gender, $companyName, $newsletter, $image, $birthDate, $user->userID, $link);
+
+        echo '<script > document.location = "adminViewUser.php" </script>';
+
+
     } else if ($errorState == 1) {
         showAlertDialog("Παρακαλώ συμπληρώστε κατάλληλα όλα τα πεδία.");
     } else if ($errorState == 2) {
@@ -243,7 +271,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['register'])) {
     } else if ($errorState == 4) {
         showAlertDialog("To e-mail υπάρχει. Δοκιμάστε διαφορετικό e-mail.");
     }
+
+} else if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['adminDeleteUser'])) {
+    deleteUserFromDatabaseGivenId($user->userID, $link);
+    echo '<script > document.location = "admin.php" </script>';
 }
 ?>
-
 
