@@ -6,10 +6,12 @@
  * Time: 18:26
  */
 
-include('ArizFunctions.php');
+global $link;
+include ("RegisterConnectToDB.php");
+include_once('ArizFunctions.php');
 $id = htmlspecialchars($_GET["h"]);
 //get hotel
-$hotel = get_hotel_by_id($id);
+$hotel = get_hotel_by_id($id,$link);
 
 ?>
 

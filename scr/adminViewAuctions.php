@@ -5,11 +5,13 @@
  * Date: 12-Jun-15
  * Time: 03:02
  */
-include 'ArizFunctions.php';
-$result= get_auctions();
+global $link;
+include ("RegisterConnectToDB.php");
+include_once('ArizFunctions.php');
+$result= get_auctions($link);
 
 global $link;
-include 'RegisterConnectToDB.php';
+include_once 'RegisterConnectToDB.php';
 
 ?>
 

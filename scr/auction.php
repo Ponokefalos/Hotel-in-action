@@ -69,10 +69,12 @@ showAlertDialog($_SESSION['userCode']);
             <!-- --------------------------------- 1o Hotel -------------------------------------->
             <div class="row">
                 <?php
-                    include ('ArizFunctions.php');
-                    $auctions = get_auctions();
+                    global $link;
+                    include ("RegisterConnectToDB.php");
+                    include_once ('ArizFunctions.php');
+                    $auctions = get_auctions($link);
                     while ($row = $auctions->fetch_assoc()){
-                        display_auction_row($row);
+                        display_auction_row($row, $link);
                         echo'<hr class="featurette-divider">';
                     }
                 ?>

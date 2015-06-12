@@ -5,8 +5,10 @@
  * Date: 12-Jun-15
  * Time: 01:47
  */
+global $link;
+include ("RegisterConnectToDB.php");
 include_once 'ArizFunctions.php';
-$result = get_hotels();
+$result = get_hotels($link);
 ?>
 
     <div class="table-responsive" style="width: auto">

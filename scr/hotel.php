@@ -76,8 +76,10 @@
     <div class="container marketing">
         <div class="row">
             <?php
+            global $link;
+            include ("RegisterConnectToDB.php");
             include('ArizFunctions.php');
-            $hotels = get_hotels();
+            $hotels = get_hotels($link);
             $hotels_array = array();
             while ($row = $hotels->fetch_assoc()) {
                 $hotels_array [] = $row;

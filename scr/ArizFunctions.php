@@ -77,13 +77,10 @@ function select_auction_by_id($id,$link){
     }
 }
 
-function get_hotel_by_id($id){
-    global $link;
-    require('RegisterConnectToDB.php');
+function get_hotel_by_id($id, $link){
 
     $sql = "SELECT * FROM hotels WHERE hotelID=".$id;
     $result = $link ->query($sql);
-    $link->close();
 
     if ($result->num_rows > 0) {
         $hotel =  mysqli_fetch_array($result);
@@ -93,14 +90,10 @@ function get_hotel_by_id($id){
     }
 }
 
-function get_hotels()
-{
-    global $link;
-    require('RegisterConnectToDB.php');
+function get_hotels($link){
 
     $sql = "SELECT * FROM hotels";
     $result = $link ->query($sql);
-    $link->close();
 
     if ($result->num_rows > 0) {
         return ($result);
@@ -110,13 +103,10 @@ function get_hotels()
 
 }
 
-function get_auctions(){
-    global $link;
-    require('RegisterConnectToDB.php');
+function get_auctions($link){
 
     $sql = "SELECT * FROM auctions";
     $result = $link->query($sql);
-    $link->close();
 
     if ($result->num_rows>0){
         return ($result);
@@ -125,13 +115,10 @@ function get_auctions(){
     }
 }
 
-function get_users(){
-    global $link;
-    require('RegisterConnectToDB.php');
+function get_users($link){
 
     $sql = "SELECT * FROM users";
     $result = $link->query($sql);
-    $link->close();
 
     if ($result->num_rows>0){
         return ($result);
@@ -141,7 +128,6 @@ function get_users(){
 }
 
 function get_auction_rating_comment($value){
-/*    $v = intval($value);*/
     $v=$value;
     if ($v>=0 && $v<1){return "gtp";}
     else if ($v>=1 && $v<2){return "Κακό";}
@@ -176,15 +162,12 @@ function select_auction_last_bid($auction_id,$link){
     }else return 0;
 }
 
-function display_auction_row($auction_row){
+function display_auction_row($auction_row, $link){
     //echo 'in display';
-    global $link;
-    require("RegisterConnectToDB.php");
     $auction_id = $auction_row["auction_id"];
     $avg = select_auction_avg_rating($auction_id,$link);
     $votes = select_count_of_auction_ratings($auction_id,$link);
     $last_bid_value=select_auction_last_bid($auction_id,$link);
-    $link->close();
 
     $comment = get_auction_rating_comment(($avg));
     $date = $auction_row['finishing_date'];
@@ -235,18 +218,14 @@ function display_auction_row($auction_row){
                 </div>
                 ';
 }
-function get_auction_name($auction_id){
-    global $link;
-    require("RegisterConnectToDB.php");
+function get_auction_name($auction_id, $link){
     $sql = "SELECT auction_hotel_name FROM auctions WHERE auction_id=$auction_id";
     $result = $link->query($sql);
     $row = mysqli_fetch_array($result);
     $auction_name= $row['auction_hotel_name'];
     return $auction_name;
 }
-function display_user_bid_history($username){
-    global $link;
-    require("RegisterConnectToDB.php");
+function display_user_bid_history($username, $link){
     //getUserID
     $sql = "SELECT user_id FROM users WHERE username='$username'";
     $result = $link->query($sql);
@@ -254,7 +233,6 @@ function display_user_bid_history($username){
     $user_id= $row['user_id'];
     $sql= "SELECT * FROM bids WHERE user_id=$user_id";
     $result = $link -> query($sql);
-    $link->close();
 
     if ($result->num_rows<=0) {
         echo '0 results';
@@ -282,7 +260,7 @@ function display_user_bid_history($username){
         echo'
             <tr>
                 <td>'.$row['date'].'</td>
-                <td>'.get_auction_name($row['auction_id']).'</td>
+                <td>'.get_auction_name($row['auction_id'],$link).'</td>
                 <td>'.$row['bid'].'€</td>
             </tr>
         ';

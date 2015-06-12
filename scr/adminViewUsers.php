@@ -5,11 +5,10 @@
  * Date: 12-Jun-15
  * Time: 16:14
  */
-include_once 'ArizFunctions.php';
-$result= get_users();
 global $link;
-include "RegisterConnectToDB.php";
-
+include("RegisterConnectToDB.php");
+include_once ('ArizFunctions.php');
+$result= get_users($link);
 
 ?>
 
