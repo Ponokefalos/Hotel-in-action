@@ -46,7 +46,7 @@
     </div>
 
     <div class="container marketing">
-        <form role="form" action="adminViewUser.php" method="post" enctype="multipart/form-data">
+        <form role="form" action="adminEditUser.php" method="post" enctype="multipart/form-data">
             <div class="form-group" id="personal-info">
                 <label>Προσωπικά Στοιχεία</label>
 
@@ -259,7 +259,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['adminEditUser'])) {
 
         updateUser($userType, $name, $surname, $username, $eMail, $password, $gender, $companyName, $newsletter, $image, $birthDate, $user->userID, $link);
 
-        echo '<script > document.location = "adminViewUser.php" </script>';
+        echo '<script > document.location = aadminEditUser.php</script>';
 
 
     } else if ($errorState == 1) {
