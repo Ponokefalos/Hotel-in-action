@@ -40,7 +40,7 @@ $result = get_hotels($link);
                 <td><img src="data:image;base64,' . base64_encode($hotel["image"]) . '" width=100 height=100/></td>
                 <td>' . $hotel["HotelName"] . '</td>
                 <td>' . $hotel["Description"] . '</td>
-                <td><a href="adminEditHotel.php?id='.$hotel["HotelName"].'">Επεξεργασία</a></td>
+                <td><a href="adminEditHotel.php?id='.$hotel["hotelID"].'">Επεξεργασία</a></td>
                 </tr>';
     }
 
