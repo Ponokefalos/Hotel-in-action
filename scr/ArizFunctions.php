@@ -6,6 +6,16 @@
  * Time: 7:44 μμ
  */
 
+function is_user_logged_in($id,$link){
+    $sql = "SELECT * FROM logins WHERE user_id=$id";
+    $result = $link ->query($sql);
+    if ($result->num_rows > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function get_login_date($id,$link){
     $sql = "SELECT * FROM logins WHERE user_id=$id";
     $result = $link ->query($sql);
@@ -13,7 +23,7 @@ function get_login_date($id,$link){
         $login =  mysqli_fetch_array($result);
         return ($login['date_since']);
     } else {
-        echo "0 results";
+        return "Never.";
     }
 }
 

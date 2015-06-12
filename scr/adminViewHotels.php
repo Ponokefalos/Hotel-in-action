@@ -5,7 +5,7 @@
  * Date: 12-Jun-15
  * Time: 01:47
  */
-    include 'ArizFunctions.php';
+    include_once 'ArizFunctions.php';
     $result= get_hotels();
 ?>
 

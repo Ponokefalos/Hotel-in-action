@@ -9,6 +9,8 @@ include_once 'ArizFunctions.php';
 $result= get_users();
 global $link;
 include "RegisterConnectToDB.php";
+
+
 ?>
 
     <div class="table-responsive">
@@ -39,6 +41,18 @@ include "RegisterConnectToDB.php";
                 $role = "Registered,VendorS";
                 break;
         }
+            $login_date = get_login_date($user['user_id'],$link);
+            if(is_user_logged_in($user['user_id'],$link)) {
+            $status = "Συνδεδεμένος";
+            }else{
+            $status = "Αποσυνδεμένος";
+            }
+            if ($user['code']==1){
+                $manager='Όχι';
+            }else{
+                $manager='Ναι';
+            }
+
         echo'
             <tr>
                 <td><img src="data:image;base64,' . base64_encode($user["image"]) . '" width=100 height=100/></td>
@@ -46,10 +60,10 @@ include "RegisterConnectToDB.php";
                 <td>'.$user["name"].'</td>
                 <td>'.$role.'</td>
                 <td>'.$user["company_name"].'</td>
-                <td>???????</td>
-                <td>DEITE TO SCREENSHOT</td>
+                <td>'.$status.'</td>
+                <td>'.$manager.'</td>
                 <td>'.$user["date_registered"].'</td>
-                <td>'.get_login_date($user['user_id'],$link).'</td>
+                <td>'.$login_date.'</td>
                 <td><input type="button" value="Επεξεργασία">.</td>
                 </tr>';
     }
