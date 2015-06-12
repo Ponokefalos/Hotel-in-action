@@ -126,10 +126,6 @@ function saveNewAuctionInDatabase($auction_hotel_name, $description, $rooms_numb
 
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 
 function returnHotelId ($link,$hotel_name){
     $query="select hotelID from hotels WHERE HotelName='$hotel_name'";
@@ -141,7 +137,7 @@ function returnHotelId ($link,$hotel_name){
 
     return $hotelID;
 
-<<<<<<< HEAD
+
 }
 
 function get_auction_by_id($link,$auctionID){
@@ -159,28 +155,29 @@ function get_auction_by_id($link,$auctionID){
     return $auction;
 }
 
-function updateAuction($hotelName, $shortDesc, $longDesc, $link, $userID, $image,$hotelID)
+function updateAuction($auction_hotel_name, $description, $rooms_number, $room_type, $checkin_date, $checkout_date, $starting_price, $min_price, $buy_out_box, $buy_out_price, $starting_date, $finishing_date, $image ,$link,$id)
 {
 
     if ($image == 1) {
-        $updateHotelQuery = "UPDATE hotels SET HotelName='$hotelName' , ShortDesc='$shortDesc' , Description='$longDesc' , kouzinaBox='$kouzinaBox' , theaBox='$theaBox' , tvBox='$tvBox' , wifiBox='$wifiBox' , wcBox='$wcBox' , parkingBox='$parkingBox' , acBox ='$acBox' , poolBox='$poolBox' , latitude='$lat' , longitude='$lond' , stars='$stars' WHERE hotelID='$hotelID'";
+        $updateAuctionQuery = "UPDATE auctions SET auction_hotel_name='$auction_hotel_name' , Description='$description' , rooms_nimber='$rooms_number' , room_type='$room_type' , checkin_date='$checkin_date' , checkout_date='$checkout_date' , starting_price='$starting_price' , min_price='$min_price' , buy_out_box='$buy_out_box' , buy_out_price='$buy_out_price' , starting_date='$starting_date' , finishing_date='$finishing_date' WHERE userID='$id'";
     } else {
-        $updateHotelQuery = "UPDATE hotels SET HotelName='$hotelName' , ShortDesc='$shortDesc' , Description='$longDesc' , kouzinaBox='$kouzinaBox' , theaBox='$theaBox' , tvBox='$tvBox' , wifiBox='$wifiBox' , wcBox='$wcBox' , parkingBox='$parkingBox' , acBox ='$acBox' , poolBox='$poolBox' , latitude='$lat' , longitude='$lond' , stars='$stars' , image='$image' WHERE hotelID='$hotelID'";
+        $updateAuctionQuery = "UPDATE auctions SET auction_hotel_name='$auction_hotel_name' , Description='$description' , rooms_nimber='$rooms_number' , room_type='$room_type' , checkin_date='$checkin_date' , checkout_date='$checkout_date' , starting_price='$starting_price' , min_price='$min_price' , buy_out_box='$buy_out_box' , buy_out_price='$buy_out_price' , starting_date='$starting_date' , finishing_date='$finishing_date' , auction_file='$image' WHERE userID='$id'";
     }
 
-    $result = mysqli_query($link, $updateHotelQuery);
+
+
+    $result = mysqli_query($link, $updateAuctionQuery);
 
     if ($result) {
         mysqli_commit($link);
-        showAlertDialog("Οι πληροφορίες του ξενοδοχείου ενημερώθηκαν επιτυχώς");
+        showAlertDialog("Οι πληροφορίες της δημοπρασίας ενημερώθηκαν επιτυχώς");
         return true;
     } else {
         mysqli_rollback($link);
-        showAlertDialog("Οι πληροφορίες του ξενοδοχείου δεν ενημερώθηκαν, κάτι πήγε λάθος");
+        showAlertDialog("Οι πληροφορίες της δημοπρασίας δεν ενημερώθηκαν, κάτι πήγε λάθος");
         return false;
     }
-=======
->>>>>>> origin/master
+
 }
 
 

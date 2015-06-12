@@ -8,6 +8,7 @@
 include('includes/navbar.php');
 include('includes/header.php');
 include('KyrFunctions.php');
+include('ArizFunctions.php');
 ?>
 
 
@@ -68,6 +69,7 @@ include('KyrFunctions.php');
     <?php
     $id = htmlspecialchars($_GET["id"]);
     $auction = get_auction_by_id($link, $id);
+    $userId = $auction['userID'];
     ?>
 
     <!-- =============================================PERIEXOMENO SELIDAS ================================================-->
@@ -105,19 +107,12 @@ include('KyrFunctions.php');
                             <p for="auctionHotelName" id="auctionHotelName" class="col-xs-2 control-label">Όνομα
                                 Ξενοδοχείου </p>
                             <?php
-
-                            $tempUserName = $_SESSION['username'];
-                            $currentUser = returnUserIDGivenName($tempUserName, $link);
-                            /*   showAlertDialog($currentUser);*/
-                            $query = "SELECT HotelName FROM hotels WHERE user_id= '$currentUser'";
-                            $result = mysqli_query($link, $query);
-
-
+                            $hotels = get_hotels($link);
                             ?>
                             <div class="col-sm-4">
                                 <select class="form-control" name="auction_hotel_name">
                                     <?php
-                                    while ($row = mysqli_fetch_array($result)) {
+                                    while ($row = mysqli_fetch_array($hotels)) {
                                         print' <option name="auction_hotel_name">' . $row['HotelName'] . '</option>';
                                     }
                                     ?>
@@ -328,6 +323,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newAuction'])) {
     $finishing_date = mysqli_real_escape_string($link, $_POST['finishing_date']);
     $file = $_FILES['image']['tmp_name'];
 
+    if (empty($file)) {
+        // $errorState = 1;
+        $image = 1;
+    } else {
+        $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
+        $image_name = addslashes($_FILES['image']['name']);
+        $image_size = getimagesize($_FILES['image']['tmp_name']);
+    }
 
     if (empty($buy_out_box)) {
         settype($buy_out_box, "integer");
@@ -339,23 +342,23 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newAuction'])) {
 
 
     if (empty($auction_hotel_name) || empty($description) || empty($rooms_number) || empty($room_type) || empty($checkin_date) ||
-        empty($checkout_date) || empty($starting_price) || empty($min_price) || empty($buy_out_box) || empty($buy_out_price) ||
+        empty($checkout_date) || empty($starting_price) || empty($min_price)  || empty($buy_out_price) ||
         empty($starting_date) || empty($finishing_date)
     ) {
         $errorState = 1;
-    } else {
-        $responce = updateAuctionInfo($auction_hotel_name, $description, $rooms_number, $room_type, $checkin_date, $checkout_date, $starting_price, $min_price, $buy_out_box, $buy_out_price, $starting_date, $finishing_date, $link);
-
-        if ($response) {
-            //   ob_clean();
-            header("Refresh:0");
-            //  header("Location: index.php");
-            exit;
-            //ob_start();
-
-        }
+    }
 
 
+    if ($errorState == 0) {
+
+
+        updateAuction($auction_hotel_name, $description, $rooms_number, $room_type, $checkin_date, $checkout_date, $starting_price, $min_price, $buy_out_box, $buy_out_price, $starting_date, $finishing_date, $link, $id);
+
+
+        echo '<script > document.location = "adminViewAuctions.php" </script>';
+
+    }else{
+        showAlertDialog("ffff");
     }
 
 }
