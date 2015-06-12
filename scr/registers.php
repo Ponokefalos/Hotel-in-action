@@ -230,7 +230,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['register'])) {
     if ($errorState == 0) {
         $userCode = returnUserCode($hotelAdmin);
         $password = md5($password);
-        saveNewUserOnDatabase($userCode, $name, $surname, $birthDate, $eMail, $companyName, $newsletter, $password, $username, $gender, $link, $image);
+        $date_registered =  date("Y-m-d H:i:s");
+        saveNewUserOnDatabase($userCode, $name, $surname, $birthDate, $eMail, $companyName, $newsletter, $password, $username, $gender, $link, $image,$date_registered);
         header("Location: index.php");
 
         exit();

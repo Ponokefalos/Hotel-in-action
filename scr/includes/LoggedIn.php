@@ -9,6 +9,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['signOut'])) {
 
 function logOut()
 {
+    global $link;
+    include_once ("ArizFunctions.php");
+    if (delete_from_login($_SESSION["user_id"],$link))
     session_unset();
     session_destroy();
     header("Location: index.php");

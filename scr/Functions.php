@@ -177,7 +177,7 @@ function getUserFromDatabase($username,$link){
  * @param $image
  * @return bool Returns TRUE if user was added successfully FALSE otherwise
  */
-function saveNewUserOnDatabase($userCode, $name, $surname, $birthDate, $email, $companyName, $newsletter, $password, $username, $maleSex, $link, $image)
+function saveNewUserOnDatabase($userCode, $name, $surname, $birthDate, $email, $companyName, $newsletter, $password, $username, $maleSex, $link, $image,$date_registered)
 {
 
     mysqli_autocommit($link, false);
@@ -194,7 +194,8 @@ function saveNewUserOnDatabase($userCode, $name, $surname, $birthDate, $email, $
                                  password,
                                  username,
                                  gender,
-                                 image
+                                 image,
+                                 date_registered
                              )
                              Values
                              (
@@ -208,7 +209,8 @@ function saveNewUserOnDatabase($userCode, $name, $surname, $birthDate, $email, $
                                  '$password',
                                  '$username',
                                  '$maleSex',
-                                 '$image'
+                                 '$image',
+                                 '$date_registered'
                              )";
 
     $result = mysqli_query($link, $query);

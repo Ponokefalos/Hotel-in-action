@@ -5,6 +5,56 @@
  * Date: 10/6/2015
  * Time: 7:44 μμ
  */
+
+function get_login_date($id,$link){
+    $sql = "SELECT * FROM logins WHERE user_id=$id";
+    $result = $link ->query($sql);
+    if ($result->num_rows > 0) {
+        $login =  mysqli_fetch_array($result);
+        return ($login['date_since']);
+    } else {
+        echo "0 results";
+    }
+}
+
+function delete_from_login($id,$link){
+    $sql = "DELETE FROM logins WHERE user_id=$id";
+    $result = mysqli_query($link, $sql);
+
+    if ($result) {
+        mysqli_commit($link);
+        showAlertDialog("Επιτυχής διαγραφή");
+        return true;
+    } else {
+        mysqli_rollback($link);
+        showAlertDialog("Αδυναμία διαγγραφής στην ιστοσελίδα. Παρακαλώ προσπαθήστε αργότερα.");
+        return false;
+    }
+}
+
+function insert_to_logins($id,$date,$link){
+    $sql = "insert into logins
+                             (
+                                 user_id,
+                                 date_since
+                             )
+                             values
+                             (
+                                 '$id',
+                                 '$date'
+                             )";
+
+    $result = mysqli_query($link, $sql);
+
+    if ($result) {
+        mysqli_commit($link);
+        return true;
+    } else {
+        mysqli_rollback($link);
+        return false;
+    }
+}
+
 function select_auction_by_id($id,$link){
     $sql = "SELECT * FROM auctions WHERE auction_id=".$id;
     $result = $link ->query($sql);
@@ -64,6 +114,22 @@ function get_auctions(){
        echo '0 results';
     }
 }
+
+function get_users(){
+    global $link;
+    require('RegisterConnectToDB.php');
+
+    $sql = "SELECT * FROM users";
+    $result = $link->query($sql);
+    $link->close();
+
+    if ($result->num_rows>0){
+        return ($result);
+    }else{
+        echo '0 results';
+    }
+}
+
 function get_auction_rating_comment($value){
 /*    $v = intval($value);*/
     $v=$value;
