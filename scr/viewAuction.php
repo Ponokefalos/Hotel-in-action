@@ -140,6 +140,7 @@
             $bool=insert_bid($_SESSION['user_id'],$auction['auction_id'],$bid_given,getCurrentDate(),$link);
             if ($bool){
                 showAlertDialog("Επιτυχία");
+             /*   echo '<script > document.location = "viewAuction.php" </script>';*/
             }else{
                 showAlertDialog("Apotυχία");
             }
