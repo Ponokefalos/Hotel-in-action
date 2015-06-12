@@ -38,6 +38,7 @@
             </button>
         </div>
         <p>
+
         <h3><i>Ξενοδοχεία</i></h3></p>
         <hr class="featurette-divider">
     </div>
@@ -45,7 +46,7 @@
     <div>
         <button onclick="location.href ='adminViewHotels.php' " ; type="submit" class="btn btn-primary">ViewHotels
         </button>
-        </div>
+    </div>
     <br><br><br>
 
     <div class="head_title">
@@ -55,15 +56,17 @@
             </button>
         </div>
         <p>
+
         <h3><i>Δημοπρασίες</i></h3></p>
         <hr class="featurette-divider">
     </div>
 
     <div>
-        <button onclick="location.href ='adminViewAuctions.php' " ; type="submit" class="btn btn-primary">adminViewAuctions
+        <button onclick="location.href ='adminViewAuctions.php' " ; type="submit" class="btn btn-primary">
+            adminViewAuctions
         </button>
-</div>
     </div>
+
 
     <br><br><br>
 
@@ -74,6 +77,7 @@
             </button>
         </div>
         <p>
+
         <h3><i>Χρήστες</i></h3></p>
         <hr class="featurette-divider">
     </div>
