@@ -307,8 +307,6 @@ include('KyrFunctions.php');
                             </div>
 
 
-
-
                         </div>
 
                         <div class="form-group" id="mapLocation">
@@ -374,7 +372,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newHotel'])) {
     $parkingBox = isset($_POST['parkingBox']) ? $_POST['parkingBox'] : '';
     $acBox = isset($_POST['acBox']) ? $_POST['acBox'] : '';
     $poolBox = isset($_POST['poolBox']) ? $_POST['poolBox'] : '';
-    $file = isset($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : '';
+
+    $file = $_FILES['image']['tmp_name'];
 
     $stars = mysqli_real_escape_string($link, $_POST['stars']);
 

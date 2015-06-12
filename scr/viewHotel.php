@@ -26,6 +26,7 @@ $hotel = get_hotel_by_id($id);
     <link href="../css/bootstrap.min.css" rel="stylesheet" />
     <link href="../css/style.css" rel="stylesheet" >
     <link href="../css/navbar.css" rel="stylesheet">
+    <link href="../css/globalShadowBoxStyle.css" rel="stylesheet">
 
     <link href="../css/HotelNefeliStatic_Style.css" rel="stylesheet">
 
@@ -79,7 +80,7 @@ $hotel = get_hotel_by_id($id);
 ================================================== -->
 <!-- Wrap the rest of the page in another container to center all the content. -->
 
-<div id="conteinerMarketing" class="container marketing" ><!-- BG COLOR-->
+<div id="conteinerMarketing" class="container marketing shadowStyle" ><!-- BG COLOR-->
     <!--<hr class="featurette-divider"> -->
 
 
@@ -93,7 +94,7 @@ $hotel = get_hotel_by_id($id);
         <hr class="featurette-divider">
     </div>
     <!-- =============================================PERIEXOMENO SELIDAS ================================================-->
-    <div id="auction" class="container marketing">
+    <div id="auction" class="container marketing ">
         <div class="row">
             <div  id="pictures" class=" col-md-6">
                 <?php echo '<img src="data:image;base64,' . base64_encode($hotel["image"]) . '" width=400 height=400/>'; ?>

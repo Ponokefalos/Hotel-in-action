@@ -33,6 +33,7 @@
     <link href="../css/bootstrap.min.css" rel="stylesheet" />
     <link href="../css/style.css" rel="stylesheet" >
     <link href="../css/navbar.css" rel="stylesheet">
+    <link href="../css/globalShadowBoxStyle.css" rel="stylesheet">
 
     <link href="../css/nefeliAuctionStyle.css" rel="stylesheet">
 
@@ -58,7 +59,7 @@
 ================================================== -->
 <!-- Wrap the rest of the page in another container to center all the content. -->
 
-<div id="conteinerMarketing" class="container marketing" ><!-- BG COLOR-->
+<div id="conteinerMarketing" class="container marketing shadowStyle" ><!-- BG COLOR-->
     <!--<hr class="featurette-divider"> -->
 
 
