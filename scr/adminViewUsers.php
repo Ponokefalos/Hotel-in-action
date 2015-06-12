@@ -37,7 +37,7 @@ $result= get_users($link);
                 $role = "Registered";
                 break;
             case 2:
-                $role = "Registered,VendorS";
+                $role = "Registered,Vendors";
                 break;
         }
             $login_date = get_login_date($user['user_id'],$link);
@@ -68,6 +68,5 @@ $result= get_users($link);
     }
 
     echo '</table>
-                </div>
             </div>';
 ?>

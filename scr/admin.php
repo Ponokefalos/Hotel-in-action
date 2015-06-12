@@ -25,10 +25,6 @@
 
     ?>
 
-    <!-- <div
-            style="border:2px solid #ccc; width:100%;height:300px;overflow:scroll;overflow-y:scroll;overflow-x:hidden;">
-            <?php /*include('adminViewAuctions.php'); */ ?>
-        </div>-->
 </head>
 
 <body style="background-color:#D7D7D7">
@@ -46,9 +42,9 @@
         <hr class="featurette-divider">
     </div>
 
-    <div
-            style="border:2px solid #ccc; width:100%;height:300px;overflow:scroll;overflow-y:scroll;overflow-x:hidden;">
-            <?php include('adminViewHotels.php');  ?>
+    <div>
+        <button onclick="location.href ='adminViewHotels.php' " ; type="submit" class="btn btn-primary">ViewHotels
+        </button>
         </div>
     <br><br><br>
 
@@ -63,9 +59,10 @@
         <hr class="featurette-divider">
     </div>
 
-    <div
-        style="border:2px solid #ccc; width:100%;height:300px;overflow:scroll;overflow-y:scroll;overflow-x:hidden;">
-        <?php /*include('adminViewAuctions.php');*/  ?>
+    <div>
+        <button onclick="location.href ='adminViewAuctions.php' " ; type="submit" class="btn btn-primary">adminViewAuctions
+        </button>
+</div>
     </div>
 
     <br><br><br>
@@ -81,9 +78,9 @@
         <hr class="featurette-divider">
     </div>
 
-    <div
-        style="border:2px solid #ccc; width:100%;height:300px;overflow:scroll;overflow-y:scroll;overflow-x:hidden;">
-        <?php include('adminViewUsers.php');  ?>
+    <div>
+        <button onclick="location.href ='adminViewUsers.php' " ; type="submit" class="btn btn-primary">adminViewUsers
+        </button>
     </div>
 
 
