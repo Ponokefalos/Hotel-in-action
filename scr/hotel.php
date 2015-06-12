@@ -76,7 +76,7 @@ include('includes/navbar.php');
                     $hotels_array [] = $row;
                     echo '<div class="col-md-6" >';
                     echo '<a href="viewHotel.php?h='.$row['hotelID'].'">';
-                    echo '<img src="data:image;base64,' . base64_encode($row["image"]) . '" width=200 height=200/>';
+                    echo '<img src="data:image;base64,' . base64_encode($row['image']) . '" width=200 height=200/>';
                     echo '<p class=HotelName>'.$row["HotelName"].'</p></a>';
                     echo '</div>';
                 }
