@@ -6,6 +6,33 @@
  * Time: 7:44 μμ
  */
 
+function insert_bid($user_id,$auction_id,$bid,$date,$link){
+    $sql = "insert into bids
+                             (
+                                 user_id,
+                                 auction_id,
+                                 bid,
+                                 date
+                             )
+                             values
+                             (
+                                 '$user_id',
+                                 '$auction_id',
+                                 '$bid',
+                                 '$date'
+                             )";
+
+    $result = mysqli_query($link, $sql);
+
+    if ($result) {
+        mysqli_commit($link);
+        return true;
+    } else {
+        mysqli_rollback($link);
+        return false;
+    }
+}
+
 function delete_hotel_from_id($id, $link){
     $sql = "DELETE FROM hotels WHERE hotelID=$id";
     $result = mysqli_query($link, $sql);

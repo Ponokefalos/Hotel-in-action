@@ -275,7 +275,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['adminEditUser'])) {
 
 } else if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['adminDeleteUser'])) {
     deleteUserFromDatabaseGivenId($id, $link);
-    echo '<script > document.location = "adminViewUsers.php" </script>';
+    echo '<script > document.location = "admin.php" </script>';
 }
 ?>
 

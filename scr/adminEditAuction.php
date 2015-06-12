@@ -272,6 +272,9 @@ include('KyrFunctions.php');
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button type="submit" class="btn btn-primary" name="newAuction">Εισαγωγή</button>
+                                <button align="right" style="margin-left: 2%" type="submit" name="adminDeleteAuction"
+                                        class="btn btn-danger">Διαγραφή Δημοπρασίας
+                                </button>
                             </div>
                         </div>
 
@@ -358,6 +361,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newAuction'])) {
 
     }
 
+}else if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['adminDeleteAuction'])) {
+    include_once('ArizFunctions.php');
+    delete_auction_from_id($id, $link);
+    echo '<script > document.location = "admin.php" </script>';
 }
 
 
