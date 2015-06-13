@@ -48,7 +48,7 @@ include('includes/navbar.php');
         <div class="addNewElement">
             <?php
             if ($_SESSION['userCode'] == 2 || $_SESSION['userCode'] == 0) {
-            echo '<button onclick="location.href =' . "'newAuctionForm.php'" . '"; type="submit" class="btn btn-primary" >+ Νέο Ξενοδοχείο</button>';
+            echo '<button onclick="location.href =' . "'newAuctionForm.php'" . '"; type="submit" class="btn btn-primary" >+ Νέα Δημοπρασία</button>';
             // <button onclick="location.href ='newHotelForm.php' "  ; type="submit" class="btn btn-primary" >+ Νέο Ξενοδοχείο</button>
                 //  <button onclick="location.href ='newAuctionForm.php' "  ; type="submit" class="btn btn-primary">+ Νέα Δημοπρασία</button>
             }

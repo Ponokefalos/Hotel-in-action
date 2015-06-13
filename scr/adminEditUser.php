@@ -25,6 +25,11 @@
     include('RegisterConnectToDB.php');
 
     $id = htmlspecialchars($_GET["id"]);
+    if (empty($id)) {
+        $id = $_SESSION['edditingUser'];
+    } else {
+        $_SESSION['edditingUser'] = $id;
+    }
     $user = getSuperUserFromDatabaseGivenId($id, $link);
 
     ?>
@@ -176,6 +181,8 @@ include('includes/footer.php');
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['adminEditUser'])) {
 
+    $id = $_SESSION['edditingUser'];
+
     $errorState = 0;
     $femaleSex = 0;
     $maleSex = 0;
@@ -205,8 +212,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['adminEditUser'])) {
         $image_size = getimagesize($_FILES['image']['tmp_name']);
     }
 
-    if (empty($name) || empty($surname) || (empty($birthDate)) || empty($eMail) || empty($companyName) || empty($username) || empty($userType)) {
+    if (empty($name) || empty($surname) || (empty($birthDate)) || empty($eMail) || empty($companyName) || empty($username) /*|| empty($userType)*/) {
         $errorState = 1;
+        showAlertDialog("prwta paidia ");
     }
 
     if (empty($image)) {
@@ -219,6 +227,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['adminEditUser'])) {
 
     if ((empty($maleSex) && empty($femaleSex)) || ($maleSex == 1 && $femaleSex == 1)) {
         $errorState = 1;
+        showAlertDialog("kati me to gender");
     } else if ($maleSex == 1) {
         $gender = 0;
     } else {
@@ -260,7 +269,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['adminEditUser'])) {
 
         updateUser($userType, $name, $surname, $username, $eMail, $password, $gender, $companyName, $newsletter, $image, $birthDate, $user->userID, $link);
 
-        echo '<script > document.location = "adminEditUser.php" </script>';
+        echo '<script > document.location = "adminViewUsers.php" </script>';
 
 
     } else if ($errorState == 1) {
