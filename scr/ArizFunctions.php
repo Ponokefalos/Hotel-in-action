@@ -115,6 +115,17 @@ function insert_to_logins($id,$date,$link){
 
     $result = mysqli_query($link, $sql);
 
+    if (mysqli_errno($link) == 1062){
+        showAlertDialog(mysqli_affected_rows($link) );
+        $sql = "update logins set date_since='$date' where user_id='$id'";
+        $result = mysqli_query($link, $sql);
+    }
+
+    if(! $result )
+    {
+        die('Could not update data: ' . mysqli_errno($link));
+    }
+
     if ($result) {
         mysqli_commit($link);
         return true;

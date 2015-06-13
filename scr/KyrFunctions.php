@@ -153,7 +153,6 @@ function get_auction_by_id($link,$auctionID){
 
 function updateAuction($hotelName, $shortDesc, $longDesc, $link, $userID, $image,$hotelID)
 {
-
     if ($image == 1) {
         $updateHotelQuery = "UPDATE hotels SET HotelName=$hotelName , ShortDesc=$shortDesc , Description=$longDesc , kouzinaBox=$kouzinaBox , theaBox=$theaBox , tvBox=$tvBox , wifiBox=$wifiBox , wcBox=$wcBox , parkingBox=$parkingBox , acBox =$acBox , poolBox=$poolBox , latitude=$lat , longitude=$lond , stars=$stars WHERE hotelID=$hotelID";
     } else {
