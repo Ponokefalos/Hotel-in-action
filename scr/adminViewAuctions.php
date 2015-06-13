@@ -47,6 +47,13 @@ include_once 'RegisterConnectToDB.php';
 <?php
 while ($auction = $result->fetch_assoc()) {
     $bid = select_auction_last_bid($auction['auction_id'], $link);
+    $now = date('Y-m-d');
+    if ($auction['finishing_date']<$now){
+        $winner = select_auction_winner($auction['auction_id'],$link);
+        $winner = $winner['username'];
+    }else{
+        $winner = "Δημοπρασία σε εξέλιξη";
+    }
     echo '
             <tr>
                 <td><img src="data:image;base64,' . base64_encode($auction["auction_file"]) . '" width=100 height=100/></td>
@@ -56,6 +63,7 @@ while ($auction = $result->fetch_assoc()) {
                 <td>' . $auction["starting_date"] . '</td>
                 <td>' . $auction["finishing_date"] . '</td>
                 <td>' . $bid . '</td>
+                <td>' . $winner . '</td>
                 <td><a href="adminEditAuction.php?id=' . $auction["auction_id"] . '">Επεξεργασία</a></td>
                 </tr>';
 }

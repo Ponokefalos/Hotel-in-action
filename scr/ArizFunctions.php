@@ -6,6 +6,8 @@
  * Time: 7:44 μμ
  */
 
+
+
 function insert_bid($user_id,$auction_id,$bid,$date,$link){
     $sql = "insert into bids
                              (
@@ -193,6 +195,27 @@ function get_auction_rating_comment($value){
     else if ($v>=4 && $v<5){return "Θαυμάσιο";}
 }
 
+function select_user_avg_rating($user_id,$link){
+    $sql= "SELECT avg(rating) FROM ratings WHERE user_id=$user_id";
+    $result = $link->query($sql);
+    if ($result -> num_rows > 0) {
+        $row = mysqli_fetch_array($result);
+        $avg = $row['avg(rating)'];
+        if ($avg==0){
+            return 0.0;
+        }else
+        return $avg;
+    }else return 0;
+}
+
+function select_count_of_user_ratings($user_id,$link){
+    $sql = "SELECT COUNT(user_id) FROM ratings WHERE user_id=$user_id";
+    $result = $link->query($sql);
+    $row = mysqli_fetch_array($result);
+    $votes = $row['COUNT(user_id)'];
+    return $votes;
+}
+
 function select_auction_avg_rating($auction_id,$link){
     $sql= "SELECT avg(rating) FROM ratings WHERE auction_id=$auction_id";
     $result = $link->query($sql);
@@ -209,8 +232,21 @@ function select_count_of_auction_ratings($auction_id,$link){
     return $votes;
 }
 
-function select_auction_last_bid($auction_id,$link){
+function select_auction_winner($auction_id,$link){
     $sql = "SELECT * FROM bids WHERE auction_id=".$auction_id." ORDER BY bids.date DESC";
+    $result = $link->query($sql);
+    if ($result->num_rows>0){
+        $row = mysqli_fetch_array($result);
+        $winner_id=$row['user_id'];
+        $sql="SELECT * FROM users WHERE user_id=".$winner_id;
+        $result = $link->query($sql);
+        $row = mysqli_fetch_array($result);
+        return $row;
+    }else return 0;
+}
+
+function select_auction_last_bid($auction_id,$link){
+    $sql = "SELECT * FROM bids WHERE auction_id=".$auction_id." ORDER BY bids.bid DESC";
     $result = $link->query($sql);
     if ($result->num_rows>0){
         $row = mysqli_fetch_array($result);

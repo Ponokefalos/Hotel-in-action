@@ -176,7 +176,7 @@
                 <p>Ιστορικό Δημοπρασιών</p>
             </div>
             <?php
-                include "ArizFunctions.php";
+                include_once "ArizFunctions.php";
                 display_user_bid_history($user->username,$link);
             ?>
 
@@ -190,10 +190,17 @@
             </div>
             <div class="user_container">
                 <p>Η Βαθμολογίας σας είναι:</p>
+
                 <br>
 
-                <p style="text-align: center"> 4.2 <br>
-                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span> <br> <br>από 34 εγγεγραμένους
+                <p style="text-align: center">
+                    <?php
+                    $user_id = returnUserIDGivenName($user->username,$link);
+                    echo select_user_avg_rating($user_id,$link);
+                    ?><br>
+                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span> <br> <br>από <?php
+                        echo select_count_of_user_ratings($user_id,$link);
+                    ?> εγγεγραμένους
                     χρήστες</p>
                 <br><br><br><br><br>
             </div>
