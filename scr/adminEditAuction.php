@@ -80,21 +80,21 @@ include('ArizFunctions.php');
         <div class="head_title">
             <p>
 
-            <h3><i>Προσθήκη Δημοπρασίας</i></h3></p>
+            <h3><i>Τροποίηση Δημοπρασίας</i></h3></p>
             <hr class="featurette-divider">
         </div>
 
 
-        <p class="infoTxt"> Καλώς ήρθατε στην φόρμα συμπλήρωσης ξενοδείων. Παρακαλούμε συμπληρώστε τα παρακάτω πεδία με
+        <p class="infoTxt"> Καλώς ήρθατε στην φόρμα τροποίησης ξενοδοχείων. Παρακαλούμε συμπληρώστε τα παρακάτω πεδία με
             τις
             απαραίτητες πληροφορίες
-            για να καταχωρηθεί η ξενοδοχειακή σας μονάδα στην σελίδα μας</p>
+            για να αλλάξετε την εμφάνηση της ξενοδοχειακής σας μονάδας στην σελίδα μας</p>
 
         <br><br><br>
 
         <div class="container marketing">
             <div class="head_title">
-                <p><h4><i>Φορμα Εγγραφής</i></h4></p>
+                <p><h4><i>Φορμα τροποίησης</i></h4></p>
                 <hr class="featurette-divider">
             </div>
 
@@ -213,9 +213,9 @@ include('ArizFunctions.php');
 
                             <div class="col-sm-offset-1 col-sm-1 ">
                                 <div class="checkbox">
-                                    <input type="checkbox" value="<?php if ($auction['buy_out_box'] == 1) {
+                                    <input type="checkbox" <?php if ($auction['buy_out_box'] == 1) {
                                         echo "checked";
-                                    } ?>" name="buy_out_box">
+                                    } ?> name="buy_out_box">
                                 </div>
                             </div>
                         </div>
@@ -355,7 +355,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['newAuction'])) {
     if ($errorState == 0) {
 
 
-        updateAuction($auction_hotel_name, $description, $rooms_number, $room_type, $checkin_date, $checkout_date, $starting_price, $min_price, $buy_out_box, $buy_out_price, $starting_date, $finishing_date, $link, $id);
+        updateAuction($auction_hotel_name, $description, $rooms_number, $room_type, $checkin_date, $checkout_date, $starting_price, $min_price, $buy_out_box, $buy_out_price, $starting_date, $finishing_date,$image, $link, $id);
 
 
         echo '<script > document.location = "adminViewAuctions.php" </script>';
