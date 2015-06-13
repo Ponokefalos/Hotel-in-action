@@ -9,7 +9,7 @@
 
 function returnUserCode($hotelAdmin)
 {
-    if ($hotelAdmin = 0) {
+    if ($hotelAdmin == 0) {
         return 1;
     } else {
         return 2;
