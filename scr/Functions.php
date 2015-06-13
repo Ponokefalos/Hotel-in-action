@@ -427,4 +427,16 @@ function updateHotel($hotelName, $shortDesc, $longDesc, $date, $link, $userID, $
     }
 }
 
+function getAllHotelsGivenUserId($userId,$link){
+    $sql = "SELECT * FROM hotels WHERE userID=".$userId;
+    $result = $link ->query($sql);
+
+    if ($result->num_rows > 0) {
+        return ($result);
+    } else {
+        echo "0 results";
+    }
+
+}
+
 ?>
